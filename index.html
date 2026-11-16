@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Blender 기초 노트</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+/* 레이아웃: 위에 칩 내비게이션, 아래로 주제별 구역. 구역마다 조작 카드 격자 + 연습 상자 */
+:root{--bg:#1c1e22;--panel:#26292f;--panel2:#2e3138;--line:#3a3e47;--fg:#ebe8e1;--muted:#a2a6af;--accent:#f08a3c;--mouse:#5b9bf0;--mouse-fg:#0f1722;
+--key-bg:#efece5;--key-fg:#1c1e22;--key-edge:#8d8a84;--tip-bg:#2f2a1e;--tip-line:#d9a441;--tip-fg:#f0c66a;
+--font-body:'IBM Plex Sans KR','Malgun Gothic','Apple SD Gothic Neo',sans-serif;--font-mono:'JetBrains Mono',Consolas,'Malgun Gothic',monospace;color-scheme:dark}
+@media (prefers-color-scheme: light){:root:not([data-theme="dark"]){--bg:#f3f1ec;--panel:#ffffff;--panel2:#f7f5f0;--line:#dcd8cf;--fg:#23262b;--muted:#5f646d;--accent:#cf5f18;--mouse:#2f6fe0;--mouse-fg:#ffffff;
+--key-bg:#23262b;--key-fg:#ffffff;--key-edge:#000000;--tip-bg:#fff6dd;--tip-line:#e0a92a;--tip-fg:#946200;color-scheme:light}}
+:root[data-theme="light"]{--bg:#f3f1ec;--panel:#ffffff;--panel2:#f7f5f0;--line:#dcd8cf;--fg:#23262b;--muted:#5f646d;--accent:#cf5f18;--mouse:#2f6fe0;--mouse-fg:#ffffff;
+--key-bg:#23262b;--key-fg:#ffffff;--key-edge:#000000;--tip-bg:#fff6dd;--tip-line:#e0a92a;--tip-fg:#946200;color-scheme:light}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--font-body);font-size:16px;line-height:1.6;word-break:keep-all}
+.wrap{max-width:1120px;margin:0 auto;padding-block:28px 56px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+header h1{font-size:clamp(28px,5vw,40px);margin:0 0 6px;letter-spacing:-.5px;text-wrap:balance}
+header p{margin:0;color:var(--muted);max-width:62ch}
+nav{display:flex;flex-wrap:wrap;gap:8px;margin:22px 0 8px}
+nav a{color:var(--fg);text-decoration:none;border:1px solid var(--line);background:var(--panel);padding:6px 13px;border-radius:999px;font-size:14px}
+nav a:hover,nav a:focus-visible{border-color:var(--accent);color:var(--accent);outline:none}
+section{margin-top:44px;scroll-margin-top:16px}
+.sec-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 12px}
+.sec-head h2{font-size:26px;margin:0;letter-spacing:-.3px}
+.sec-head span{font-family:var(--font-mono);font-size:12px;letter-spacing:1.5px;color:var(--muted)}
+.lead{margin:6px 0 16px;color:var(--muted);max-width:68ch}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:12px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 16px;min-width:0;display:flex;flex-direction:column;gap:8px}
+.card h3{margin:0;font-size:17px;font-weight:600}
+.card .how{font-size:15.5px}
+.card .why{font-size:14px;color:var(--muted)}
+.card .where{font-family:var(--font-mono);font-size:12px;color:var(--accent)}
+kbd{display:inline-block;background:var(--key-bg);color:var(--key-fg);border-radius:6px;padding:1px 8px;font-family:var(--font-mono);font-size:13.5px;font-weight:700;margin:1px;box-shadow:0 2px 0 var(--key-edge);line-height:1.5;white-space:nowrap}
+.mouse{display:inline-block;background:var(--mouse);color:var(--mouse-fg);border-radius:6px;padding:1px 8px;font-size:13.5px;font-weight:600;margin:1px;line-height:1.5}
+.box{margin-top:14px;background:var(--tip-bg);border-left:5px solid var(--tip-line);border-radius:8px;padding:12px 16px;font-size:15.5px}
+.box b{color:var(--tip-fg);margin-right:8px}
+.note{margin-top:10px;font-size:14.5px;color:var(--muted);max-width:76ch}
+.legend{display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:14px;font-size:14px;color:var(--muted)}
+footer{margin-top:56px;padding-top:16px;border-top:1px solid var(--line);font-size:13.5px;color:var(--muted)}
+footer a{color:var(--accent)}
+</style>
+<style>body{margin:0}img{max-width:100%}</style>
+</head>
+<body>
+
+<div class="wrap">
+<header><h1>Blender 기초 노트</h1><p>SD 캐릭터 강의(DyeoV)를 따라가기 전에 알아 둘 조작과 개념을 주제별로 모았어요. 구역마다 직접 해 볼 연습이 하나씩 있어요.</p>
+<div class="legend"><span><kbd>G</kbd> 키보드 키</span><span><span class="mouse">클릭</span> 마우스 조작</span><span>키는 Blender 기본 키맵 기준</span></div></header>
+<nav><a href="#view">화면 움직이기</a><a href="#object">오브젝트 다루기</a><a href="#edit">편집 모드</a><a href="#core">강의가 계속 쓰는 세 가지</a><a href="#concept">알아 둘 개념</a><a href="#helper">자주 쓰는 보조 기능</a><a href="#trap">초보가 자주 걸리는 함정</a><a href="#uv">UV</a><a href="#texture">텍스처</a><a href="#rig">리깅</a></nav>
+<section id="view"><div class="sec-head"><h2>화면 움직이기</h2><span>VIEW NAVIGATION</span></div><p class="lead">마우스를 3D 화면 위에 올려 둔 상태에서 해요.</p><div class="grid">
+<div class="card"><h3>화면 돌리기</h3><div class="how"><span class="mouse">휠 버튼 누른 채 드래그</span></div></div>
+<div class="card"><h3>화면 옮기기</h3><div class="how"><kbd>Shift</kbd> + <span class="mouse">휠 버튼 드래그</span></div></div>
+<div class="card"><h3>확대 · 축소</h3><div class="how"><span class="mouse">휠 굴리기</span></div></div>
+<div class="card"><h3>정면 / 옆면 / 윗면</h3><div class="how">넘패드 <kbd>1</kbd> / <kbd>3</kbd> / <kbd>7</kbd></div></div>
+<div class="card"><h3>뒷면</h3><div class="how"><kbd>Ctrl</kbd> + 넘패드 <kbd>1</kbd></div></div>
+<div class="card"><h3>선택한 것만 크게 보기</h3><div class="how">넘패드 <kbd>.</kbd></div></div>
+</div>
+<div class="box"><b>연습</b>화면을 돌려서 캐릭터의 뒤통수를 본 다음, 넘패드 <kbd>1</kbd>로 정면으로 돌아오세요.</div>
+<p class="note">넘패드가 없는 키보드면 화면 오른쪽 위의 축 아이콘(X·Y·Z 동그라미)을 눌러도 같은 방향으로 바뀌어요.</p>
+</section>
+<section id="object"><div class="sec-head"><h2>오브젝트 다루기</h2><span>OBJECT MODE</span></div><p class="lead">오브젝트 모드(기본 상태)에서 해요.</p><div class="grid">
+<div class="card"><h3>선택</h3><div class="how"><span class="mouse">왼쪽 클릭</span></div></div>
+<div class="card"><h3>추가</h3><div class="how"><kbd>Shift</kbd> <kbd>A</kbd> → Mesh → Cube</div></div>
+<div class="card"><h3>이동 / 회전 / 크기</h3><div class="how"><kbd>G</kbd> / <kbd>R</kbd> / <kbd>S</kbd> 누르고 마우스 이동, <span class="mouse">클릭</span>으로 확정</div></div>
+<div class="card"><h3>한 축으로만</h3><div class="how"><kbd>G</kbd> 다음에 <kbd>X</kbd> <kbd>Y</kbd> <kbd>Z</kbd> 중 하나</div></div>
+<div class="card"><h3>숫자로 입력</h3><div class="how"><kbd>G</kbd> <kbd>Z</kbd> <kbd>1</kbd> <kbd>Enter</kbd> → 위로 1 m</div></div>
+<div class="card"><h3>취소</h3><div class="how">확정 전: <span class="mouse">오른쪽 클릭</span> &nbsp; 확정 후: <kbd>Ctrl</kbd> <kbd>Z</kbd></div></div>
+<div class="card"><h3>삭제</h3><div class="how"><kbd>X</kbd> → Delete</div></div>
+</div>
+<div class="box"><b>연습</b>큐브를 하나 추가하고 <kbd>G</kbd> <kbd>X</kbd> <kbd>2</kbd> <kbd>Enter</kbd>로 옆으로 2 m 옮긴 뒤, <kbd>S</kbd> <kbd>0.5</kbd> <kbd>Enter</kbd>로 절반 크기로 줄이세요.</div>
+<p class="note">X는 좌우, Y는 앞뒤, Z는 위아래예요. 캐릭터 정면은 -Y 쪽을 봐요.</p>
+</section>
+<section id="edit"><div class="sec-head"><h2>편집 모드</h2><span>EDIT MODE</span></div><p class="lead">오브젝트를 선택하고 <kbd>Tab</kbd>을 누르면 들어가고, 다시 누르면 나와요.</p><div class="grid">
+<div class="card"><h3>점 / 선 / 면 선택 방식</h3><div class="how">키보드 숫자 <kbd>1</kbd> / <kbd>2</kbd> / <kbd>3</kbd> (넘패드 아님)</div></div>
+<div class="card"><h3>여러 개 선택</h3><div class="how"><kbd>Shift</kbd> + <span class="mouse">클릭</span></div></div>
+<div class="card"><h3>전체 선택 / 해제</h3><div class="how"><kbd>A</kbd> / <kbd>Alt</kbd> <kbd>A</kbd></div></div>
+<div class="card"><h3>한 줄(루프) 선택</h3><div class="how"><kbd>Alt</kbd> + <span class="mouse">선 클릭</span></div></div>
+<div class="card"><h3>속까지 선택되게 (X-Ray)</h3><div class="how"><kbd>Alt</kbd> <kbd>Z</kbd></div></div>
+<div class="card"><h3>이동 · 회전 · 크기</h3><div class="how">오브젝트 때와 같은 <kbd>G</kbd> <kbd>R</kbd> <kbd>S</kbd></div></div>
+</div>
+<div class="box"><b>연습</b>큐브에서 편집 모드로 들어가 <kbd>3</kbd>으로 면 선택으로 바꾸고, 윗면을 클릭해서 <kbd>G</kbd> <kbd>Z</kbd>로 위로 올려 보세요.</div>
+<p class="note">오브젝트 모드에서는 물체 전체를, 편집 모드에서는 물체를 이루는 점·선·면을 움직여요. 형태를 만드는 일은 전부 편집 모드에서 해요.</p>
+</section>
+<section id="core"><div class="sec-head"><h2>강의가 계속 쓰는 세 가지</h2><span>EXTRUDE · INSET · LOOP CUT</span></div><p class="lead">전부 편집 모드에서 해요.</p><div class="grid">
+<div class="card"><h3>익스트루드 <kbd>E</kbd></h3><div class="how">면 선택 후 누르고 마우스 이동</div><div class="why">면을 뽑아내 새 부분을 만들어요. 팔다리를 뽑을 때 써요</div></div>
+<div class="card"><h3>인셋 <kbd>I</kbd></h3><div class="how">면 선택 후 누르고 마우스 이동</div><div class="why">면 안쪽에 작은 면을 만들어요. 눈구멍을 뚫기 전에 써요</div></div>
+<div class="card"><h3>루프컷 <kbd>Ctrl</kbd> <kbd>R</kbd></h3><div class="how">선 위에 마우스 → <span class="mouse">클릭</span> 두 번</div><div class="why">한 바퀴 도는 선을 추가해요. 휠을 굴리면 줄 수가 늘어요</div></div>
+</div>
+<div class="box"><b>연습</b>큐브 윗면을 선택하고 <kbd>I</kbd>로 안쪽에 작은 면을 만든 뒤, 그 면을 <kbd>E</kbd>로 위로 뽑아 보세요. 그다음 <kbd>Ctrl</kbd> <kbd>R</kbd>로 옆면에 가로 줄을 하나 넣어 보세요.</div>
+<p class="note">여기까지 익히면 강의 Ep.2를 시작할 수 있어요. 비례 편집, Mirror, Subdivision은 Ep.2에서 강사가 켜는 방법부터 보여 줘요.</p>
+</section>
+<section id="concept"><div class="sec-head"><h2>알아 둘 개념</h2><span>CONCEPTS</span></div><p class="lead">조작법이 아니라 '왜 그렇게 되는지'에 해당하는 내용이에요.</p><div class="grid">
+<div class="card"><h3>점 · 선 · 면</h3><div class="how">모든 형태는 점을 선으로 잇고 그 사이를 면으로 채운 거예요. 면은 사각형으로 유지하는 게 기본이에요</div><div class="where">전체</div></div>
+<div class="card"><h3>노멀 (면 방향)</h3><div class="how">면에는 앞뒤가 있어요. 뒤집히면 게임에서 투명하게 보여요</div><div class="where">Ep.2 Face Orientation</div></div>
+<div class="card"><h3>오리진과 3D 커서</h3><div class="how">오리진은 오브젝트의 기준점이고, 3D 커서는 새 물체가 생기는 자리예요</div><div class="where">Ep.2 눈동자, Mirror</div></div>
+<div class="card"><h3>트랜스폼 적용 <kbd>Ctrl</kbd> <kbd>A</kbd></h3><div class="how">오브젝트 모드에서 크기를 바꾸면 '늘어난 상태'로 기록돼요. 적용해야 실제 크기가 돼요</div><div class="where">Ep.3 귀, Ep.7 아웃라인</div></div>
+<div class="card"><h3>모디파이어</h3><div class="how">원본을 건드리지 않고 효과를 얹는 기능이에요. 끄거나 지우면 원래대로 돌아와요</div><div class="where">Mirror, Subdivision</div></div>
+<div class="card"><h3>Mirror</h3><div class="how">반쪽만 만들면 반대쪽이 자동으로 생겨요. 그래서 왼쪽 절반을 지우고 시작해요</div><div class="where">Ep.2부터 계속</div></div>
+<div class="card"><h3>Subdivision</h3><div class="how">각진 메시를 부드럽게 보여 줘요. 실제 점 개수는 그대로예요</div><div class="where">Ep.2부터 계속</div></div>
+<div class="card"><h3>비례 편집 <kbd>O</kbd></h3><div class="how">점 하나를 움직이면 주변 점이 같이 딸려 와요. 휠로 범위를 조절해요</div><div class="where">Ep.2 얼굴 형태</div></div>
+</div>
+<p class="note">오른쪽 칸은 DyeoV 강의에서 그 개념이 처음 쓰이는 곳이에요.</p>
+</section>
+<section id="helper"><div class="sec-head"><h2>자주 쓰는 보조 기능</h2><span>HELPERS</span></div><p class="lead">몰라도 진행은 되지만, 알면 훨씬 덜 헤매요.</p><div class="grid">
+<div class="card"><h3>방금 한 동작의 수치 고치기</h3><div class="how">화면 왼쪽 아래에 뜨는 작은 패널, 또는 <kbd>F9</kbd></div></div>
+<div class="card"><h3>기능 이름으로 찾기</h3><div class="how"><kbd>F3</kbd></div></div>
+<div class="card"><h3>숨기기 / 다시 보이기</h3><div class="how"><kbd>H</kbd> / <kbd>Alt</kbd> <kbd>H</kbd></div></div>
+<div class="card"><h3>이어진 부분만 선택</h3><div class="how">마우스를 올리고 <kbd>L</kbd></div></div>
+<div class="card"><h3>선택 넓히기 / 좁히기</h3><div class="how"><kbd>Ctrl</kbd> + 넘패드 <kbd>+</kbd> / <kbd>-</kbd></div></div>
+<div class="card"><h3>화면 표시 방식 바꾸기</h3><div class="how"><kbd>Z</kbd> (와이어, 솔리드, 재질 미리보기)</div></div>
+<div class="card"><h3>옆 패널 열기</h3><div class="how"><kbd>N</kbd> 수치 패널 &nbsp; <kbd>T</kbd> 도구 패널</div></div>
+<div class="card"><h3>저장</h3><div class="how"><kbd>Ctrl</kbd> <kbd>S</kbd> 자주 누르세요</div></div>
+</div>
+<div class="box"><b>습관</b>단계가 끝날 때마다 다른 이름으로 저장해 두세요(face_01, face_02 …). 그리고 한 방향에서만 보지 말고 계속 돌려 보세요. 정면에서 괜찮아도 옆에서 보면 틀어진 경우가 많아요.</div>
+</section>
+<section id="trap"><div class="sec-head"><h2>초보가 자주 걸리는 함정</h2><span>COMMON TRAPS</span></div><p class="lead">뭔가 이상하면 여기부터 확인하세요.</p><div class="grid">
+<div class="card"><h3>키가 안 먹힌다</h3><div class="how">마우스가 3D 화면 위에 없어서예요. 단축키는 마우스가 올라가 있는 창에 적용돼요</div></div>
+<div class="card"><h3>엉뚱한 게 움직인다</h3><div class="how">모드가 달라서예요. 화면 왼쪽 위에 Object Mode인지 Edit Mode인지 표시돼요</div></div>
+<div class="card"><h3>뒤쪽 점이 선택 안 된다</h3><div class="how">X-Ray가 꺼져 있어서예요. <kbd>Alt</kbd> <kbd>Z</kbd>로 켜요. 반쪽을 지울 때 꼭 필요해요</div></div>
+<div class="card"><h3><kbd>E</kbd> 누르고 취소했더니 이상하다</h3><div class="how">오른쪽 클릭으로 취소해도 겹친 점이 남아요. <kbd>Ctrl</kbd> <kbd>Z</kbd>로 되돌려야 깨끗해요</div></div>
+<div class="card"><h3>주변이 다 딸려 온다</h3><div class="how">비례 편집이 켜진 채예요. <kbd>O</kbd>로 끄세요</div></div>
+<div class="card"><h3>가운데가 벌어진다</h3><div class="how">Mirror 모디파이어의 Clipping이 꺼져 있어서예요</div></div>
+<div class="card"><h3>오브젝트 모드에서 크기를 바꿨다</h3><div class="how">형태는 편집 모드에서 바꾸는 게 원칙이에요. 이미 바꿨다면 <kbd>Ctrl</kbd> <kbd>A</kbd>로 적용해 두세요</div></div>
+</div>
+<p class="note">그래도 안 풀리면 지금 화면 상태를 그대로 말해 주세요. Blender 상태를 읽어서 원인을 찾아 드릴게요.</p>
+</section>
+<section id="uv"><div class="sec-head"><h2>UV: 입체를 펼친 전개도</h2><span>UV UNWRAP</span></div><p class="lead">텍스처 그림이 모델의 어디에 붙을지 정하는 지도예요. 종이 상자를 가위로 잘라 펼치는 것과 같아요.</p><div class="grid">
+<div class="card"><h3>UV 화면 열기</h3><div class="how">화면 맨 위 탭에서 <b>UV Editing</b></div></div>
+<div class="card"><h3>자를 선 표시 (심)</h3><div class="how">편집 모드에서 선 선택 → <kbd>Ctrl</kbd> <kbd>E</kbd> → Mark Seam</div></div>
+<div class="card"><h3>펼치기</h3><div class="how">면 전체 선택 <kbd>A</kbd> → <kbd>U</kbd> → Unwrap</div></div>
+<div class="card"><h3>보이는 그대로 펼치기</h3><div class="how">넘패드 <kbd>1</kbd>로 정면 → <kbd>U</kbd> → Project From View</div></div>
+<div class="card"><h3>조각 옮기기 · 크기 · 회전</h3><div class="how">UV 창에서 <kbd>G</kbd> <kbd>S</kbd> <kbd>R</kbd></div></div>
+<div class="card"><h3>조각 고정 / 해제</h3><div class="how">UV 창에서 <kbd>P</kbd> / <kbd>Alt</kbd> <kbd>P</kbd></div></div>
+<div class="card"><h3>이어진 조각만 선택</h3><div class="how">UV 창에서 마우스를 올리고 <kbd>L</kbd></div></div>
+</div>
+<div class="box"><b>연습</b>큐브의 편집 모드에서 모서리 선 몇 개를 골라 Mark Seam을 한 뒤, <kbd>A</kbd> → <kbd>U</kbd> → Unwrap을 누르고 UV 창에서 전개도가 어떻게 펴졌는지 보세요. 심을 다르게 넣으면 펴지는 모양이 달라져요.</div>
+<p class="note">잘 보이는 곳(얼굴, 눈)은 조각을 크게, 안 보이는 곳(뒤통수)은 작게 둬요. 조각끼리는 붙이지 말고 조금 띄워요. 붙어 있으면 칠할 때 색이 옆 조각으로 번져요.</p>
+</section>
+<section id="texture"><div class="sec-head"><h2>텍스처: 표면에 입히는 그림</h2><span>TEXTURE PAINT</span></div><p class="lead">UV로 펼친 전개도 위에 색을 칠한 이미지예요. 강의는 이미지를 출력에 바로 연결해서 조명 영향을 받지 않게 해요.</p><div class="grid">
+<div class="card"><h3>재질 만들기</h3><div class="how">오른쪽 속성 창의 Material 탭 → New</div></div>
+<div class="card"><h3>이미지 만들어 연결</h3><div class="how"><b>Shading</b> 탭 → <kbd>Shift</kbd> <kbd>A</kbd> → Image Texture → New (2048) → Color를 Material Output에 연결</div></div>
+<div class="card"><h3>칠하는 화면</h3><div class="how">맨 위 탭에서 <b>Texture Paint</b></div></div>
+<div class="card"><h3>브러시 크기 / 세기</h3><div class="how"><kbd>F</kbd> / <kbd>Shift</kbd> <kbd>F</kbd> 누르고 마우스 이동</div></div>
+<div class="card"><h3>한 번에 채우기</h3><div class="how">왼쪽 도구에서 Fill(페인트통) 선택 후 클릭</div></div>
+<div class="card"><h3>칠한 결과 보기</h3><div class="how">3D 화면에서 <kbd>Z</kbd> → Material Preview</div></div>
+<div class="card"><h3>이미지 저장</h3><div class="how">이미지 창 메뉴 Image → Save. <b>파일 저장과 별개예요</b></div></div>
+</div>
+<div class="box"><b>주의</b>칠한 그림은 <kbd>Ctrl</kbd> <kbd>S</kbd>로 저장되지 않아요. Image → Save를 따로 해야 하고, 안 하면 Blender를 닫을 때 사라져요. 색이 안 칠해지면 그 오브젝트에 재질이 없거나, 이미지가 연결되지 않았거나, UV가 없는 거예요.</div>
+<p class="note">유저가 색을 고르게 할 파츠(머리카락, 눈동자, 옷)는 색을 칠하지 않고 회색조로 밝고 어두운 곳만 칠해요.</p>
+</section>
+<section id="rig"><div class="sec-head"><h2>리깅: 뼈를 넣어 움직이게 하기</h2><span>RIGGING</span></div><p class="lead">뼈(본)를 움직이면, 그 뼈와 같은 이름의 버텍스 그룹에 든 점들이 '웨이트' 값만큼 따라와요.</p><div class="grid">
+<div class="card"><h3>뼈대 추가</h3><div class="how"><kbd>Shift</kbd> <kbd>A</kbd> → Armature</div></div>
+<div class="card"><h3>뼈 이어 만들기</h3><div class="how">뼈대 선택 → <kbd>Tab</kbd> → 뼈 끝을 선택하고 <kbd>E</kbd>로 뽑기</div></div>
+<div class="card"><h3>이름 바꾸기</h3><div class="how"><kbd>F2</kbd> &nbsp; 좌우는 끝에 <b>.L</b> / <b>.R</b></div></div>
+<div class="card"><h3>반대쪽 자동 생성</h3><div class="how">뼈 편집 상태에서 메뉴 Armature → Symmetrize</div></div>
+<div class="card"><h3>메시에 뼈대 연결</h3><div class="how">메시 선택 → <kbd>Shift</kbd> + 뼈대 선택 → <kbd>Ctrl</kbd> <kbd>P</kbd> → With Empty Groups</div></div>
+<div class="card"><h3>포즈 잡아 보기</h3><div class="how">뼈대 선택 → <kbd>Ctrl</kbd> <kbd>Tab</kbd> → 뼈 선택 후 <kbd>R</kbd></div></div>
+<div class="card"><h3>포즈 초기화</h3><div class="how">포즈 상태에서 <kbd>A</kbd> → <kbd>Alt</kbd> <kbd>R</kbd> (회전) <kbd>Alt</kbd> <kbd>G</kbd> (이동)</div></div>
+</div>
+<div class="box"><b>웨이트</b>웨이트는 0부터 1까지의 값이에요. 1이면 뼈를 완전히 따라가고 0이면 안 따라가요. 팔꿈치처럼 꺾이는 곳은 두 뼈가 나눠 가져요(가운데 0.5 / 0.5, 옆줄 0.8 / 0.2, 그 바깥 0.9 / 0.1). Weight Paint 화면에서 파랑이 0, 빨강이 1이에요.</div>
+<p class="note">웨이트 수치 입력과 옷에 웨이트 옮기기는 규칙이 정해진 작업이라 스크립트로 자동화할 수 있어요.</p>
+</section>
+<footer>조작 키는 Blender 기본 키맵 기준이고, 5.3에서 하나씩 눌러 확인한 것은 아니에요. 강의: <a href="https://www.youtube.com/playlist?list=PLAR5yRjFCe9sOjK9pbKqRPGTGlaXgfUIA">[SD 버츄얼 캐릭터 만들기] — DyeoV</a></footer></div>
+</body>
+</html>
