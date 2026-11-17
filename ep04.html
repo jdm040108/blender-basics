@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ep.4 손 모델링과 리깅</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap">
+<link rel="stylesheet" href="style.css"></head><body><div class="wrap">
+<div class="top"><a href="index.html">기초</a><a href="ep01.html">Ep.1</a><a href="ep02.html">Ep.2</a><a href="ep03.html">Ep.3</a><a href="ep04.html" class="on">Ep.4</a><a href="ep05.html">Ep.5</a><a href="ep06.html">Ep.6</a><a href="ep07.html">Ep.7</a><a href="ep08.html">Ep.8</a><a href="ep09.html">Ep.9</a><a href="ep10.html">Ep.10</a><a href="ep11.html">Ep.11</a><a href="ep12.html">Ep.12</a><a href="ep13.html">Ep.13</a><a href="lookup.html">찾아보기</a></div>
+<header><div class="ep">EP.04</div><h1>손 모델링과 리깅</h1><p>큐브로 손가락 하나를 만들어 뼈와 웨이트를 넣은 뒤 다섯 개로 복제해 손을 완성해요. 손을 몸에 붙이고, 몸 전체 뼈대와 머리·눈 뼈까지 만들어 얼굴 파츠를 연결해요.</p>
+<a class="vid" href="https://www.youtube.com/watch?v=Yen7jb19ZqE">강의 영상 열기</a>
+</header>
+<nav class="toc"><a href="#s1">참조 이미지 준비</a><a href="#s2">중지 손가락 1개 모델링</a><a href="#s3">관절 토폴로지</a><a href="#s4">손가락 뼈 만들기</a><a href="#s5">메시와 뼈 연결, 수동 웨이트</a><a href="#s6">손가락 5개로 복제하고 배치하기</a><a href="#s7">손등과 손바닥 모델링</a><a href="#s8">Hand 뼈 추가와 웨이트 정리</a><a href="#s9">백업과 팔에 붙이기</a><a href="#s10">몸 뼈대 만들기</a><a href="#s11">머리·눈 뼈와 얼굴 파츠 연결</a></nav>
+<section id="s1"><div class="sec-head"><h2>참조 이미지 준비</h2><a class="t" href="https://www.youtube.com/watch?v=Yen7jb19ZqE&t=0s">0:00~0:45</a></div>
+<p class="lead">손 그림(Hand.png)이 위에서 봤을 때 반투명하게 깔려 있어요.</p>
+<ol class="steps">
+<li><h3>Hand.png 불러오기<em>파일·설정</em></h3><div class="how">준비 파일의 Hand.png를 불러와요 → <kbd>`</kbd> → Top 으로 위에서 봤을 때 잘 보이게 놓아요</div><div class="why">손은 위에서 내려다보며 만들기 때문에 손 그림을 바닥에 깔아 두고 따라 그려요.</div><div class="nt">노트에는 불러오는 메뉴가 따로 적혀 있지 않아요. 앞 편에서 참조 이미지를 넣던 방법 그대로 하세요.</div></li>
+<li><h3>이미지 Side를 Both로<em>화면</em></h3><div class="how">이미지 선택 → 이미지 설정에서 Side → Both</div><div class="why">Side는 이미지를 어느 쪽에서 볼 때 보여 줄지 정하는 옵션이에요. 손은 아래에서도 봐야 해서 양쪽 다 보이게 해요.</div><div class="nt">평소 규칙과 다르게 이번만 Both로 둬요.</div></li>
+<li><h3>Opacity 0.3으로<em>화면</em></h3><div class="how">이미지 설정에서 Opacity → 0.3 입력</div><div class="why">이미지를 반투명하게 만들어서 그 위에 만드는 모델이 잘 보이게 해요.</div></li>
+<li><h3>이미지 컬렉션에 넣기<em>파일·설정</em></h3><div class="how">이미지를 이미지 Collection으로 옮겨요 → 이름을 Hand 로 바꿔요</div><div class="why">참조 이미지를 한곳에 모아 두면 나중에 한 번에 켜고 끌 수 있어요.</div></li>
+<li><h3>다른 오브젝트 끄기<em>화면</em></h3><div class="how">손 이미지만 남기고 다른 오브젝트는 전부 보이지 않게 꺼요</div><div class="why">손만 보이는 깨끗한 화면에서 시작하려는 거예요.</div></li>
+</ol>
+</section>
+<section id="s2"><div class="sec-head"><h2>중지 손가락 1개 모델링</h2><a class="t" href="https://www.youtube.com/watch?v=Yen7jb19ZqE&t=45s">0:45~3:00</a></div>
+<p class="lead">큐브가 둥근 단면의 중지 손가락 모양이 되어 있어요.</p>
+<ol class="steps">
+<li><h3>Cube 추가하기<em>메시 편집</em></h3><div class="how"><kbd>Shift</kbd> <kbd>A</kbd> → Cube → 크기를 줄여 손 그림의 중지 위치에 놓아요</div><div class="why">손가락은 큐브에서 시작해요. 중지가 가장 길어서 디테일이 제일 필요하니 중지부터 만들어요.</div></li>
+<li><h3>비례 편집 끄기<em>파일·설정</em></h3><div class="how">화면 위쪽의 Proportional Editing 버튼을 꺼요</div><div class="why">비례 편집은 선택한 점 주변까지 같이 끌려오게 하는 기능이에요. 켜져 있으면 손가락이 엉뚱하게 늘어나요.</div><div class="nt">켜져 있으면 안 돼요.</div></li>
+<li><h3>손가락 길이로 늘리기<em>이동·변형</em></h3><div class="how">Edit Mode로 들어가요 → 손가락 길이 방향으로 늘려요</div><div class="why">Edit Mode는 점·선·면을 직접 고치는 모드예요. 큐브를 손 그림의 중지 길이에 맞춰요.</div></li>
+<li><h3>루프 컷으로 마디 나누기<em>메시 편집</em></h3><div class="how"><kbd>Ctrl</kbd> <kbd>R</kbd> → 관절 2줄이 생기게 넣어요 (3등분)</div><div class="why">루프 컷은 물체를 한 바퀴 도는 선을 새로 넣는 기능이에요. 줄 2개를 넣어 손가락 마디 3개를 만들어요.</div></li>
+<li><h3>뿌리 쪽 면 지우기<em>메시 편집</em></h3><div class="how">손바닥과 이어질 뿌리 쪽 면 선택 → 삭제</div><div class="why">나중에 손바닥과 이어 붙일 자리라서 뚫린 채로 둬요.</div></li>
+<li><h3>Subdivision 걸기<em>모디파이어</em></h3><div class="how"><kbd>Ctrl</kbd> <kbd>1</kbd></div><div class="why">Subdivision은 면을 잘게 나눠 둥글게 만들어 주는 모디파이어예요. 숫자 1은 한 단계만 나눈다는 뜻이에요.</div></li>
+<li><h3>Subdivision 적용하기<em>모디파이어</em></h3><div class="how">모디파이어 패널에서 Subdivision → Apply</div><div class="why">Apply를 하면 둥글어진 모양이 진짜 점과 면으로 바뀌어요. 큐브가 둥근 단면의 손가락이 돼요.</div></li>
+<li><h3>Subdivision 다시 걸기<em>모디파이어</em></h3><div class="how"><kbd>Ctrl</kbd> <kbd>1</kbd> → Edit Mode로 들어가요</div><div class="why">적용한 뒤 한 번 더 걸어서 더 부드러운 상태로 보면서 편집해요.</div></li>
+<li><h3>정면 뷰와 X-Ray 켜기<em>화면</em></h3><div class="how"><kbd>`</kbd> → Front → X-Ray 켜기</div><div class="why">X-Ray는 물체를 반투명하게 보여 줘서 뒤쪽 점까지 선택하게 해 줘요.</div></li>
+<li><h3>손끝 가늘게 줄이기<em>이동·변형</em></h3><div class="how">손끝 쪽 점 선택 → <kbd>S</kbd> 로 살짝 줄여요</div><div class="why">손끝으로 갈수록 가늘어지는 손가락 모양을 만들어요.</div><div class="nt">강의 자막에 수치가 없어요. 화면을 보고 맞추세요.</div></li>
+<li><h3>마디 비율 맞추기<em>메시 편집</em></h3><div class="how">관절 루프 위치를 옮겨요: 손끝 마디는 가장 짧게, 뿌리 쪽 마디는 가장 길게. 나머지 루프는 남은 면의 가운데쯤으로</div><div class="why">사람 손가락은 정확히 3등분이 아니에요. 비율을 맞춰야 자연스럽게 접혀요.</div></li>
+<li><h3>Auto Smooth 80도<em>음영·노멀</em></h3><div class="how"><span class="mouse">우클릭</span> → Shade Auto Smooth → 각도 80</div><div class="why">면이 각져 보이지 않고 매끈하게 보이게 해요. 80도보다 날카롭게 꺾인 곳만 각지게 남아요.</div><div class="nt">다른 파츠와 똑같이 80도로 맞춰요.</div></li>
+</ol>
+</section>
+<section id="s3"><div class="sec-head"><h2>관절 토폴로지</h2><a class="t" href="https://www.youtube.com/watch?v=Yen7jb19ZqE&t=180s">3:00~4:45</a></div>
+<p class="lead">관절 바깥쪽은 3줄, 안쪽은 적은 줄이라 잘 접히는 손가락이 되어 있어요.</p>
+<ol class="steps">
+<li><h3>관절 루프 2줄 선택<em>선택</em></h3><div class="how">관절이 될 루프 2줄을 선택해요</div><div class="why">이 두 줄이 손가락이 꺾이는 자리예요.</div></li>
+<li><h3>베벨로 3줄 만들기<em>메시 편집</em></h3><div class="how"><kbd>Ctrl</kbd> <kbd>B</kbd> → <span class="mouse">휠 한 칸 올리기</span> 로 3줄이 되게 해요</div><div class="why">Bevel은 선 하나를 여러 줄로 벌리는 기능이에요. 관절에 줄이 3개 있어야 부드럽게 굽혀져요.</div></li>
+<li><h3>안쪽 엣지 지우기<em>메시 편집</em></h3><div class="how">손바닥 쪽(접히는 안쪽)의 추가 엣지 선택 → <kbd>Ctrl</kbd> <kbd>X</kbd></div><div class="why">Dissolve는 면에 구멍을 내지 않고 선만 없애는 기능이에요. 접히는 안쪽은 살이 포개지니 줄이 적어야 해요.</div></li>
+<li><h3>오각형 정리하기<em>메시 편집</em></h3><div class="how">오각형의 점 두 개 선택 → <kbd>J</kbd></div><div class="why">J(Connect Vertex Path)는 점과 점 사이에 선을 그어 줘요. 지우고 남은 오각형을 깔끔한 면으로 나눠요.</div></li>
+<li><h3>반대쪽도 똑같이<em>메시 편집</em></h3><div class="how">반대쪽 옆면도 <kbd>Ctrl</kbd> <kbd>X</kbd> 로 지우고 <kbd>J</kbd> 로 정리해요</div><div class="why">양쪽이 같은 구조여야 고르게 접혀요.</div></li>
+<li><h3>관절 부위 살짝 줄이기<em>이동·변형</em></h3><div class="how">Proportional Editing 켜기 → 관절 부위를 살짝 줄여요</div><div class="why">관절이 너무 땡땡하게 부풀어 보이면 조금 줄여서 자연스럽게 해요.</div><div class="nt">관절이 너무 땡땡해 보일 때만 해요.</div></li>
+</ol>
+<div class="box"><b>강사의 팁</b><ul><li>결과: 관절 바깥쪽(손등 쪽)은 3줄, 안쪽은 적은 줄이에요. 굽힐 때 바깥은 늘어나고 안쪽은 접혀요.</li></ul></div>
+</section>
+<section id="s4"><div class="sec-head"><h2>손가락 뼈 만들기</h2><a class="t" href="https://www.youtube.com/watch?v=Yen7jb19ZqE&t=285s">4:45~7:35</a></div>
+<p class="lead">중지에 Middle1.L, Middle2.L, Middle3.L 뼈 3개가 들어가 있어요.</p>
+<ol class="steps">
+<li><h3>커서를 뿌리로 옮기기<em>화면</em></h3><div class="how">손가락 뿌리(열린 쪽) 루프 선택 → <kbd>Shift</kbd> <kbd>S</kbd> → Cursor to Selected</div><div class="why">3D 커서는 새 물체가 생기는 자리예요. 뼈가 손가락 뿌리 중심에서 시작하게 하려는 거예요.</div></li>
+<li><h3>원점도 뿌리로 옮기기<em>이동·변형</em></h3><div class="how"><kbd>Q</kbd> 퀵 메뉴에 등록해 둔 원점 이동 기능으로 오브젝트 원점을 커서 위치로 옮겨요</div><div class="why">원점은 물체의 기준점이에요. 뿌리에 두면 회전과 배치가 편해요.</div><div class="nt">강의 자막에 정확한 명령 이름이 없어요. 화면을 보고 맞추세요.</div></li>
+<li><h3>뼈 하나 추가하기<em>리깅</em></h3><div class="how"><kbd>Shift</kbd> <kbd>A</kbd> → Armature → Single Bone → 크기를 줄여요</div><div class="why">Armature는 뼈대 오브젝트예요. 뼈를 넣어야 손가락을 굽힐 수 있어요.</div></li>
+<li><h3>뼈가 앞에 보이게 하기<em>화면</em></h3><div class="how">아마추어 데이터 탭(초록 사람 아이콘) → Viewport Display → In Front 체크, Name 체크</div><div class="why">In Front는 뼈가 메시에 가려지지 않게 해 주고, Name은 뼈 이름을 화면에 띄워 줘요.</div></li>
+<li><h3>뼈 눕히고 늘리기<em>리깅</em></h3><div class="how">뼈 끝점(tail) 선택 → <kbd>R</kbd> 90 → <kbd>G</kbd> <kbd>X</kbd> 로 손가락 방향으로 늘려요</div><div class="why">세워져 있는 뼈를 눕혀서 손가락과 같은 방향으로 맞춰요.</div></li>
+<li><h3>메시를 와이어프레임으로<em>화면</em></h3><div class="how">손가락 메시 선택 → Viewport Display → Wireframe 체크</div><div class="why">메시의 선이 보여야 관절 줄 위치에 뼈를 맞출 수 있어요.</div></li>
+<li><h3>뼈를 3개로 나누기<em>리깅</em></h3><div class="how">뼈 선택 → Subdivide → 분할 수 2</div><div class="why">뼈 하나를 잘라 관절 2개, 뼈 3개로 만들어요. 손가락 마디 수와 같아요.</div></li>
+<li><h3>관절 점 위치 맞추기<em>리깅</em></h3><div class="how">관절 점 선택 → <kbd>G</kbd> <kbd>X</kbd> → 베벨한 3줄의 가운데 줄에 맞춰요. 손끝 점은 손가락 끝에 맞춰요</div><div class="why">뼈 관절이 메시의 관절 줄과 같은 자리에 있어야 그 자리에서 꺾여요.</div></li>
+<li><h3>뼈를 살짝 위로<em>리깅</em></h3><div class="how">뼈 전체 선택 → 손등 쪽(위)으로 살짝 올려요</div><div class="why">실제 손가락 뼈처럼 손등 쪽에 가깝게 두면 더 자연스럽게 접혀요.</div><div class="nt">강의 자막에 수치가 없어요. 화면을 보고 맞추세요.</div></li>
+<li><h3>뼈 이름 붙이기<em>리깅</em></h3><div class="how">뼈 선택 → <kbd>F2</kbd> → Middle1.L, Middle2.L, Middle3.L</div><div class="why">뿌리부터 1, 2, 3 순서예요. .L은 왼쪽이라는 뜻이고, 나중에 오른손을 자동으로 만들 때 꼭 필요해요.</div><div class="nt">꼭 .L을 붙여요. Bone 같은 기본 이름은 버추얼 변환 프로그램이 알아보지 못해요.</div></li>
+</ol>
+<div class="tw"><table><tr><th>본</th><th>위치</th><th>비고</th></tr><tr><td>Middle1.L</td><td>뿌리 쪽 마디</td><td>.L 필수</td></tr><tr><td>Middle2.L</td><td>가운데 마디</td><td>.L 필수</td></tr><tr><td>Middle3.L</td><td>손끝 마디</td><td>.L 필수</td></tr></table></div>
+</section>
+<section id="s5"><div class="sec-head"><h2>메시와 뼈 연결, 수동 웨이트</h2><a class="t" href="https://www.youtube.com/watch?v=Yen7jb19ZqE&t=455s">7:35~13:45</a></div>
+<p class="lead">뼈를 돌리면 손가락이 관절에서 자연스럽게 굽혀져요.</p>
+<ol class="steps">
+<li><h3>메시를 뼈에 연결하기<em>리깅</em></h3><div class="how">손가락 메시 선택 → <span class="mouse">Shift+클릭</span> 으로 뼈 선택 → <kbd>Ctrl</kbd> <kbd>P</kbd> → Armature Deform → With Empty Groups</div><div class="why">메시가 뼈를 따라 움직이게 묶어요. With Empty Groups는 뼈 이름과 같은 빈 버텍스 그룹만 만들어 줘서, 값은 직접 넣어요.</div></li>
+<li><h3>마디에 Weight 1 주기<em>웨이트</em></h3><div class="how">메시 Edit Mode → 마디 구간의 점 선택 → 버텍스 그룹에서 해당 뼈 선택 → Weight 1 → Assign</div><div class="why">웨이트는 점이 뼈를 얼마나 따라가는지 정하는 값이에요. 1이면 그 뼈를 100% 따라가요.</div><div class="nt">마디 3개 모두 각자의 뼈 그룹에 넣어요.</div></li>
+<li><h3>관절 가운데 0.5씩<em>웨이트</em></h3><div class="how">관절 가운데 루프 선택 → 양쪽 뼈 그룹에 각각 Weight 0.5 → Assign</div><div class="why">관절 가운데는 두 뼈를 반반씩 따라가야 부드럽게 꺾여요.</div></li>
+<li><h3>피벗을 개별 원점으로<em>파일·설정</em></h3><div class="how">Pose Mode → 피벗을 Individual Origins 로</div><div class="why">Pose Mode는 뼈를 움직여 포즈를 잡는 모드예요. 피벗을 이렇게 두면 뼈마다 자기 관절을 중심으로 돌아요.</div></li>
+<li><h3>굽히기 테스트<em>리깅</em></h3><div class="how">뼈 전체 선택 → <kbd>R</kbd> <kbd>X</kbd> <kbd>X</kbd></div><div class="why">X를 두 번 누르면 뼈 자신의 X축(로컬 축)으로 돌아요. 손가락이 주먹 쥐듯 말리는지 확인해요.</div></li>
+<li><h3>뼈 Roll을 0으로<em>리깅</em></h3><div class="how">뼈 Edit Mode → <kbd>N</kbd> 패널 → Item → Roll → 0 (모든 뼈)</div><div class="why">Roll은 뼈가 자기 길이 방향으로 돌아간 각도예요. 90으로 되어 있으면 뼈가 엉뚱한 축으로 돌아요.</div><div class="nt">흔한 실수예요. 뼈가 이상한 방향으로 돌면 Roll부터 확인하세요.</div></li>
+<li><h3>포즈 초기화하기<em>리깅</em></h3><div class="how">Pose → Clear Transform → All</div><div class="why">테스트로 돌린 뼈를 원래 자세로 되돌려요.</div></li>
+<li><h3>퀵 메뉴에 등록하기<em>파일·설정</em></h3><div class="how">Clear Transform → All 메뉴를 Quick Favorites(<kbd>Q</kbd>)에 등록해요</div><div class="why">자주 쓰는 기능이라 Q 한 번으로 바로 꺼내 쓰려는 거예요.</div></li>
+<li><h3>Edit Mode에서 포즈 보기<em>모디파이어</em></h3><div class="how">메시의 Armature 모디파이어 → Edit Mode 버튼(사각형)과 On Cage 버튼(삼각형)을 둘 다 켜요</div><div class="why">손가락을 굽힌 상태 그대로 점을 고르고 웨이트를 고칠 수 있어요.</div></li>
+<li><h3>가운데 옆 줄 0.8 / 0.2<em>웨이트</em></h3><div class="how">관절 가운데 바로 옆 줄 선택 → 가까운 마디 그룹 0.8, 반대쪽 그룹 0.2 → Assign</div><div class="why">가운데에서 멀어질수록 자기 마디 뼈를 더 많이 따라가게 해요.</div></li>
+<li><h3>바깥 줄 0.9 / 0.1<em>웨이트</em></h3><div class="how">그 바깥 줄(마디 쪽 세 칸째 점들) 선택 → 가까운 마디 그룹 0.9, 반대쪽 그룹 0.1 → Assign</div><div class="why">값이 0.5, 0.8, 0.9로 서서히 변해야 관절이 딱딱하게 꺾이지 않아요.</div></li>
+<li><h3>두 관절 모두 넣기<em>웨이트</em></h3><div class="how">Middle1과 Middle2 사이, Middle2와 Middle3 사이 관절 둘 다 같은 값으로 넣어요</div><div class="why">관절 두 곳이 같은 규칙이어야 손가락이 고르게 말려요.</div><div class="nt">마음에 안 들면 값을 직접 바꿔 가며 찾아보세요.</div></li>
+</ol>
+<div class="tw"><table><tr><th>관절 줄 (마디 A와 B 사이)</th><th>A 뼈</th><th>B 뼈</th></tr><tr><td>A 쪽 바깥 줄</td><td>0.9</td><td>0.1</td></tr><tr><td>A 쪽 옆 줄</td><td>0.8</td><td>0.2</td></tr><tr><td>가운데 줄</td><td>0.5</td><td>0.5</td></tr><tr><td>B 쪽 옆 줄</td><td>0.2</td><td>0.8</td></tr><tr><td>B 쪽 바깥 줄</td><td>0.1</td><td>0.9</td></tr></table></div>
+<div class="box"><b>강사의 팁</b><ul><li>SD 캐릭터는 손가락이 짧고, 접히면 안쪽이 안 보여서 이 정도 웨이트면 충분해요.</li></ul></div>
+</section>
+<section id="s6"><div class="sec-head"><h2>손가락 5개로 복제하고 배치하기</h2><a class="t" href="https://www.youtube.com/watch?v=Yen7jb19ZqE&t=825s">13:45~19:00</a></div>
+<p class="lead">손가락 5개가 한 메시, 한 아마추어로 합쳐져 있고 이름은 Hand예요.</p>
+<ol class="steps">
+<li><h3>손가락 복제하기<em>이동·변형</em></h3><div class="how">메시와 뼈를 함께 선택 → <kbd>Shift</kbd> <kbd>D</kbd> → 검지, 약지, 새끼, 엄지 자리에 놓아요 (4번 반복)</div><div class="why">웨이트까지 끝낸 중지를 복사하면 나머지 손가락은 다시 리깅하지 않아도 돼요.</div></li>
+<li><h3>새끼손가락 줄이기<em>이동·변형</em></h3><div class="how">새끼손가락 선택 → <kbd>S</kbd> 로 줄여요</div><div class="why">새끼손가락은 다른 손가락보다 작아요.</div><div class="nt">강의 자막에 수치가 없어요. 화면을 보고 맞추세요.</div></li>
+<li><h3>피벗을 Median Point로<em>파일·설정</em></h3><div class="how">피벗 메뉴 → Median Point</div><div class="why">선택한 것들의 가운데를 중심으로 돌게 해요. 엄지를 돌릴 때 회전이 이상하면 이걸로 바꿔요.</div></li>
+<li><h3>엄지 돌리기<em>이동·변형</em></h3><div class="how">엄지 뼈 선택 → <kbd>R</kbd> <kbd>X</kbd> 로 회전 → 최종 X 약 65도, 다른 축 -45도</div><div class="why">엄지는 손톱이 위가 아니라 옆을 보고 있어야 해요.</div><div class="nt">90도는 과하고 60도쯤부터 시도해요. -45는 -46.8을 계산하기 편하게 정리한 값이고, 강사도 정답은 모르겠다고 해요. 어느 축이 -45인지는 자막에 없어요. 화면을 보고 맞추세요.</div></li>
+<li><h3>엄지를 낮게 놓기<em>이동·변형</em></h3><div class="how">엄지를 다른 손가락보다 아래로 내려 놓아요</div><div class="why">실제 손도 엄지가 다른 손가락보다 낮은 곳에서 나와요.</div></li>
+<li><h3>손가락 뿌리 일자로<em>이동·변형</em></h3><div class="how">손가락 뿌리 높이를 아치형이 아니라 일자로 맞춰 놓아요</div><div class="why">진짜 손은 아치형이지만 버추얼 캐릭터에서는 움직임이 예쁘지 않아서 일자로 펴요.</div></li>
+<li><h3>손가락 뼈 이름 바꾸기<em>리깅</em></h3><div class="how">각 뼈 선택 → <kbd>F2</kbd> → Index1~3.L, Ring1~3.L, Little1~3.L, Thumb1~3.L</div><div class="why">복제한 뼈는 이름이 중지 그대로라서 손가락마다 바꿔 줘야 해요.</div><div class="nt">엄지 이름을 붙이는 순간은 강의 자막에 없어요. 뒤에 Thumb 이름이 나오는 것으로 확인했어요.</div></li>
+<li><h3>뼈 부모 풀기<em>리깅</em></h3><div class="how">각 손가락 메시 선택 → <kbd>Alt</kbd> <kbd>P</kbd> → Clear and Keep Transformation</div><div class="why">메시를 합치기 전에 각 뼈와의 부모 관계를 풀어요. Keep Transformation은 지금 위치를 그대로 지켜 줘요.</div></li>
+<li><h3>메시 합치기<em>메시 편집</em></h3><div class="how">손가락 메시들 선택 → 중지 메시를 마지막에 선택 → <kbd>Ctrl</kbd> <kbd>J</kbd></div><div class="why">Join은 여러 오브젝트를 하나로 합쳐요. 마지막에 고른 것이 기준이 돼요.</div></li>
+<li><h3>뼈 합치기<em>리깅</em></h3><div class="how">손가락 아마추어들 선택 → 중지 아마추어를 마지막에 선택 → <kbd>Ctrl</kbd> <kbd>J</kbd></div><div class="why">뼈대도 하나의 아마추어로 합쳐야 한 번에 다룰 수 있어요.</div></li>
+<li><h3>이름을 Hand로<em>파일·설정</em></h3><div class="how">오브젝트 이름을 Hand 로 바꿔요</div><div class="why">나중에 헷갈리지 않게 이름을 정리해요.</div></li>
+<li><h3>주먹 쥐기 테스트<em>리깅</em></h3><div class="how">Pose Mode → 뼈 전체 선택 → <kbd>R</kbd> <kbd>X</kbd> <kbd>X</kbd></div><div class="why">다섯 손가락이 한꺼번에 잘 말리는지 확인해요.</div><div class="nt">엄지 방향이 마음에 안 들면 합치기 전에 고쳐야 해요.</div></li>
+</ol>
+<div class="tw"><table><tr><th>손가락</th><th>본 이름</th><th>비고</th></tr><tr><td>엄지</td><td>Thumb1.L, Thumb2.L, Thumb3.L</td><td>이름 붙이는 순간은 자막에 없음</td></tr><tr><td>검지</td><td>Index1.L, Index2.L, Index3.L</td><td></td></tr><tr><td>중지</td><td>Middle1.L, Middle2.L, Middle3.L</td><td>처음 만든 손가락</td></tr><tr><td>약지</td><td>Ring1.L, Ring2.L, Ring3.L</td><td></td></tr><tr><td>새끼</td><td>Little1.L, Little2.L, Little3.L</td><td>스케일 축소</td></tr></table></div>
+</section>
+<section id="s7"><div class="sec-head"><h2>손등과 손바닥 모델링</h2><a class="t" href="https://www.youtube.com/watch?v=Yen7jb19ZqE&t=1140s">19:00~29:00</a></div>
+<p class="lead">손가락이 손바닥으로 이어지고, 손목 끝이 점 8개짜리 8각형으로 되어 있어요.</p>
+<ol class="steps">
+<li><h3>손가락 사이 잇기<em>메시 편집</em></h3><div class="how">이웃한 손가락 뿌리의 열린 테두리 점들을 서로 Merge 해요</div><div class="why">Merge는 여러 점을 하나로 합쳐요. 따로 떨어진 손가락들을 한 덩어리로 이어요.</div></li>
+<li><h3>손마디뼈 부분 뽑기<em>메시 편집</em></h3><div class="how">뿌리 테두리 선택 → <kbd>E</kbd> <kbd>X</kbd></div><div class="why">Extrude는 선택한 선에서 새 면을 뽑아내요. 손가락 뿌리에서 손등 쪽으로 면을 만들어요.</div></li>
+<li><h3>뽑은 끝 일자로 펴기<em>이동·변형</em></h3><div class="how">Proportional Editing 끄기 → <kbd>S</kbd> <kbd>X</kbd></div><div class="why">S X로 X 방향 크기를 납작하게 줄이면 들쭉날쭉한 끝이 일자로 정렬돼요.</div></li>
+<li><h3>한 번 더 뽑기<em>메시 편집</em></h3><div class="how"><kbd>E</kbd> <kbd>X</kbd></div><div class="why">손등과 손바닥 면을 한 칸 더 늘려요.</div></li>
+<li><h3>손가락 사이 이중선 합치기<em>메시 편집</em></h3><div class="how">손가락 사이의 이중 엣지 선택 → <kbd>M</kbd> → At Center (손등, 손바닥 양쪽)</div><div class="why">가운데로 합쳐서 점 수를 줄여요. 점이 많으면 리깅할 때 생각할 게 늘어나요.</div></li>
+<li><h3>엄지 연결하기<em>메시 편집</em></h3><div class="how">손바닥과 이어질 면 삭제 → 테두리 점 선택 → <kbd>F</kbd></div><div class="why">F는 선택한 점들 사이를 면으로 채워요. 엄지와 손바닥 사이를 메워 이어요.</div></li>
+<li><h3>오각형 정리하기<em>메시 편집</em></h3><div class="how">오각형이 생기면 Subdivide 로 나누거나, 점을 합쳐서 사각형으로 만들어요</div><div class="why">사각형 면이어야 Subdivision을 걸었을 때 표면이 깨끗해요.</div><div class="nt">강사도 여러 번 해 보며 맞춰요.</div></li>
+<li><h3>엄지 쪽 손바닥 넓히기<em>메시 편집</em></h3><div class="how">엣지 선택 → <kbd>G</kbd> <kbd>G</kbd></div><div class="why">Edge Slide는 선을 면 위에서 미끄러지듯 옮겨요. 엄지 쪽 손바닥을 두툼하게 넓혀요.</div></li>
+<li><h3>손목 쪽으로 뽑기<em>메시 편집</em></h3><div class="how"><kbd>E</kbd> <kbd>X</kbd> 반복 → 옆에서 봤을 때는 Z 방향으로 키워요</div><div class="why">손바닥을 손목까지 늘리고 두께도 만들어요.</div></li>
+<li><h3>손목 끝을 8각형으로<em>메시 편집</em></h3><div class="how">뽑을 때마다 점 선택 → <kbd>M</kbd> → At Center 또는 At Last 로 조금씩 합쳐요 (13개 → 10개 → 8개)</div><div class="why">팔 단면이 점 8개짜리 8각형이라서 손목 끝도 8개로 맞춰야 딱 붙어요. At Last는 마지막에 고른 점 위치로 합쳐요.</div><div class="nt">이 구간의 핵심 목표예요.</div></li>
+<li><h3>통통하게 볼륨 주기<em>이동·변형</em></h3><div class="how">Proportional Editing 켜기 → 손등은 Z로 조금 올리고, 납작한 부분은 둥글게 만들어요</div><div class="why">SD 캐릭터는 손이 통통하고 짧아야 귀여워요.</div><div class="nt">V자 같은 손 모양을 만들 수 있게 손가락 길이는 어느 정도 남겨요. 너무 리얼하면 SD 손 같지 않아요.</div></li>
+</ol>
+<div class="box"><b>강사의 팁</b><ul><li>손바닥 토폴로지에는 정해진 법칙이 없어요. 원하는 모양만 나오면 돼요.</li></ul></div>
+</section>
+<section id="s8"><div class="sec-head"><h2>Hand 뼈 추가와 웨이트 정리</h2><a class="t" href="https://www.youtube.com/watch?v=Yen7jb19ZqE&t=1740s">29:00~42:30</a></div>
+<p class="lead">Hand.L 뼈가 손등과 손바닥을 움직이고, 손가락 뿌리가 부드럽게 이어져요.</p>
+<ol class="steps">
+<li><h3>Hand.L 뼈 추가하기<em>리깅</em></h3><div class="how">아마추어 Edit Mode → 뼈 하나 추가 → <kbd>F2</kbd> → Hand.L</div><div class="why">손가락만 리깅되어 있어서 손등과 손바닥이 따라오지 않아요. 손 전체를 움직일 뼈가 필요해요.</div><div class="nt">중지 뼈 하나를 복제해 쓴 것으로 보이지만 강의 자막에 명확하지 않아요. 화면을 보고 맞추세요.</div></li>
+<li><h3>손가락을 Hand에 묶기<em>리깅</em></h3><div class="how">Index1, Middle1, Ring1, Little1, Thumb1 선택 → 마지막에 Hand.L 선택 → <kbd>Ctrl</kbd> <kbd>P</kbd> → Keep Offset</div><div class="why">손가락 첫 마디 뼈가 Hand.L의 자식이 돼요. Hand를 움직이면 손가락이 다 따라와요.</div><div class="nt">잘 되면 점선으로 이어져 보여요.</div></li>
+<li><h3>Hand.L 그룹 만들기<em>웨이트</em></h3><div class="how">메시 선택 → 버텍스 그룹에 새 그룹 추가 → 이름을 Hand.L 로</div><div class="why">버텍스 그룹 이름이 뼈 이름과 정확히 같아야 그 뼈를 따라가요.</div><div class="nt">철자와 대소문자까지 똑같아야 해요.</div></li>
+<li><h3>손등·손바닥에 Weight 1<em>웨이트</em></h3><div class="how">X-Ray 켜기 → 손등, 손바닥, 손가락 뿌리 마디 부분 선택 → Hand.L 그룹 → Weight 1 → Assign</div><div class="why">손등과 손바닥이 Hand.L 뼈를 따라가게 해요.</div><div class="nt">X-Ray를 켜야 뒤쪽 점까지 선택돼요.</div></li>
+<li><h3>Weight Paint로 확인<em>웨이트</em></h3><div class="how">Weight Paint 모드로 바꿔요 → 그룹을 하나씩 눌러 색을 봐요</div><div class="why">웨이트를 색으로 보여 주는 모드예요. 빨강은 1, 파랑은 0이에요.</div></li>
+<li><h3>넘친 웨이트 빼기<em>웨이트</em></h3><div class="how">Edit Mode → 손바닥 쪽까지 칠해진 영역 선택 → 해당 1번 뼈 그룹 → Remove</div><div class="why">손가락 1번 뼈가 손바닥까지 끌고 가면 안 돼요. 손바닥은 Hand.L만 따라가게 해요.</div><div class="nt">Thumb1, Index1, Middle1, Ring1, Little1 모두 확인하세요.</div></li>
+<li><h3>뼈를 막대로 표시<em>화면</em></h3><div class="how">아마추어 데이터 탭 → Viewport Display → Display As → Stick, Name 체크 해제 (In Front는 유지)</div><div class="why">뼈가 가는 막대로 보여서 메시가 잘 보여요.</div></li>
+<li><h3>웨이트 스무스<em>웨이트</em></h3><div class="how">Weight Paint 모드 → Weights → Smooth</div><div class="why">이웃한 점끼리 웨이트 값을 섞어서 딱딱하게 꺾이는 곳을 부드럽게 해요.</div><div class="nt">너무 많이 하면 고무 인간처럼 흐물거려요.</div></li>
+<li><h3>Smooth를 퀵 메뉴에<em>파일·설정</em></h3><div class="how">Weights → Smooth 메뉴를 Quick Favorites(<kbd>Q</kbd>)에 등록해요</div><div class="why">계속 반복해서 쓰니까 Q로 바로 꺼내 쓰려는 거예요.</div></li>
+<li><h3>선택한 면만 스무스<em>웨이트</em></h3><div class="how">Edit Mode에서 스무스할 면만 선택 → Weight Paint 모드 → Paint Mask(면 마스크) 켜기 → Smooth</div><div class="why">마스크를 켜면 선택한 영역에만 적용돼요. 잘 된 곳은 건드리지 않아요.</div></li>
+<li><h3>손가락 뿌리 스무스<em>웨이트</em></h3><div class="how">Index1 등 각 손가락 1번 뼈 그룹 선택 → 뿌리 주변에 Smooth 약 3회</div><div class="why">뿌리에 Hand 값만 있으면 딱딱해요. Smooth를 하면 주변 손가락 값이 번져 들어와요.</div></li>
+<li><h3>점 하나씩 값 고치기<em>웨이트</em></h3><div class="how">점 하나 선택 → <kbd>N</kbd> 패널 → Item → Vertex Weights 값을 <span class="mouse">드래그</span></div><div class="why">Smooth로 안 고쳐지는 점은 숫자를 직접 바꿔서 원하는 모양이 될 때까지 맞춰요.</div></li>
+<li><h3>엄지 뿌리 고치기<em>웨이트</em></h3><div class="how">Hand.L 그룹 선택 → 엄지 뿌리 주변에 Smooth</div><div class="why">엄지 뿌리가 튀어나오면 Thumb1 값만 있고 Hand 값이 없어서 그래요. Hand 값을 번지게 해요.</div></li>
+<li><h3>파묻힌 점 고치기<em>웨이트</em></h3><div class="how">버텍스 마스크(점 선택) 모드 → 문제 점 주변 선택 → Smooth</div><div class="why">안으로 파묻힌 점은 점 단위로 골라서 주변과 값을 섞어 줘요.</div></li>
+<li><h3>Hand.L 뼈 길게 늘리기<em>리깅</em></h3><div class="how">Hand.L 뼈 끝점 선택 → X축으로 길게 늘려 손 전체 크기에 맞춰요</div><div class="why">뼈 크기가 손 크기와 맞아야 나중에 알아보기 쉬워요.</div></li>
+</ol>
+<div class="box"><b>강사의 팁</b><ul><li>면이 꼬여 뒤집히면 버추얼 쉐이더의 아웃라인(외곽선) 색이 손바닥에 튀어나와요. 자주 쓰는 포즈에서 안 보이게 계속 고쳐야 하고, 이게 리깅에서 가장 어려운 부분이에요.</li><li>엄지는 첫 번째 뼈를 빼고 굽혀야 자연스러워요.</li></ul></div>
+</section>
+<section id="s9"><div class="sec-head"><h2>백업과 팔에 붙이기</h2><a class="t" href="https://www.youtube.com/watch?v=Yen7jb19ZqE&t=2550s">42:30~47:10</a></div>
+<p class="lead">손이 몸(바디) 메시에 합쳐져 있고, 백업 컬렉션에 손 복사본이 있어요.</p>
+<ol class="steps">
+<li><h3>손 모양 다듬기<em>이동·변형</em></h3><div class="how">뷰를 빙글빙글 돌려 보며 옆모습에서 손이 통통해 보이게 다듬어요</div><div class="why">한 방향에서만 보면 납작한 곳을 놓쳐요.</div><div class="nt">나중에 UV와 텍스처 작업이 있으니 면이 너무 꼬이지 않게 하세요.</div></li>
+<li><h3>백업 컬렉션 만들기<em>파일·설정</em></h3><div class="how">손 메시와 손 뼈 선택 → <kbd>Shift</kbd> <kbd>D</kbd> → <kbd>M</kbd> → New Collection → 이름 백업</div><div class="why">합치다 망가지면 여기서 복사해 오려고 미리 사본을 떠 둬요.</div></li>
+<li><h3>백업 숨기기<em>화면</em></h3><div class="how">백업 컬렉션에 색 지정 → 체크 해제</div><div class="why">작업 화면에 보이지 않게 숨겨 둬요.</div></li>
+<li><h3>로컬 뷰로 보기<em>화면</em></h3><div class="how">손, 손 뼈, 바디 선택 → <kbd>/</kbd></div><div class="why">로컬 뷰는 선택한 것만 화면에 남기는 기능이에요. 한 번 더 누르면 돌아와요.</div><div class="nt">강의는 넘패드 / 를 써요.</div></li>
+<li><h3>위에서 배치 맞추기<em>이동·변형</em></h3><div class="how"><kbd>`</kbd> → Top → 손을 팔 끝에 맞게 놓아요</div><div class="why">손목과 팔 끝이 이어지도록 위치를 잡아요.</div></li>
+<li><h3>스냅 설정하기<em>파일·설정</em></h3><div class="how">손 메시 Edit Mode → Proportional Editing 끄기 → 피벗 Median Point → 스냅(자석) 켜고 Vertex 로</div><div class="why">스냅을 Vertex로 두면 옮기는 점이 다른 점에 착 달라붙어요.</div></li>
+<li><h3>손목 점을 팔에 붙이기<em>이동·변형</em></h3><div class="how">손목 끝 점 하나 선택 → <kbd>G</kbd> → 팔 끝 점에 갖다 대요 (8개 점 각각)</div><div class="why">손목 8점을 팔 끝 8점과 같은 자리에 놓아요.</div><div class="nt">이것만으로는 점이 합쳐지지 않아요. 다음 편에서 M → At Last 로 병합해요.</div></li>
+<li><h3>트랜스폼 적용하기<em>이동·변형</em></h3><div class="how">바디 선택 → <kbd>Ctrl</kbd> <kbd>A</kbd> → All Transforms. 손도 똑같이 해요</div><div class="why">크기와 회전 값을 기본값으로 굳혀요. 안 하면 합칠 때 모양이 틀어질 수 있어요.</div><div class="nt">합치기 전에 꼭 각각 해요.</div></li>
+<li><h3>손을 바디에 합치기<em>메시 편집</em></h3><div class="how">손 선택 → 바디를 마지막에 선택 → <kbd>Ctrl</kbd> <kbd>J</kbd></div><div class="why">손과 몸을 하나의 메시로 만들어요.</div></li>
+</ol>
+</section>
+<section id="s10"><div class="sec-head"><h2>몸 뼈대 만들기</h2><a class="t" href="https://www.youtube.com/watch?v=Yen7jb19ZqE&t=2830s">47:10~55:30</a></div>
+<p class="lead">엉덩이부터 머리, 팔, 다리까지 뼈가 있고 오른쪽도 자동으로 만들어져 있어요.</p>
+<ol class="steps">
+<li><h3>커서를 원점으로<em>화면</em></h3><div class="how"><kbd>Shift</kbd> <kbd>C</kbd></div><div class="why">3D 커서를 월드 한가운데로 돌려놓아요. 새 뼈가 몸 중심에서 생겨요.</div></li>
+<li><h3>새 아마추어 추가<em>리깅</em></h3><div class="how">스냅 끄기 → <kbd>Shift</kbd> <kbd>A</kbd> → Armature → Single Bone</div><div class="why">손 아마추어에 이어 만들지 않고 새로 만들어요. 실수로 손가락 뼈를 건드리지 않으려는 거예요.</div><div class="nt">나중에 손 아마추어와 합쳐요.</div></li>
+<li><h3>뼈 표시 옵션 켜기<em>화면</em></h3><div class="how">아마추어 데이터 탭 → Viewport Display → In Front 체크, Name 체크</div><div class="why">뼈가 몸에 가려지지 않고 이름도 보이게 해요.</div></li>
+<li><h3>Hips 이름 붙이기<em>리깅</em></h3><div class="how">첫 뼈 선택 → <kbd>F2</kbd> → Hips</div><div class="why">뼈대의 시작은 항상 엉덩이예요.</div></li>
+<li><h3>Spine 뽑기<em>리깅</em></h3><div class="how">Hips 끝점 선택 → <kbd>E</kbd> <kbd>Z</kbd> → <kbd>F2</kbd> → Spine</div><div class="why">E로 뼈 끝에서 새 뼈를 위로 뽑아요. 허리 뼈예요.</div></li>
+<li><h3>Chest 뽑기<em>리깅</em></h3><div class="how"><kbd>E</kbd> <kbd>Z</kbd> → <kbd>F2</kbd> → Chest</div><div class="why">가슴 뼈예요.</div></li>
+<li><h3>Neck 뽑기<em>리깅</em></h3><div class="how"><kbd>E</kbd> → <kbd>F2</kbd> → Neck</div><div class="why">목 뼈예요.</div></li>
+<li><h3>Head 뽑기<em>리깅</em></h3><div class="how"><kbd>E</kbd> <kbd>Z</kbd> → <kbd>F2</kbd> → Head</div><div class="why">머리 뼈예요.</div></li>
+<li><h3>몸통 관절 위치 맞추기<em>리깅</em></h3><div class="how">관절 점을 옮겨요: Chest는 조금 위쪽 라인에, Spine은 Hips와 Chest 사이 중간쯤에</div><div class="why">관절 위치가 몸이 꺾이는 자리가 돼요.</div><div class="nt">강의 자막에 수치가 없어요. 화면을 보고 맞추세요.</div></li>
+<li><h3>어깨 뼈 만들기<em>리깅</em></h3><div class="how">Neck 선택 → <kbd>Shift</kbd> <kbd>D</kbd> → <kbd>R</kbd> 90 → <kbd>F2</kbd> → Shoulder.L → X로 옮겨 배치</div><div class="why">Neck을 복제하면 부모가 Chest로 유지돼요. 그래서 어깨가 가슴을 따라 움직여요.</div><div class="nt">어깨뼈는 조금 위쪽에 있는 게 좋아요.</div></li>
+<li><h3>팔 뼈 뽑기<em>리깅</em></h3><div class="how">Shoulder.L 끝점 선택 → <kbd>E</kbd> <kbd>X</kbd></div><div class="why">어깨 끝에서 팔 방향으로 뼈를 뽑아요.</div></li>
+<li><h3>Connected 풀고 내리기<em>리깅</em></h3><div class="how">Bone 탭 → Connected 체크 해제 → 팔 뼈를 아래로 내려 손과 일자가 되게 해요</div><div class="why">Connected를 풀면 부모 뼈 끝에 붙어 있지 않고 따로 옮길 수 있어요.</div></li>
+<li><h3>팔 뼈 반으로 나누기<em>리깅</em></h3><div class="how">팔 뼈 선택 → Subdivide</div><div class="why">뼈 하나를 위팔과 아래팔 두 개로 나눠요.</div></li>
+<li><h3>팔꿈치 위치 맞추기<em>리깅</em></h3><div class="how">가운데 점 선택 → <kbd>G</kbd> <kbd>X</kbd> → 팔꿈치 라인에 맞춰요</div><div class="why">뼈 관절이 메시의 팔꿈치 자리에 와야 그곳에서 꺾여요.</div></li>
+<li><h3>팔 뼈 이름 붙이기<em>리깅</em></h3><div class="how"><kbd>F2</kbd> → UpperArm.L, LowerArm.L</div><div class="why">위팔과 아래팔이에요.</div></li>
+<li><h3>팔 높이를 Hand에 맞추기<em>리깅</em></h3><div class="how">스냅 켜고 Vertex → 팔 뼈 선택 → <kbd>G</kbd> <kbd>Z</kbd> → Hand.L 뼈 뿌리 높이에 맞춰요</div><div class="why">팔 뼈와 손 뼈가 같은 높이에서 이어져야 해요.</div></li>
+<li><h3>아래팔 끝을 Hand에<em>리깅</em></h3><div class="how">LowerArm.L 끝점 선택 → <kbd>G</kbd> <kbd>X</kbd> → Hand.L 뿌리 위치로</div><div class="why">아래팔이 끝나는 곳에서 손 뼈가 시작하게 해요.</div></li>
+<li><h3>앞뒤 라인 맞추기<em>리깅</em></h3><div class="how"><kbd>G</kbd> <kbd>Y</kbd></div><div class="why">앞뒤 방향으로도 팔 뼈와 손 뼈가 한 줄이 되게 해요.</div><div class="nt">조금 어긋나는 건 괜찮아요.</div></li>
+<li><h3>허벅지 뼈 만들기<em>리깅</em></h3><div class="how">Spine 선택 → <kbd>Shift</kbd> <kbd>D</kbd> → <kbd>R</kbd> 180 → <kbd>F2</kbd> → UpperLeg.L</div><div class="why">Spine을 복제하면 부모가 Hips로 유지돼요. 뒤집어서 아래로 향하는 다리 뼈로 써요.</div></li>
+<li><h3>종아리 뼈 뽑기<em>리깅</em></h3><div class="how"><kbd>E</kbd> → 발목까지 → <kbd>F2</kbd> → LowerLeg.L</div><div class="why">무릎부터 발목까지의 뼈예요.</div></li>
+<li><h3>발 뼈 뽑기<em>리깅</em></h3><div class="how"><kbd>E</kbd> <kbd>Z</kbd> → <kbd>F2</kbd> → Foot.L</div><div class="why">발목 아래 발 뼈예요.</div></li>
+<li><h3>발끝 뼈 뽑기<em>리깅</em></h3><div class="how">Foot.L 끝점 선택 → <kbd>E</kbd> <kbd>Y</kbd> → <kbd>F2</kbd> → Toe.L</div><div class="why">발가락 쪽 뼈예요.</div></li>
+<li><h3>Toe 위치 잡기<em>리깅</em></h3><div class="how">Toe.L 선택 → Bone 탭 → Connected 체크 해제 → 발가락 위치로 내밀어 놓아요</div><div class="why">연결을 풀어야 발가락 자리로 따로 옮길 수 있어요.</div></li>
+<li><h3>모든 뼈 Roll 0 확인<em>리깅</em></h3><div class="how">뼈 선택 → <kbd>N</kbd> 패널 → Item → Roll → 0 (모든 뼈)</div><div class="why">회전시킨 뼈는 Roll이 바뀌어 있어요. 0이 아니면 엉뚱한 축으로 돌아요.</div></li>
+<li><h3>손과 몸 뼈대 합치기<em>리깅</em></h3><div class="how">손 아마추어 먼저 선택 → 바디 아마추어를 마지막에 선택 → <kbd>Ctrl</kbd> <kbd>J</kbd></div><div class="why">마지막에 고른 바디 아마추어가 기준이 되어 하나로 합쳐져요.</div></li>
+<li><h3>오른쪽 뼈 자동 생성<em>리깅</em></h3><div class="how">뼈 Edit Mode → 전체 선택 → <span class="mouse">우클릭</span> → Symmetrize</div><div class="why">.L 뼈를 반대쪽에 복사해서 .R 뼈를 만들어 줘요.</div><div class="nt">왼쪽을 완벽히 끝낸 뒤에 하세요.</div></li>
+<li><h3>뼈 표시 정리<em>화면</em></h3><div class="how">아마추어 데이터 탭 → Viewport Display → Display As → Stick, Name 체크 해제</div><div class="why">뼈가 많아졌으니 가는 막대로 바꿔 화면을 깔끔하게 해요.</div></li>
+</ol>
+<div class="tw"><table><tr><th>본</th><th>부모</th><th>비고</th></tr><tr><td>Hips</td><td></td><td>시작 뼈</td></tr><tr><td>Spine</td><td>Hips</td><td>Hips와 Chest 사이 중간쯤</td></tr><tr><td>Chest</td><td>Spine</td><td>조금 위쪽 라인</td></tr><tr><td>Neck</td><td>Chest</td><td></td></tr><tr><td>Head</td><td>Neck</td><td></td></tr><tr><td>Shoulder.L</td><td>Chest</td><td>Neck 복제, R 90, 조금 위쪽</td></tr><tr><td>UpperArm.L</td><td>Shoulder.L</td><td>Connected 해제</td></tr><tr><td>LowerArm.L</td><td>UpperArm.L</td><td>끝을 Hand.L 뿌리에</td></tr><tr><td>UpperLeg.L</td><td>Hips</td><td>Spine 복제, R 180</td></tr><tr><td>LowerLeg.L</td><td>UpperLeg.L</td><td>발목까지</td></tr><tr><td>Foot.L</td><td>LowerLeg.L</td><td></td></tr><tr><td>Toe.L</td><td>Foot.L</td><td>Connected 해제</td></tr></table></div>
+</section>
+<section id="s11"><div class="sec-head"><h2>머리·눈 뼈와 얼굴 파츠 연결</h2><a class="t" href="https://www.youtube.com/watch?v=Yen7jb19ZqE&t=3330s">55:30~63:29</a></div>
+<p class="lead">얼굴, 귀, 눈썹 등은 Head 뼈를, 눈알은 Eye 뼈를 따라 움직여요.</p>
+<ol class="steps">
+<li><h3>Head 뼈 길게 늘리기<em>리깅</em></h3><div class="how">Head 뼈 끝점을 정수리 근처까지 올려요</div><div class="why">SD 캐릭터는 머리가 아주 커서 머리 뼈도 길어야 해요.</div></li>
+<li><h3>Neck 위치 내리기<em>리깅</em></h3><div class="how">Neck 관절을 턱 위치와 목 길이에 맞게 내려요</div><div class="why">목이 꺾이는 자리를 실제 목 위치에 맞춰요.</div></li>
+<li><h3>눈 뼈 복제하기<em>리깅</em></h3><div class="how">Head 선택 → <kbd>Shift</kbd> <kbd>D</kbd></div><div class="why">Head 뼈를 복사해서 눈 뼈로 써요.</div></li>
+<li><h3>부모를 Head로<em>리깅</em></h3><div class="how">Bone 탭 → Relations → Parent → Head</div><div class="why">눈 뼈가 머리를 따라 움직이게 해요.</div></li>
+<li><h3>눈 뼈 방향과 위치<em>리깅</em></h3><div class="how">-90도 회전해서 앞을 보게 → 크기 줄이기 → <kbd>`</kbd> → Front 에서 눈 정중앙에 놓아요</div><div class="why">눈 뼈는 눈 한가운데에서 앞을 향해야 눈알이 제자리에서 돌아요.</div></li>
+<li><h3>눈 뼈 Roll 0으로<em>리깅</em></h3><div class="how"><kbd>N</kbd> 패널 → Item → Roll → 0</div><div class="why">회전 때문에 Roll이 -180이 되어 있어요. 0으로 돌려놓아요.</div></li>
+<li><h3>Eye.L 이름 붙이기<em>리깅</em></h3><div class="how"><kbd>F2</kbd> → Eye.L</div><div class="why">왼쪽 눈 뼈예요.</div></li>
+<li><h3>Eye.R 만들기<em>리깅</em></h3><div class="how"><span class="mouse">우클릭</span> → Symmetrize</div><div class="why">반대쪽 눈 뼈 Eye.R이 자동으로 생겨요.</div></li>
+<li><h3>얼굴에 Head 그룹 추가<em>웨이트</em></h3><div class="how">얼굴 메시 선택 → 버텍스 그룹 추가 → 이름 Head</div><div class="why">뼈 이름과 같은 그룹이 있어야 얼굴이 Head 뼈를 따라가요.</div><div class="nt">이름은 뼈 이름과 똑같이 써요.</div></li>
+<li><h3>얼굴 전체 Weight 1<em>웨이트</em></h3><div class="how">Edit Mode → 전체 선택 → Head 그룹 → Weight 1 → Assign</div><div class="why">얼굴의 모든 점이 Head 뼈를 100% 따라가게 해요.</div></li>
+<li><h3>Armature 모디파이어 추가<em>모디파이어</em></h3><div class="how">Add Modifier → Deform → Armature → Object 칸에 아마추어 지정</div><div class="why">이 모디파이어가 있어야 메시가 뼈를 따라 움직여요.</div></li>
+<li><h3>귀 Mirror 적용<em>모디파이어</em></h3><div class="how">귀 선택 → Mirror 모디파이어 → Apply</div><div class="why">귀와 머리의 모디파이어 구성이 달라서, 합치기 전에 귀 쪽을 정리해요.</div></li>
+<li><h3>귀 Subdivision 적용<em>모디파이어</em></h3><div class="how">귀의 Subdivision 값을 2에서 1로 낮추기 → Apply</div><div class="why">머리는 Subdivision 1이라서 귀도 같은 단계로 맞춰요.</div></li>
+<li><h3>귀 오른쪽 절반 지우기<em>메시 편집</em></h3><div class="how">귀 Edit Mode → 오른쪽(Right) 절반 선택 → 삭제</div><div class="why">머리에 Mirror가 걸려 있어서 한쪽만 있으면 돼요.</div></li>
+<li><h3>귀를 머리에 합치기<em>메시 편집</em></h3><div class="how">귀 선택 → 머리를 마지막에 선택 → <kbd>Ctrl</kbd> <kbd>J</kbd></div><div class="why">모디파이어 구성이 같아졌으니 하나로 합쳐요.</div></li>
+<li><h3>귀에 Head Weight 1<em>웨이트</em></h3><div class="how">귀 버텍스 선택 → Head 그룹 → Weight 1 → Assign</div><div class="why">합친 귀도 머리 뼈를 따라가게 해요.</div></li>
+<li><h3>눈 주변 파츠 연결<em>웨이트</em></h3><div class="how">아이라인, 쌍꺼풀, 눈썹, 언더라인 각각: Head 그룹 추가 → 전체 선택 → Weight 1 → Assign → Add Modifier → Deform → Armature</div><div class="why">이 파츠들도 머리를 따라 움직여야 해요.</div><div class="nt">머리에 합치지 않고 따로 둬요. 나중에 눈 감기 같은 표정 작업이 편해요.</div></li>
+<li><h3>눈알 연결<em>웨이트</em></h3><div class="how">눈알 선택 → Eye.L 그룹 추가 (강의는 Eye.R 그룹도 추가) → 전체 선택 → Eye.L에 Weight 1 → Assign → Add Modifier → Deform → Armature</div><div class="why">눈알은 Head가 아니라 눈 뼈를 따라가야 눈동자를 굴릴 수 있어요.</div><div class="nt">Mirror 모디파이어가 반대쪽 값을 자동으로 넘겨줘서 L 값만 1을 주면 돼요.</div></li>
+<li><h3>혀·치아 연결<em>웨이트</em></h3><div class="how">혀, 치아 각각: Head 그룹 추가 → 전체 선택 → Weight 1 → Assign → Add Modifier → Deform → Armature</div><div class="why">전용 뼈가 없으니 머리 뼈를 따라가게 해요.</div></li>
+<li><h3>눈 뼈 테스트<em>리깅</em></h3><div class="how">Pose Mode → 눈 뼈 선택 → <kbd>R</kbd> <kbd>R</kbd> 또는 <kbd>G</kbd></div><div class="why">R을 두 번 누르면 트랙볼 회전이라 자유롭게 돌려볼 수 있어요. 눈알이 따라오는지 확인해요.</div></li>
+<li><h3>포즈 되돌리기<em>리깅</em></h3><div class="how"><kbd>Q</kbd> → Clear Transform</div><div class="why">테스트한 뼈를 원래 자세로 돌려놓아요.</div></li>
+</ol>
+<div class="tw"><table><tr><th>파츠</th><th>버텍스 그룹</th><th>비고</th></tr><tr><td>얼굴(머리)</td><td>Head</td><td>Weight 1 + Armature 모디파이어</td></tr><tr><td>귀</td><td>Head</td><td>머리에 Ctrl+J 로 합침</td></tr><tr><td>아이라인, 쌍꺼풀, 눈썹, 언더라인</td><td>Head</td><td>머리에 합치지 않고 따로</td></tr><tr><td>눈알</td><td>Eye.L</td><td>Mirror가 반대쪽 값 자동 처리</td></tr><tr><td>혀, 치아</td><td>Head</td><td>전용 뼈 없음</td></tr></table></div>
+<div class="box"><b>강사의 팁</b><ul><li>남은 작업(다음 편): 몸통 웨이트 연결, 팔꿈치와 무릎 관절이에요.</li></ul></div>
+</section>
+<div class="pn"><a href="ep03.html">← Ep.3 귀, 치아, 혀, 몸 만들기</a><a href="ep05.html">Ep.5 바디를 움직이자! 몸 리깅하고 색칠하기 →</a></div>
+<footer>강의 자막을 정리한 노트에서 뽑은 내용이에요. 자막에 없는 수치는 강의 화면을 보고 맞추세요. 단축키는 Blender 기본 키맵 기준이에요.
+강의: <a href="https://www.youtube.com/playlist?list=PLAR5yRjFCe9sOjK9pbKqRPGTGlaXgfUIA">[SD 버츄얼 캐릭터 만들기] DyeoV</a></footer>
+</div></body></html>

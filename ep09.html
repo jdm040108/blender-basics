@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ep.9 옷을 더 사랑스럽게: 옷 텍스처 페인팅</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap">
+<link rel="stylesheet" href="style.css"></head><body><div class="wrap">
+<div class="top"><a href="index.html">기초</a><a href="ep01.html">Ep.1</a><a href="ep02.html">Ep.2</a><a href="ep03.html">Ep.3</a><a href="ep04.html">Ep.4</a><a href="ep05.html">Ep.5</a><a href="ep06.html">Ep.6</a><a href="ep07.html">Ep.7</a><a href="ep08.html">Ep.8</a><a href="ep09.html" class="on">Ep.9</a><a href="ep10.html">Ep.10</a><a href="ep11.html">Ep.11</a><a href="ep12.html">Ep.12</a><a href="ep13.html">Ep.13</a><a href="lookup.html">찾아보기</a></div>
+<header><div class="ep">EP.09</div><h1>옷을 더 사랑스럽게: 옷 텍스처 페인팅</h1><p>의상의 UV를 새로 펴고 Cloth 이미지 한 장에 베이스 색, 명암, 테두리 선, 주머니 같은 그림을 직접 칠해요. 마지막에 이미지를 저장하고 옷, 몸, 얼굴에 VRM 재질(MToon)과 아웃라인을 넣어요.</p>
+<a class="vid" href="https://www.youtube.com/watch?v=xsazmlSfeRk">강의 영상 열기</a>
+</header>
+<nav class="toc"><a href="#s1">의상 컬렉션 만들기</a><a href="#s2">의상 UV 펴기</a><a href="#s3">Mirror·Subdivision을 Apply한 뒤 다시 반으로 자르기</a><a href="#s4">UV 배치(주차)</a><a href="#s5">베이스 색 채우기</a><a href="#s6">명암(그림자) 칠하기</a><a href="#s7">홑겹 면의 테두리 선을 직접 그리기</a><a href="#s8">그림으로 디테일 추가</a><a href="#s9">바지·양말·신발</a><a href="#s10">저장과 VRM 머티리얼(MToon) 설정</a><a href="#s11">쉐이더·브러시·해상도 정리</a></nav>
+<section id="s1"><div class="sec-head"><h2>의상 컬렉션 만들기</h2><a class="t" href="https://www.youtube.com/watch?v=xsazmlSfeRk&t=0s">0:00~0:30</a></div>
+<p class="lead">의상 오브젝트가 전용 컬렉션에 모여 있어요.</p>
+<ol class="steps">
+<li><h3>의상 컬렉션 만들기<em>파일·설정</em></h3><div class="how">의상 오브젝트만 선택 → 의상 전용 컬렉션을 새로 만들어 넣기</div><div class="why">컬렉션은 오브젝트를 담는 폴더예요. 필요할 때 의상만 골라 볼 수 있어요.</div></li>
+<li><h3>나머지 옷 숨기기<em>화면</em></h3><div class="how">작업할 한 벌만 남기고 나머지는 눈 아이콘 끄기</div><div class="why">한 벌씩 작업해야 헷갈리지 않아요.</div></li>
+</ol>
+</section>
+<section id="s2"><div class="sec-head"><h2>의상 UV 펴기</h2><a class="t" href="https://www.youtube.com/watch?v=xsazmlSfeRk&t=30s">0:30~7:11</a></div>
+<p class="lead">가디건, 블라우스, 리본, 바지, 신발과 양말의 UV가 칠하기 좋게 새로 펴져 있어요.</p>
+<ol class="steps">
+<li><h3>가디건 Unwrap<em>UV</em></h3><div class="how">가디건 Edit Mode → 전체 선택 → UV → Unwrap → Angle Based</div><div class="why">UV는 3D 표면을 이미지 위에 펼친 전개도예요. 가디건은 따라온 Seam(절개선) 구성이 괜찮아서 그대로 펴요.</div></li>
+<li><h3>블라우스 면 정리<em>메시 편집</em></h3><div class="how">블라우스에서 마음에 안 드는 부분의 면 선택 → 삭제</div><div class="why">펴기 전에 필요 없는 면을 정리해요.</div></li>
+<li><h3>카라만 남기고 숨기기<em>화면</em></h3><div class="how">카라만 선택 → <kbd>Shift</kbd> <kbd>H</kbd></div><div class="why">선택한 것만 남기고 나머지를 숨겨요. 카라 안쪽 경계를 고르기 쉬워져요.</div></li>
+<li><h3>카라 경계 Seam<em>UV</em></h3><div class="how">카라 안쪽(몸판과 만나는 경계) 엣지 선택 → Mark Seam</div><div class="why">카라 때문에 UV가 어색해져서 카라와 몸판을 따로 나눠요.</div></li>
+<li><h3>숨긴 것 다시 표시<em>화면</em></h3><div class="how"><kbd>Alt</kbd> <kbd>H</kbd></div><div class="why">숨겨 둔 면을 다시 보이게 해요.</div></li>
+<li><h3>블라우스 Unwrap<em>UV</em></h3><div class="how">Unwrap → 불필요하게 조각나는 Seam 은 Clear Seam 후 다시 Unwrap</div><div class="why">몸판 섬 하나와 카라 섬 하나로 나오면 돼요. 섬은 UV 조각 하나를 말해요.</div></li>
+<li><h3>리본 모디파이어 적용<em>모디파이어</em></h3><div class="how">리본의 Mirror 모디파이어 Apply → Subdivision 모디파이어 Apply</div><div class="why">큐브로 만든 리본은 그대로 펴면 동그랗게 나와 칠하기 어려워요. 모디파이어 결과를 실제 메시로 굳혀요.</div></li>
+<li><h3>리본 절반 삭제<em>메시 편집</em></h3><div class="how">X-ray 켜기 → 왼쪽 절반 선택 → 삭제</div><div class="why">반쪽만 칠하고 Mirror로 복사하려고 절반을 지워요.</div></li>
+<li><h3>리본에 Mirror 다시<em>모디파이어</em></h3><div class="how">Mirror 모디파이어 다시 추가 → Clipping 켜기</div><div class="why">지운 절반이 거울처럼 다시 생겨요.</div></li>
+<li><h3>리본 Seam과 Unwrap<em>UV</em></h3><div class="how">매듭과 날개 각각 절반 지점(앞과 뒤의 경계)에 Mark Seam → Unwrap(첫 번째 항목 Angle Based)</div><div class="why">앞면 섬과 뒷면 섬으로 나뉘어요.</div></li>
+<li><h3>리본 섬 배치<em>UV</em></h3><div class="how">앞면 섬은 앞면끼리, 뒷면 섬은 뒷면끼리 모아 두기</div><div class="why">칠할 때 어디가 앞인지 바로 알 수 있어요.</div></li>
+<li><h3>바지 Seam 지우기<em>UV</em></h3><div class="how">바지의 기존 Seam 전부 선택 → Clear Seam</div><div class="why">그냥 펴면 가랑이 안쪽이 꼬여서 절개선을 처음부터 다시 넣어요.</div></li>
+<li><h3>바지 Seam 새로 넣기<em>UV</em></h3><div class="how">가랑이 안쪽 라인, 다리 부분, 밑단 마감 부분에 Mark Seam → Unwrap</div><div class="why">옷의 재봉선처럼 잘라요. 말려 올라간 롤업 부분, 엉덩이와 아랫배 부분, 다리 안쪽 마감 부분으로 나뉘어요.</div></li>
+<li><h3>신발·양말 Seam<em>UV</em></h3><div class="how">양말과 신발의 경계 루프에 Mark Seam → 밑창(동그란 면) 둘레에도 Mark Seam → Unwrap</div><div class="why">신발 갑피, 양말, 신발 밑창으로 나뉘어요. 색이 바뀌는 경계에서 잘라 둬야 칠하기 쉬워요.</div><div class="nt">양말과 신발 경계에는 반드시 Seam을 넣으세요.</div></li>
+<li><h3>신발·양말 섬 배치<em>UV</em></h3><div class="how">신발 섬은 신발끼리, 양말 섬은 양말끼리 모아 두기</div><div class="why">같은 색으로 칠할 것끼리 붙여 두면 편해요.</div></li>
+<li><h3>섬이 어디인지 확인<em>UV</em></h3><div class="how">UV 에디터에서 섬 선택 → 3D 뷰에서 선택된 곳 확인</div><div class="why">어떤 섬이 옷의 어디인지 헷갈릴 때 써요.</div></li>
+</ol>
+<div class="tw"><table><tr><th>의상</th><th>Seam / Unwrap 방법</th><th>결과 섬</th></tr><tr><td>가디건</td><td>따라온 Seam 그대로. 전체 선택 → UV → Unwrap → Angle Based</td><td></td></tr><tr><td>블라우스</td><td>카라만 선택해 Shift+H → 카라 안쪽 경계에 Mark Seam → Alt+H → Unwrap</td><td>몸판 섬 + 카라 섬</td></tr><tr><td>리본</td><td>Mirror, Subdivision Apply → 왼쪽 절반 삭제 → Mirror 다시(Clipping 켬) → 매듭과 날개의 앞뒤 경계에 Seam → Unwrap</td><td>앞면 섬 / 뒷면 섬</td></tr><tr><td>바지</td><td>기존 Seam 전부 Clear → 가랑이 안쪽, 다리 부분, 밑단 마감 부분에 새 Seam</td><td>롤업 부분 / 엉덩이+아랫배 / 다리 안쪽 마감</td></tr><tr><td>신발+양말</td><td>양말과 신발 경계 루프에 Seam, 밑창에도 Seam</td><td>신발 갑피 / 양말 / 신발 밑창</td></tr></table></div>
+<div class="box"><b>강사의 팁</b><ul><li>몸에서 복제한 옷은 몸 UV가 따라와 있지만 새로 펴요.</li></ul></div>
+</section>
+<section id="s3"><div class="sec-head"><h2>Mirror·Subdivision을 Apply한 뒤 다시 반으로 자르기</h2><a class="t" href="https://www.youtube.com/watch?v=xsazmlSfeRk&t=431s">7:11~10:24</a></div>
+<p class="lead">옷마다 UV가 촘촘해지고, 반쪽만 칠하면 되도록 Mirror가 스택 맨 위에 다시 걸려 있어요.</p>
+<ol class="steps">
+<li><h3>Mirror Apply<em>모디파이어</em></h3><div class="how">옷 선택 → Mirror 모디파이어 → Apply</div><div class="why">Apply는 모디파이어 결과를 실제 메시로 굳히는 거예요.</div></li>
+<li><h3>Subdivision Apply<em>모디파이어</em></h3><div class="how">Subdivision 모디파이어 → Apply</div><div class="why">옷에는 주머니, 단추 같은 디테일을 그려 넣어요. 면이 촘촘해야 UV도 촘촘해져서 그림이 깨끗하게 나와요.</div></li>
+<li><h3>쉐이프 키 오류 해결<em>쉐이프 키</em></h3><div class="how">쉐이프 키 때문에 적용할 수 없다는 오류가 뜨면 → 그 오브젝트의 Basis 쉐이프 키 삭제 → 다시 Apply</div><div class="why">쉐이프 키가 있는 메시에는 모디파이어를 적용할 수 없어요. 몸에서 복제할 때 쉐이프 키가 따라온 옷에서 생겨요.</div><div class="nt">어느 옷에서 오류가 났는지 강의 자막이 불명확해요(가디건으로 보여요). 오류가 뜨는 옷에만 하세요.</div></li>
+<li><h3>한쪽 절반 삭제<em>메시 편집</em></h3><div class="how">Edit Mode → X-ray 켜기 → 한쪽 절반 선택 → 삭제</div><div class="why">Mirror를 적용한 채로 펴면 양쪽을 다 칠해야 해요. 반만 칠하려고 다시 반으로 잘라요.</div><div class="nt">정중앙 점은 선택에 넣으면 안 돼요.</div></li>
+<li><h3>Mirror 다시 추가<em>모디파이어</em></h3><div class="how">Mirror 모디파이어 추가 → 스택 맨 위(Armature 보다 위)로 올리기 → Clipping 체크</div><div class="why">지운 절반을 거울처럼 다시 만들어요.</div><div class="nt">순서가 정말 중요해요. Mirror가 Armature 아래에 있으면 나중에 포즈를 적용했을 때 이상하게 움직여요.</div></li>
+</ol>
+<div class="box"><b>강사의 팁</b><ul><li>몸은 거의 단색이라 큰 네모(로우폴리 UV)로 충분했어요. 옷은 주머니, 자수, 와펜, 레이스, 단추 같은 디테일을 그려 넣기 때문에 촘촘한 네모가 필요해요.</li><li>리본은 앞 구간에서 이미 처리했어요.</li><li>한쪽에만 하트를 넣는 것처럼 좌우가 다른 무늬를 원하면, Mirror를 적용한 상태로 양쪽이 모두 펼쳐진 UV를 배치해야 해요.</li></ul></div>
+</section>
+<section id="s4"><div class="sec-head"><h2>UV 배치(주차)</h2><a class="t" href="https://www.youtube.com/watch?v=xsazmlSfeRk&t=624s">10:24~12:18</a></div>
+<p class="lead">모든 의상의 UV 섬이 Cloth 이미지 안에 자리 잡고 있어요.</p>
+<ol class="steps">
+<li><h3>모든 섬 한 번에 보기<em>UV</em></h3><div class="how">의상 전부 선택 → Edit Mode → 전체 선택</div><div class="why">모든 옷의 섬이 UV 에디터에 한꺼번에 보여요.</div></li>
+<li><h3>섬 배치하기<em>UV</em></h3><div class="how">섬을 옮기고 크기를 바꿔 Cloth 이미지 안에 퍼즐 맞추듯 배치</div><div class="why">이미지 한 장에 모든 옷을 담아요.</div><div class="nt">섬끼리 적당히 떨어뜨려 두세요. 붙어 있으면 칠할 때 옆 섬으로 번져요.</div></li>
+<li><h3>안 보이는 섬 작게<em>UV</em></h3><div class="how">리본 섬은 작게, 리본 뒷면 섬은 더 작게, 바지 안쪽 마감 섬도 작게 줄이기</div><div class="why">잘 안 보이는 곳에는 이미지 공간을 조금만 줘요.</div></li>
+</ol>
+<div class="box"><b>강사의 팁</b><ul><li>이 영상에서는 체커 텍스처로 밀도를 맞추는 과정을 하지 않아요.</li></ul></div>
+</section>
+<section id="s5"><div class="sec-head"><h2>베이스 색 채우기</h2><a class="t" href="https://www.youtube.com/watch?v=xsazmlSfeRk&t=738s">12:18~17:21</a></div>
+<p class="lead">옷마다 기본 색이 채워져 있어요.</p>
+<ol class="steps">
+<li><h3>Image Editor에서 채우기<em>페인트</em></h3><div class="how">Texture Paint 워크스페이스 → Image Editor → Fill(페인트 통) → 해당 UV 섬 클릭</div><div class="why">섬 하나를 한 가지 색으로 채워요. 강사가 더 좋아하는 방법이에요.</div></li>
+<li><h3>3D 뷰에서 채우기<em>페인트</em></h3><div class="how">Edit Mode에서 칠할 면(또는 전체) 선택 → Texture Paint 모드 → 페인트 마스크(Face Selection Masking) 켜기 → Fill 로 클릭</div><div class="why">페인트 마스크는 선택한 면에만 칠해지게 해 줘요. 선택된 면만 채워져요.</div></li>
+<li><h3>가디건 색<em>페인트</em></h3><div class="how">가디건을 따뜻하고 밝은 노란색으로 채우기</div><div class="why">머리와 눈이 파란색이라 대비되는 색을 골랐어요.</div><div class="nt">정확한 색 코드는 강의 자막에 없어요. 화면을 보고 맞추세요.</div></li>
+<li><h3>리본 색<em>페인트</em></h3><div class="how">리본을 머리색과 비슷한 파란 계열로 채우기</div><div class="why">여러 색을 시도한 끝에 고른 색이에요. 빨강은 색동저고리 같다고 뺐어요.</div><div class="nt">정확한 색 코드는 강의 자막에 없어요.</div></li>
+<li><h3>블라우스 색<em>페인트</em></h3><div class="how">블라우스를 살짝 어두운 아이보리로 채우기</div><div class="why">순백색은 하이라이트처럼 보여서 피해요.</div><div class="nt">정확한 색 코드는 강의 자막에 없어요.</div></li>
+<li><h3>바지 색<em>페인트</em></h3><div class="how">바지를 밝은 브라운으로 채우기</div><div class="why">가디건과 같은 노랑이면 정장 세트 같아 보여요. 캐주얼한 느낌으로 가요.</div><div class="nt">정확한 색 코드는 강의 자막에 없어요.</div></li>
+<li><h3>롤업 색<em>페인트</em></h3><div class="how">바지의 말려 올라간 부분을 블라우스와 같은 색으로 채우기</div><div class="why">같은 색을 써서 통일감을 줘요.</div></li>
+<li><h3>양말 색<em>페인트</em></h3><div class="how">양말 면만 선택 → 따로 칠하기</div><div class="why">신발과 한 메시라서 양말 면만 골라 칠해요.</div><div class="nt">양말 색은 강의 자막에 없어요. 화면을 보고 맞추세요.</div></li>
+<li><h3>신발 색<em>페인트</em></h3><div class="how">신발을 어둡고 검정에 가까운 색으로 채우기</div><div class="why">SD 캐릭터에는 어두운 신발이 잘 어울려요.</div></li>
+<li><h3>팔레트에 색 추가<em>페인트</em></h3><div class="how">색을 쓸 때마다 팔레트의 + 버튼 누르기</div><div class="why">팔레트는 자주 쓰는 색을 모아 두는 곳이에요. 안 넣어 두면 매번 스포이드로 찍어야 해요.</div><div class="nt">강사도 여러 번 잊어서 거듭 강조했어요.</div></li>
+</ol>
+<div class="box"><b>강사의 팁</b><ul><li>레이어를 쓰지 않고 Cloth 이미지 한 장에 직접 칠해요.</li></ul></div>
+</section>
+<section id="s6"><div class="sec-head"><h2>명암(그림자) 칠하기</h2><a class="t" href="https://www.youtube.com/watch?v=xsazmlSfeRk&t=1041s">17:21~29:44</a></div>
+<p class="lead">블라우스, 리본, 가디건의 가려지는 곳에 그림자가 칠해져 있어요.</p>
+<ol class="steps">
+<li><h3>명암색 만들기<em>페인트</em></h3><div class="how">각 베이스 색보다 조금 더 어둡고 진한(채도 있는) 색 만들기 → 팔레트에 추가</div><div class="why">그림자로 칠할 색이에요.</div><div class="nt">너무 갈색으로 가면 채도를 빼세요. 색 코드는 강의 자막에 없어요.</div></li>
+<li><h3>그림자 영역 선택<em>선택</em></h3><div class="how">Edit Mode에서 그림자가 질 영역의 면 선택</div><div class="why">큰 덩어리를 한 번에 채우려고 미리 골라요.</div></li>
+<li><h3>마스크 켜고 Fill<em>페인트</em></h3><div class="how">Texture Paint 모드 → 페인트 마스크 켜기 → Fill 로 클릭</div><div class="why">선택한 면에만 그림자색이 채워져요.</div></li>
+<li><h3>마스크 끄고 다듬기<em>페인트</em></h3><div class="how">페인트 마스크 끄기 → 브러시로 경계를 이어 다듬기</div><div class="why">면 단위로 채우면 경계가 각져요. 손으로 이어 줘야 자연스러워요.</div></li>
+<li><h3>선택 뒤집기<em>선택</em></h3><div class="how"><kbd>Ctrl</kbd> <kbd>I</kbd></div><div class="why">선택된 것과 안 된 것을 맞바꿔요. 반대쪽을 칠할 때 써요.</div></li>
+<li><h3>과한 곳 지우기<em>페인트</em></h3><div class="how">베이스 색을 골라 과하게 칠한 곳 덮기</div><div class="why">지우개 대신 원래 색으로 덮어서 고쳐요.</div></li>
+<li><h3>블라우스 명암<em>페인트</em></h3><div class="how">카라와 목 근처 영역을 통째로 어둡게 칠하기 → 리본에 가려지는 부분, 가디건에 가려지는 부분에도 그림자 그리기 → 안 보이는 속 부분도 칠하기</div><div class="why">몸의 목 아래를 어둡게 칠했던 것과 맞춰요. 속까지 칠해 둬야 안 칠한 것처럼 보이지 않아요.</div></li>
+<li><h3>리본 명암<em>페인트</em></h3><div class="how">옷과 카라에 가려지는 안쪽 면을 어둡게 → 매듭에서 바깥으로 퍼지는 접힌 주름 명암 그리기</div><div class="why">주름 명암이 리본의 매력이에요.</div><div class="nt">주름살처럼 과해지면 다시 그리세요. 옆에서 봤을 때도 명암이 이어지게 하세요.</div></li>
+<li><h3>Wireframe 켜기<em>화면</em></h3><div class="how">Overlays → Wireframe 켜기</div><div class="why">메시의 선이 보여서 어깨선이 어디인지 알 수 있어요.</div></li>
+<li><h3>가디건 명암<em>페인트</em></h3><div class="how">어깨 라인에 맞춰 목 주변 명암(어깨선을 넘지 않게) → 뒤쪽은 둥글게 퍼지도록 → 리본이 드리우는 그림자 → 소매 끝</div><div class="why">가려지는 곳에 그림자를 넣어 입체감을 줘요.</div><div class="nt">팔과 어깨처럼 움직이는 부위에 걸쳐 명암을 넣으면 포즈에 따라 우글거려 보여요. 목 주변 명암은 어깨 영역까지만 넣으세요.</div></li>
+<li><h3>뚫린 블라우스 줄이기<em>메시 편집</em></h3><div class="how">블라우스에서 가디건을 뚫고 나온 부분 선택 → <kbd>Alt</kbd> <kbd>S</kbd> 로 줄이기</div><div class="why">Alt+S는 면 방향으로 부풀리거나 줄여요. 작업 중 발견한 뚫림을 바로 고쳐요.</div></li>
+</ol>
+<div class="box"><b>강사의 팁</b><ul><li>이 구간부터 강사는 타블렛으로 그려요. 계속 할 사람은 타블렛을 권하고, 취미라면 굳이 필요 없어요.</li></ul></div>
+</section>
+<section id="s7"><div class="sec-head"><h2>홑겹 면의 테두리 선을 직접 그리기</h2><a class="t" href="https://www.youtube.com/watch?v=xsazmlSfeRk&t=1603s">26:43~29:44, 33:26~37:04</a></div>
+<p class="lead">아웃라인이 안 생기는 가디건 앞섶과 카라 가장자리에 테두리 선이 그려져 있어요.</p>
+<ol class="steps">
+<li><h3>Stroke를 Line으로<em>페인트</em></h3><div class="how">브러시 Stroke Method → Line</div><div class="why">드래그한 시작점과 끝점 사이에 직선이 그어져요.</div></li>
+<li><h3>가디건 테두리 긋기<em>페인트</em></h3><div class="how">Image Editor(UV 창)에서 가디건 UV 섬 가장자리를 따라 직선 긋기 → 소매 끝은 더 두껍게</div><div class="why">가디건 앞섶처럼 한 장짜리 면(홑겹)의 가장자리에는 MToon 아웃라인이 생기지 않아요. 텍스처에 선을 직접 그려요.</div><div class="nt">브러시 크기 수치는 강의 자막에 없어요.</div></li>
+<li><h3>Stroke를 Space로<em>페인트</em></h3><div class="how">Stroke Method → Space 로 되돌리기</div><div class="why">보통 브러시처럼 자유롭게 그리는 방식으로 돌아가요.</div></li>
+<li><h3>선 다듬기<em>페인트</em></h3><div class="how">베이스 색(노랑)으로 너무 두껍거나 딱딱한 부분 다듬기</div><div class="why">선 굵기를 고르게 맞춰요.</div><div class="nt">계단처럼 보여도 멀리서 보면 티가 안 나요.</div></li>
+<li><h3>카라 테두리 긋기<em>페인트</em></h3><div class="how">검은색 고르기 → Stroke Method Line → 블라우스 카라 가장자리에 테두리 그리기</div><div class="why">카라도 홑겹이라 아웃라인이 안 생겨요.</div><div class="nt">강사는 처음에 너무 얇게 그려서 두 배 두께로 다시 그렸어요. 전체를 보면서 두께를 정하세요. 선 두께는 균일한 게 가장 좋아요.</div></li>
+<li><h3>카라에 칠이 안 될 때<em>음영·노멀</em></h3><div class="how">카라 면만 선택 → 노멀을 일시적으로 뒤집기(Flip) → 칠하기</div><div class="why">노멀은 면이 향하는 방향이에요. 면이 뒤집혀(Face Orientation 빨강) 있으면 칠이 안 돼요.</div><div class="nt">칠한 뒤 다시 되돌리는지는 강의 자막에 없어요. 화면을 보고 확인하세요.</div></li>
+<li><h3>삐져나감 확인<em>페인트</em></h3><div class="how">블라우스의 다른 영역으로 선이 삐져나가지 않았는지 확인</div><div class="why">UV 창에서 그은 선이 옆 섬에 묻을 수 있어요.</div></li>
+</ol>
+</section>
+<section id="s8"><div class="sec-head"><h2>그림으로 디테일 추가</h2><a class="t" href="https://www.youtube.com/watch?v=xsazmlSfeRk&t=1784s">29:44~33:20</a></div>
+<p class="lead">가디건에 주머니와 하트 그림이 그려져 있어요.</p>
+<ol class="steps">
+<li><h3>주머니 윤곽 그리기<em>페인트</em></h3><div class="how">명암색으로 가디건에 주머니 윤곽 그리기</div><div class="why">검은 선을 바로 쓰면 어색해서 명암색으로 그려요.</div><div class="nt">Mirror 상태라 양쪽에 동시에 그려져요.</div></li>
+<li><h3>주머니 명암 넣기<em>페인트</em></h3><div class="how">주머니 자체에도 명암 추가</div><div class="why">주머니가 옷 위에 덧대진 것처럼 보여요.</div></li>
+<li><h3>하트 포인트 그리기<em>페인트</em></h3><div class="how">흰색으로 하트 그리기 → 그 위에 약간 어두운 색으로 명암 넣기</div><div class="why">명암을 넣으면 그림 티가 줄어들어요.</div></li>
+</ol>
+<div class="box"><b>강사의 팁</b><ul><li>옆에서 보면 그림이 늘어나 보여요. 3D 표면에 그린 것이라 그래요. 싫으면 주머니를 메시로 모델링하세요.</li><li>어떤 그림이 딱 봐도 그림이고 어떤 게 3D로 만든 것처럼 보이는지는 직접 그려 봐야 알아요. 애매하게 3D처럼 보이는 표현을 연습해 보세요.</li></ul></div>
+</section>
+<section id="s9"><div class="sec-head"><h2>바지·양말·신발</h2><a class="t" href="https://www.youtube.com/watch?v=xsazmlSfeRk&t=2224s">37:04~46:29</a></div>
+<p class="lead">바지, 양말, 신발에 색 구분과 명암이 들어가고 밑창에 그림이 그려져 있어요.</p>
+<ol class="steps">
+<li><h3>롤업 경계에 Seam<em>UV</em></h3><div class="how">바지 롤업 부분의 경계 엣지 선택 → Mark Seam</div><div class="why">경계에 절개선이 있으면 롤업 면만 골라 선택하기 쉬워요.</div></li>
+<li><h3>롤업 채우기<em>페인트</em></h3><div class="how">롤업 면 선택 → 페인트 마스크가 켜져 있는지 확인 → 블라우스 색으로 Fill</div><div class="why">말려 올라간 부분을 다른 색으로 구분해요.</div></li>
+<li><h3>바지 명암<em>페인트</em></h3><div class="how">가디건과 허리단에 가려지는 부분 위주로 명암 칠하기 → 롤업 부분과 흰 영역에 중간 톤 명암</div><div class="why">바지는 두께가 막힌 입체라 아웃라인이 자동으로 생겨요. 그래서 가려지는 곳의 그림자만 넣어요.</div></li>
+<li><h3>넘친 곳 덮기<em>페인트</em></h3><div class="how">흰색으로 넘친 곳 다시 덮기</div><div class="why">삐져나간 그림자를 원래 색으로 고쳐요.</div></li>
+<li><h3>양말 윗단 명암<em>페인트</em></h3><div class="how">양말 윗단 일부 면 선택 → 명암색으로 Fill</div><div class="why">양말 위쪽에 그림자를 넣어요.</div></li>
+<li><h3>양말에 루프컷 추가<em>메시 편집</em></h3><div class="how">신발에 신겨지는 경계 쪽에 루프컷 하나 추가 → 생긴 좁은 띠만 선택 → 칠하기</div><div class="why">면이 넓어서 그대로 채우면 그림자가 너무 두꺼워요. 선을 하나 넣어 좁은 띠를 만들어요.</div></li>
+<li><h3>밑창 어둡게<em>페인트</em></h3><div class="how">신발 밑창 영역을 더 어두운 색으로 채우기 → 네모나 보이는 경계는 브러시로 직접 다듬기</div><div class="why">밑창을 구분해 신발처럼 보이게 해요.</div></li>
+<li><h3>Mirror 잠깐 끄기<em>모디파이어</em></h3><div class="how">Mirror 모디파이어 표시 잠깐 끄기</div><div class="why">반대쪽 신발이 가리지 않아서 뒤와 옆을 볼 수 있어요.</div></li>
+<li><h3>밑창에 그림 그리기<em>페인트</em></h3><div class="how">밝은 색으로 밑창에 발바닥 그림과 서명 그리기</div><div class="why">포즈를 취했을 때 보이는 재미 요소예요. 강사는 자기 이름(DYEOV)을 넣었어요.</div></li>
+<li><h3>Mirror 다시 켜기<em>모디파이어</em></h3><div class="how">Mirror 모디파이어 표시 다시 켜기</div><div class="why">끝났으니 반대쪽 신발을 다시 보이게 해요.</div></li>
+</ol>
+<div class="box"><b>강사의 팁</b><ul><li>3D인데 왜 그림자를 그리나요? 가디건이 홑겹이라 아웃라인이 안 생길 수 있고, 강사가 원하는 것이 2D 같으면서 3D인 느낌이기 때문이에요.</li><li>완전한 3D 느낌을 원하면 그리지 말고 쉐이더를 공부하세요.</li></ul></div>
+</section>
+<section id="s10"><div class="sec-head"><h2>저장과 VRM 머티리얼(MToon) 설정</h2><a class="t" href="https://www.youtube.com/watch?v=xsazmlSfeRk&t=2789s">46:29~50:22</a></div>
+<p class="lead">옷, 몸, 얼굴에 VRM 재질이 들어가고 아웃라인 두께가 통일돼 있어요.</p>
+<ol class="steps">
+<li><h3>Cloth 이미지 저장<em>파일·설정</em></h3><div class="how">Cloth 이미지를 Cloth-img.png 이름으로 저장</div><div class="why">칠한 이미지는 파일로 저장해야 사라지지 않아요. VRM 재질에서 이 파일을 불러 써요.</div></li>
+<li><h3>Armature 숨기기<em>화면</em></h3><div class="how">Armature 의 눈 아이콘 끄기</div><div class="why">이 단계에서는 본이 필요 없어요.</div></li>
+<li><h3>옷에 VRM Material 켜기<em>애드온</em></h3><div class="how">블라우스 선택 → Material 탭 → VRM Material 체크</div><div class="why">VRM 애드온의 재질(MToon)로 바꿔요. 의상이 머티리얼을 함께 쓰니 하나만 바꿔도 전체에 적용돼요.</div></li>
+<li><h3>옷 Lit·Shade 이미지<em>재질·텍스처</em></h3><div class="how">Lit Color 에 Cloth-img.png → Shade Color 텍스처에도 같은 Cloth-img.png</div><div class="why">Lit Color는 빛 받는 쪽, Shade Color는 그림자 쪽 색이에요. 둘 다 칠한 이미지를 넣어요.</div></li>
+<li><h3>옷 아웃라인<em>재질·텍스처</em></h3><div class="how">Outline → Screen Coordinates → 두께 0.005</div><div class="why">옷 테두리에 선이 생겨요.</div></li>
+<li><h3>몸에 VRM Material<em>재질·텍스처</em></h3><div class="how">Body 선택 → VRM Material 체크 → Lit Color 와 Shade Color 텍스처 모두 body-img.png → Outline Screen Coordinates, 두께 0.005</div><div class="why">옷과 몸의 선이 이어져 보이지 않는 건 몸에 VRM 재질이 없어서예요.</div></li>
+<li><h3>옷 그림자색<em>재질·텍스처</em></h3><div class="how">의상의 Shade Color 색을 블라우스 그림자색에서 가져와 비슷한 톤으로 맞추기</div><div class="why">강사가 보통 쓰는 방법이에요. 그림자는 주황 계열이나 핑크 계열이 예쁘다고 해요.</div><div class="nt">정확한 색 코드는 강의 자막에 없어요.</div></li>
+<li><h3>몸 그림자색<em>재질·텍스처</em></h3><div class="how">Body 의 Shade Color 색을 몸 텍스처의 가장 어두운 그림자색에서 조금 밝게</div><div class="why">몸에 지는 그림자 색을 정해요.</div><div class="nt">정확한 색 코드는 강의 자막에 없어요.</div></li>
+<li><h3>얼굴에 VRM Material<em>재질·텍스처</em></h3><div class="how">얼굴 선택 → VRM Material 체크 → Lit Color 와 Shade Color 텍스처 모두 Face 이미지 → 몸에 쓴 그림자 색 코드를 복사해 Shade Color 색에 붙여 넣기</div><div class="why">몸과 얼굴의 그림자색이 같아야 피부가 이어져 보여요.</div></li>
+<li><h3>얼굴 아웃라인<em>재질·텍스처</em></h3><div class="how">얼굴 Outline → Screen Coordinates → 두께 0.005</div><div class="why">옷, 몸과 선 두께를 맞춰요.</div><div class="nt">켜면 흰자와 속눈썹까지 선이 생겨요. 원하는 곳만 아웃라인을 없애는 방법(아웃라인 마스크)은 다음 편에서 해요.</div></li>
+</ol>
+<div class="tw"><table><tr><th>대상</th><th>Lit Color / Shade Color 텍스처</th><th>Outline</th><th>그림자색(Shade Color의 색)</th></tr><tr><td>의상</td><td>Cloth-img.png / Cloth-img.png</td><td>Screen Coordinates, 0.005</td><td>블라우스 그림자색과 비슷한 톤. 주황이나 핑크 계열이 예쁨</td></tr><tr><td>몸(Body)</td><td>body-img.png / body-img.png</td><td>Screen Coordinates, 0.005</td><td>몸 텍스처의 가장 어두운 그림자색에서 조금 밝게</td></tr><tr><td>얼굴</td><td>Face 이미지 / Face 이미지</td><td>Screen Coordinates, 0.005</td><td>몸에 쓴 색 코드를 복사해 똑같이</td></tr></table></div>
+</section>
+<section id="s11"><div class="sec-head"><h2>쉐이더·브러시·해상도 정리</h2></div>
+<p class="lead">이 편에서 쓴 설정을 한눈에 볼 수 있어요.</p>
+<ol class="steps" hidden>
+</ol>
+<div class="tw"><table><tr><th>항목</th><th>값</th><th>비고</th></tr><tr><td>해상도</td><td>Cloth 이미지 2048 × 2048</td><td>Ep.8에서 만든 것</td></tr><tr><td>작업 중 쉐이더</td><td>Image Texture → Material Output</td><td>Principled 없이 직접 연결(Ep.7과 같은 방식으로 보임)</td></tr><tr><td>최종 쉐이더</td><td>VRM Material(MToon)</td><td>Lit Color / Shade Color / Outline</td></tr><tr><td>브러시</td><td>기본 Draw 브러시 + Fill</td><td>반경과 강도 수치는 자막에 없음</td></tr><tr><td>Stroke Method</td><td>Space(기본) / Line(직선 테두리)</td><td>오가며 사용</td></tr><tr><td>레이어</td><td>없음</td><td>베이스 색으로 덮어 수정</td></tr><tr><td>마스크</td><td>Paint Mask(면 선택 마스크)</td><td>켜고 끄며 사용</td></tr><tr><td>애드온</td><td>VRM 애드온(VRM Material 패널)</td><td>그 밖의 페인팅 애드온은 없음</td></tr></table></div>
+<div class="box"><b>강사의 팁</b><ul><li>레이어는 쓰지 않아요. 한 이미지에 직접 덧칠하고, 고칠 때는 베이스 색으로 덮어 그려요.</li><li>마스크 켜고 Fill, 마스크 끄고 브러시로 잇기가 기본 순서예요.</li><li>브러시 반경과 강도 수치는 강의 자막에 없어요. 화면을 보고 맞추세요.</li><li>이미지와 애드온 정보는 1편 설명란에 있다고 해요.</li></ul></div>
+</section>
+<div class="pn"><a href="ep08.html">← Ep.8 옷 리깅: 데이터 전송(Data Transfer)으로 간단하게</a><a href="ep10.html">Ep.10 아웃라인 Mask, Blink 표정 →</a></div>
+<footer>강의 자막을 정리한 노트에서 뽑은 내용이에요. 자막에 없는 수치는 강의 화면을 보고 맞추세요. 단축키는 Blender 기본 키맵 기준이에요.
+강의: <a href="https://www.youtube.com/playlist?list=PLAR5yRjFCe9sOjK9pbKqRPGTGlaXgfUIA">[SD 버츄얼 캐릭터 만들기] DyeoV</a></footer>
+</div></body></html>

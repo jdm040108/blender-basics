@@ -1,55 +1,13 @@
 <!doctype html>
-<html lang="ko">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Blender 기초 노트</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap">
-<style>
-/* 레이아웃: 위에 칩 내비게이션, 아래로 주제별 구역. 구역마다 조작 카드 격자 + 연습 상자 */
-:root{--bg:#1c1e22;--panel:#26292f;--panel2:#2e3138;--line:#3a3e47;--fg:#ebe8e1;--muted:#a2a6af;--accent:#f08a3c;--mouse:#5b9bf0;--mouse-fg:#0f1722;
---key-bg:#efece5;--key-fg:#1c1e22;--key-edge:#8d8a84;--tip-bg:#2f2a1e;--tip-line:#d9a441;--tip-fg:#f0c66a;
---font-body:'IBM Plex Sans KR','Malgun Gothic','Apple SD Gothic Neo',sans-serif;--font-mono:'JetBrains Mono',Consolas,'Malgun Gothic',monospace;color-scheme:dark}
-@media (prefers-color-scheme: light){:root:not([data-theme="dark"]){--bg:#f3f1ec;--panel:#ffffff;--panel2:#f7f5f0;--line:#dcd8cf;--fg:#23262b;--muted:#5f646d;--accent:#cf5f18;--mouse:#2f6fe0;--mouse-fg:#ffffff;
---key-bg:#23262b;--key-fg:#ffffff;--key-edge:#000000;--tip-bg:#fff6dd;--tip-line:#e0a92a;--tip-fg:#946200;color-scheme:light}}
-:root[data-theme="light"]{--bg:#f3f1ec;--panel:#ffffff;--panel2:#f7f5f0;--line:#dcd8cf;--fg:#23262b;--muted:#5f646d;--accent:#cf5f18;--mouse:#2f6fe0;--mouse-fg:#ffffff;
---key-bg:#23262b;--key-fg:#ffffff;--key-edge:#000000;--tip-bg:#fff6dd;--tip-line:#e0a92a;--tip-fg:#946200;color-scheme:light}
-*{box-sizing:border-box}
-body{background:var(--bg);color:var(--fg);font-family:var(--font-body);font-size:16px;line-height:1.6;word-break:keep-all}
-.wrap{max-width:1120px;margin:0 auto;padding-block:28px 56px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
-header h1{font-size:clamp(28px,5vw,40px);margin:0 0 6px;letter-spacing:-.5px;text-wrap:balance}
-header p{margin:0;color:var(--muted);max-width:62ch}
-nav{display:flex;flex-wrap:wrap;gap:8px;margin:22px 0 8px}
-nav a{color:var(--fg);text-decoration:none;border:1px solid var(--line);background:var(--panel);padding:6px 13px;border-radius:999px;font-size:14px}
-nav a:hover,nav a:focus-visible{border-color:var(--accent);color:var(--accent);outline:none}
-section{margin-top:44px;scroll-margin-top:16px}
-.sec-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 12px}
-.sec-head h2{font-size:26px;margin:0;letter-spacing:-.3px}
-.sec-head span{font-family:var(--font-mono);font-size:12px;letter-spacing:1.5px;color:var(--muted)}
-.lead{margin:6px 0 16px;color:var(--muted);max-width:68ch}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:12px}
-.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 16px;min-width:0;display:flex;flex-direction:column;gap:8px}
-.card h3{margin:0;font-size:17px;font-weight:600}
-.card .how{font-size:15.5px}
-.card .why{font-size:14px;color:var(--muted)}
-.card .where{font-family:var(--font-mono);font-size:12px;color:var(--accent)}
-kbd{display:inline-block;background:var(--key-bg);color:var(--key-fg);border-radius:6px;padding:1px 8px;font-family:var(--font-mono);font-size:13.5px;font-weight:700;margin:1px;box-shadow:0 2px 0 var(--key-edge);line-height:1.5;white-space:nowrap}
-.mouse{display:inline-block;background:var(--mouse);color:var(--mouse-fg);border-radius:6px;padding:1px 8px;font-size:13.5px;font-weight:600;margin:1px;line-height:1.5}
-.box{margin-top:14px;background:var(--tip-bg);border-left:5px solid var(--tip-line);border-radius:8px;padding:12px 16px;font-size:15.5px}
-.box b{color:var(--tip-fg);margin-right:8px}
-.note{margin-top:10px;font-size:14.5px;color:var(--muted);max-width:76ch}
-.legend{display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:14px;font-size:14px;color:var(--muted)}
-footer{margin-top:56px;padding-top:16px;border-top:1px solid var(--line);font-size:13.5px;color:var(--muted)}
-footer a{color:var(--accent)}
-</style>
-<style>body{margin:0}img{max-width:100%}</style>
-</head>
-<body>
-
-<div class="wrap">
-<header><h1>Blender 기초 노트</h1><p>SD 캐릭터 강의(DyeoV)를 따라가기 전에 알아 둘 조작과 개념을 주제별로 모았어요. 구역마다 직접 해 볼 연습이 하나씩 있어요.</p>
-<div class="legend"><span><kbd>G</kbd> 키보드 키</span><span><span class="mouse">클릭</span> 마우스 조작</span><span>키는 Blender 기본 키맵 기준</span></div></header>
-<nav><a href="#view">화면 움직이기</a><a href="#object">오브젝트 다루기</a><a href="#edit">편집 모드</a><a href="#core">강의가 계속 쓰는 세 가지</a><a href="#modifier">Mirror와 Subdivision</a><a href="#mirror">Mirror 따라 하기</a><a href="#delete">지우기</a><a href="#concept">알아 둘 개념</a><a href="#helper">자주 쓰는 보조 기능</a><a href="#trap">초보가 자주 걸리는 함정</a><a href="#uv">UV</a><a href="#texture">텍스처</a><a href="#rig">리깅</a></nav>
+<link rel="stylesheet" href="style.css"></head><body><div class="wrap">
+<div class="top"><a href="index.html" class="on">기초</a><a href="ep01.html">Ep.1</a><a href="ep02.html">Ep.2</a><a href="ep03.html">Ep.3</a><a href="ep04.html">Ep.4</a><a href="ep05.html">Ep.5</a><a href="ep06.html">Ep.6</a><a href="ep07.html">Ep.7</a><a href="ep08.html">Ep.8</a><a href="ep09.html">Ep.9</a><a href="ep10.html">Ep.10</a><a href="ep11.html">Ep.11</a><a href="ep12.html">Ep.12</a><a href="ep13.html">Ep.13</a><a href="lookup.html">찾아보기</a></div>
+<header><h1>Blender 기초 노트</h1><p>SD 캐릭터 강의(DyeoV)를 따라가기 위한 조작 안내예요. 이 페이지는 강의 전에 익힐 기초이고, 위의 Ep.1~Ep.13에는 강의에 나오는 조작을 순서대로 전부 적었어요.</p>
+<div class="legend"><span><kbd>G</kbd> 키보드 키</span><span><span class="mouse">클릭</span> 마우스 조작</span><span>넘패드 없는 키보드 기준</span></div></header>
+<div class="eplist"><a href="ep01.html"><b>Ep.1</b> 블렌더 기본 세팅 &amp; 필수 에드온<span>8개 구간 · 조작 41개</span></a><a href="ep02.html"><b>Ep.2</b> 얼굴 모델링부터 색칠까지<span>16개 구간 · 조작 196개</span></a><a href="ep03.html"><b>Ep.3</b> 귀, 치아, 혀, 몸 만들기<span>12개 구간 · 조작 116개</span></a><a href="ep04.html"><b>Ep.4</b> 손 모델링과 리깅<span>11개 구간 · 조작 140개</span></a><a href="ep05.html"><b>Ep.5</b> 바디를 움직이자! 몸 리깅하고 색칠하기<span>11개 구간 · 조작 85개</span></a><a href="ep06.html"><b>Ep.6</b> 트윈테일 머리 모델링<span>14개 구간 · 조작 131개</span></a><a href="ep07.html"><b>Ep.7</b> 트윈테일 컬러링 &amp; 찰랑 리깅<span>22개 구간 · 조작 119개</span></a><a href="ep08.html"><b>Ep.8</b> 옷 리깅: 데이터 전송(Data Transfer)으로 간단하게<span>16개 구간 · 조작 115개</span></a><a href="ep09.html"><b>Ep.9</b> 옷을 더 사랑스럽게: 옷 텍스처 페인팅<span>11개 구간 · 조작 77개</span></a><a href="ep10.html"><b>Ep.10</b> 아웃라인 Mask, Blink 표정<span>8개 구간 · 조작 81개</span></a><a href="ep11.html"><b>Ep.11</b> 입모양 완성: A, E, I, O, U 쉐이프 키<span>7개 구간 · 조작 74개</span></a><a href="ep12.html"><b>Ep.12</b> 특별한 표정 (Happy / Surprise / Angry), 버텍스 수 점검, 모디파이어 적용<span>6개 구간 · 조작 60개</span></a><a href="ep13.html"><b>Ep.13</b> 블렌더에서 VRM 추출 + 유니티 최종 설정<span>15개 구간 · 조작 86개</span></a></div>
+<nav class="toc"><a href="#view">화면 움직이기</a><a href="#object">오브젝트 다루기</a><a href="#edit">편집 모드</a><a href="#core">강의가 계속 쓰는 세 가지</a><a href="#modifier">Mirror와 Subdivision</a><a href="#mirror">Mirror 따라 하기</a><a href="#delete">지우기</a><a href="#concept">알아 둘 개념</a><a href="#helper">자주 쓰는 보조 기능</a><a href="#trap">초보가 자주 걸리는 함정</a><a href="#uv">UV</a><a href="#texture">텍스처</a><a href="#rig">리깅</a></nav>
 <section id="view"><div class="sec-head"><h2>화면 움직이기</h2><span>VIEW NAVIGATION</span></div><p class="lead">마우스를 3D 화면 위에 올려 둔 상태에서 해요.</p><div class="grid">
 <div class="card"><h3>화면 돌리기</h3><div class="how"><span class="mouse">휠 버튼 누른 채 드래그</span></div></div>
 <div class="card"><h3>화면 옮기기</h3><div class="how"><kbd>Shift</kbd> + <span class="mouse">휠 버튼 드래그</span></div></div>
@@ -202,6 +160,6 @@ footer a{color:var(--accent)}
 <div class="box"><b>웨이트</b>웨이트는 0부터 1까지의 값이에요. 1이면 뼈를 완전히 따라가고 0이면 안 따라가요. 팔꿈치처럼 꺾이는 곳은 두 뼈가 나눠 가져요(가운데 0.5 / 0.5, 옆줄 0.8 / 0.2, 그 바깥 0.9 / 0.1). Weight Paint 화면에서 파랑이 0, 빨강이 1이에요.</div>
 <p class="note">웨이트 수치 입력과 옷에 웨이트 옮기기는 규칙이 정해진 작업이라 스크립트로 자동화할 수 있어요.</p>
 </section>
-<footer>조작 키는 Blender 기본 키맵 기준이고, 5.3에서 하나씩 눌러 확인한 것은 아니에요. 강의: <a href="https://www.youtube.com/playlist?list=PLAR5yRjFCe9sOjK9pbKqRPGTGlaXgfUIA">[SD 버츄얼 캐릭터 만들기] — DyeoV</a></footer></div>
-</body>
-</html>
+<footer>강의 자막을 정리한 노트에서 뽑은 내용이에요. 자막에 없는 수치는 강의 화면을 보고 맞추세요. 단축키는 Blender 기본 키맵 기준이에요.
+강의: <a href="https://www.youtube.com/playlist?list=PLAR5yRjFCe9sOjK9pbKqRPGTGlaXgfUIA">[SD 버츄얼 캐릭터 만들기] DyeoV</a></footer>
+</div></body></html>

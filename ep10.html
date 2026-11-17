@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ep.10 아웃라인 Mask, Blink 표정</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap">
+<link rel="stylesheet" href="style.css"></head><body><div class="wrap">
+<div class="top"><a href="index.html">기초</a><a href="ep01.html">Ep.1</a><a href="ep02.html">Ep.2</a><a href="ep03.html">Ep.3</a><a href="ep04.html">Ep.4</a><a href="ep05.html">Ep.5</a><a href="ep06.html">Ep.6</a><a href="ep07.html">Ep.7</a><a href="ep08.html">Ep.8</a><a href="ep09.html">Ep.9</a><a href="ep10.html" class="on">Ep.10</a><a href="ep11.html">Ep.11</a><a href="ep12.html">Ep.12</a><a href="ep13.html">Ep.13</a><a href="lookup.html">찾아보기</a></div>
+<header><div class="ep">EP.10</div><h1>아웃라인 Mask, Blink 표정</h1><p>원하는 곳에만 외곽선이 나오도록 흑백 마스크 이미지를 구워서 VRM 매테리얼에 넣어요. 이어서 눈을 감는 표정(Blink) 쉐이프 키를 얼굴, 아이라인, 눈에 만들어요.</p>
+<a class="vid" href="https://www.youtube.com/watch?v=Wcm2llkvYIU">강의 영상 열기</a>
+</header>
+<nav class="toc"><a href="#s1">아웃라인을 없앨 영역 정하기</a><a href="#s2">얼굴 아웃라인 마스크 베이크</a><a href="#s3">응용: 머리카락 끝을 뾰족하게 (Hair-Mask)</a><a href="#s4">페이셜 방식 개요</a><a href="#s5">쉐이프 키 준비</a><a href="#s6">Blink 만들기: 얼굴 메쉬</a><a href="#s7">Blink: 아이라인/속눈썹 오브젝트</a><a href="#s8">Blink: 눈(Eye) 오브젝트로 뽀용한 연출</a></nav>
+<section id="s1"><div class="sec-head"><h2>아웃라인을 없앨 영역 정하기</h2><a class="t" href="https://www.youtube.com/watch?v=Wcm2llkvYIU&t=0s">0:00~2:10</a></div>
+<p class="lead">어디에 외곽선을 남기고 어디를 지울지 정하고, 마스크 이미지를 넣는 칸이 어디인지 알게 돼요.</p>
+<ol class="steps">
+<li><h3>Outline 이미지 칸 확인<em>재질·텍스처</em></h3><div class="how">속성 창 Material 탭 → face 매테리얼 선택 → 아래쪽 VRM 매테리얼의 Outline 설정 칸을 찾아요</div><div class="why">이 칸에 흑백 이미지를 넣으면 흰색인 곳에만 아웃라인(외곽선)이 생겨요. 검은색인 곳은 선이 사라져요.</div><div class="nt">이 강의의 아웃라인은 VRM 애드온의 VRM(MToon) 매테리얼이 만들어 주는 선이에요. 오브젝트에 MToon 아웃라인 모디파이어가 붙어 있어요.</div></li>
+</ol>
+<div class="box"><b>강사의 팁</b><ul><li>아웃라인이 필요 없는 곳: 눈 흰자와 피부 사이 구분선, 속눈썹, 입속, 이빨, 혓바닥. 눈 흰자 경계에 선이 있으면 오히려 못생겨 보인다고 해요.</li><li>얼굴 쪽에서 아웃라인이 필요한 곳은 사실상 얼굴 피부와 귀뿐이에요. 나머지는 마스크에서 전부 검은색이어야 해요.</li><li>마스크는 텍스처 페인트로 직접 칠해도 돼요. 강사는 버텍스 그룹 웨이트 → Attribute 노드 → Emit 베이크 방식으로 만들어요.</li></ul></div>
+</section>
+<section id="s2"><div class="sec-head"><h2>얼굴 아웃라인 마스크 베이크</h2><a class="t" href="https://www.youtube.com/watch?v=Wcm2llkvYIU&t=137s">2:17~8:20</a></div>
+<p class="lead">Face-Mask 이미지가 만들어져 face 매테리얼의 Outline 칸에 들어가고, 눈 흰자와 입속의 외곽선이 사라져요.</p>
+<ol class="steps">
+<li><h3>얼굴 메쉬 선택<em>선택</em></h3><div class="how">얼굴(Head) 메쉬를 <span class="mouse">클릭</span>해서 선택</div><div class="why">마스크를 만들 대상이 얼굴이에요.</div></li>
+<li><h3>쉐이딩을 Material Preview로<em>화면</em></h3><div class="how">Viewport Shading 4번째 버튼(Rendered)에서 3번째 버튼(Material Preview)으로 바꿔요</div><div class="why">곧 렌더 엔진을 무거운 Cycles로 바꾸기 때문에 화면이 느려지지 않게 미리 가벼운 표시로 바꿔 둬요.</div></li>
+<li><h3>렌더 엔진을 Cycles로<em>파일·설정</em></h3><div class="how">속성 창 Render 탭 → Render Engine → EEVEE를 Cycles로</div><div class="why">Cycles여야 Bake(굽기) 메뉴가 떠요. 베이크는 화면에 보이는 색을 이미지로 찍어 내는 기능이에요.</div><div class="nt">작업이 끝나면 꼭 EEVEE로 되돌려요.</div></li>
+<li><h3>샘플 수 낮추기<em>파일·설정</em></h3><div class="how">Render 탭 → Viewport Max Samples를 64 정도로, Render Max Samples를 512 정도로</div><div class="why">Cycles에서 화면이 버벅일 때 계산량을 줄여 줘요.</div><div class="nt">렉이 걸릴 때만 해요.</div></li>
+<li><h3>버텍스 그룹 만들기<em>웨이트</em></h3><div class="how">속성 창 Data 탭 → Vertex Groups → + → 이름을 Outline-non 으로</div><div class="why">버텍스 그룹은 점마다 0~1 값을 저장하는 묶음이에요. 이 값을 흑백 마스크의 재료로 써요.</div><div class="nt">강의 뒤쪽에서는 Outline_non 이라고도 불러요. 자막 표기가 섞여 있으니 한 가지로 정해서 끝까지 같은 이름을 쓰세요.</div></li>
+<li><h3>Edit Mode로 전환<em>화면</em></h3><div class="how">얼굴을 선택한 채 Edit Mode로 들어가요</div><div class="why">점을 골라서 웨이트 값을 넣으려면 편집 모드여야 해요.</div></li>
+<li><h3>얼굴 전체에 Weight 1<em>웨이트</em></h3><div class="how">얼굴 전체 선택 → Vertex Groups의 Weight를 1로 → Assign</div><div class="why">1은 흰색, 곧 선이 있다는 뜻이에요. 먼저 전부 선이 있는 상태로 만들어요.</div></li>
+<li><h3>선 없앨 영역에 Weight 0<em>웨이트</em></h3><div class="how">입속, 눈 흰자처럼 선이 없었으면 하는 영역 선택 → Weight를 0으로 → Assign</div><div class="why">0은 검은색, 곧 선이 없다는 뜻이에요.</div><div class="nt">자막은 이 대목에서 '입속과 귀 같은 영역'이라고 말하지만 앞에서는 귀에 아웃라인이 필요하다고 했어요. 귀를 0으로 넣는지는 자막으로 확실하지 않아요. 화면을 보고 맞추세요.</div></li>
+<li><h3>Weight Paint로 확인<em>웨이트</em></h3><div class="how">Weight Paint 모드로 전환해서 색을 확인해요</div><div class="why">웨이트가 색으로 보여요. 빨강이 1, 파랑이 0이에요.</div></li>
+<li><h3>웨이트 Smooth 한 번<em>웨이트</em></h3><div class="how"><kbd>Q</kbd> → Smooth 를 한 번 적용</div><div class="why">0과 1의 경계를 살짝 흐리게 해서 선이 뚝 끊기지 않고 점점 가늘어지게 해요.</div><div class="nt">자막은 'Q를 눌러서 스무스'라고만 해요. Q(Quick Favorites, 자주 쓰는 메뉴 모음)에 Smooth를 미리 등록해 둔 것으로 보여요.</div></li>
+<li><h3>Weight 0 다시 Assign<em>웨이트</em></h3><div class="how">눈 흰자와 입속을 다시 선택 → Weight 0 → Assign</div><div class="why">Smooth로 번진 값을 다시 눌러서, 경계만 살짝 흐리고 없앨 영역은 확실한 파란색(0)이 되게 해요.</div></li>
+<li><h3>face 매테리얼 잠깐 빼기<em>재질·텍스처</em></h3><div class="how">Material 탭 → 매테리얼 슬롯의 face 옆 X 버튼</div><div class="why">베이크용 임시 매테리얼을 넣을 자리를 비워요.</div><div class="nt">X로 빼도 매테리얼 데이터는 남아 있어서 나중에 다시 고를 수 있어요.</div></li>
+<li><h3>Outline_X 매테리얼 만들기<em>재질·텍스처</em></h3><div class="how">Material 탭 → New → 이름을 Outline_X 로</div><div class="why">웨이트 값을 흑백으로 보여 주는 베이크 전용 매테리얼이에요.</div></li>
+<li><h3>Principled BSDF 삭제<em>재질·텍스처</em></h3><div class="how">Shader Editor에서 Principled BSDF 노드를 지워요</div><div class="why">기본 쉐이더 대신 스스로 빛나는 Emission을 쓸 거라서 필요 없어요.</div></li>
+<li><h3>Attribute, Emission 추가<em>재질·텍스처</em></h3><div class="how">Shader Editor에서 <kbd>Shift</kbd> <kbd>A</kbd> → Attribute 노드 추가, 다시 <kbd>Shift</kbd> <kbd>A</kbd> → Emission 쉐이더 추가</div><div class="why">Attribute는 메쉬에 저장된 값(여기서는 버텍스 그룹)을 읽어 오는 노드예요. Emission은 조명과 상관없이 그 색을 그대로 내보내요.</div></li>
+<li><h3>노드 연결<em>재질·텍스처</em></h3><div class="how">Attribute → Emission → Material Output 순서로 선을 이어요</div><div class="why">웨이트 값이 그대로 표면 색이 돼요.</div></li>
+<li><h3>Attribute에 그룹 이름 넣기<em>재질·텍스처</em></h3><div class="how">Attribute 노드의 Name 칸에 버텍스 그룹 이름 Outline-non 을 그대로 붙여넣기</div><div class="why">이름이 정확히 같아야 그 그룹의 값을 읽어 와요.</div><div class="nt">한 글자라도 다르면 안 돼요. 버텍스 그룹 이름을 복사해서 붙여넣으세요.</div></li>
+<li><h3>Rendered로 흑백 확인<em>화면</em></h3><div class="how">Viewport Shading 4번째 버튼(Rendered)으로 전환</div><div class="why">3번째 쉐이딩에서는 변화가 없고 4번째로 가야 흑백이 보여요.</div></li>
+<li><h3>베이크용 이미지 만들기<em>재질·텍스처</em></h3><div class="how">Shader Editor에서 Image Texture 노드 추가 → New → 이름 Face-Mask, 크기 2048</div><div class="why">구운 결과가 담길 빈 이미지예요. 크기는 기존 텍스처와 같은 2048로 맞춰요.</div><div class="nt">이 노드는 다른 노드에 연결하지 않아요. 선택만 해 두면 돼요.</div></li>
+<li><h3>Emit으로 Bake<em>재질·텍스처</em></h3><div class="how">Head 메쉬 선택 + Face-Mask 이미지 노드를 <span class="mouse">클릭</span>해 활성 상태로 → Render 탭 → Bake → Bake Type을 Emit 으로 → Bake</div><div class="why">선택된 이미지 노드에 흑백이 찍혀요. 흰색은 선 있음, 검은색은 선 없음이에요.</div><div class="nt">렉이 심하면 3번째 뷰포트 쉐이딩으로 바꾼 뒤 Bake를 누르세요.</div></li>
+<li><h3>렌더 엔진을 EEVEE로<em>파일·설정</em></h3><div class="how">Render 탭 → Render Engine → Cycles를 EEVEE로</div><div class="why">Cycles로 두면 렉이 걸려 응답 없음이 되고 저장이 날아갈 수 있어요.</div><div class="nt">잊기 쉬워요. 베이크가 끝나면 바로 되돌리세요.</div></li>
+<li><h3>매테리얼을 face로 되돌리기<em>재질·텍스처</em></h3><div class="how">Material 탭 → 매테리얼 슬롯에서 Outline_X 대신 원래 face 를 선택</div><div class="why">임시 매테리얼은 베이크할 때만 써요.</div></li>
+<li><h3>Face-Mask 저장<em>파일·설정</em></h3><div class="how">이미지 에디터에서 Face-Mask 를 띄우고 Image → Save</div><div class="why">이미지가 파일로 저장돼 있지 않으면 VRM 매테리얼의 Outline 칸에 들어가지 않아요.</div></li>
+<li><h3>Outline 칸에 마스크 넣기<em>재질·텍스처</em></h3><div class="how">face 매테리얼 → VRM 매테리얼 아래쪽 Outline 이미지 칸 → 폴더 버튼 → 저장한 Face-Mask 파일 열기</div><div class="why">이제 이 이미지의 검은 곳은 외곽선이 안 나와요.</div><div class="nt">칸에서 이미지를 바로 고르면 안 들어가요. 폴더 버튼으로 파일을 불러와야 해요.</div></li>
+<li><h3>Edit Mode 다녀와서 갱신<em>화면</em></h3><div class="how">Edit Mode로 들어가 전체 선택 → 다시 Object Mode로</div><div class="why">마스크를 넣어도 화면에 반영이 안 될 때 이렇게 하면 갱신돼요.</div><div class="nt">강사 설명으로는 VRM 매테리얼이 유니티의 MToon을 블렌더에서 흉내 낸 것이라 생기는 오류로 보여요.</div></li>
+<li><h3>속눈썹, 입속도 갱신<em>화면</em></h3><div class="how">속눈썹 오브젝트, 입속 오브젝트도 하나씩 선택해서 Edit Mode에 들어갔다가 Object Mode로 나와요</div><div class="why">다른 오브젝트도 한 번씩 다녀와야 선이 사라진 모습으로 바뀌어요.</div><div class="nt">결과: 속눈썹 아웃라인이 사라지고, 입 주변은 입으로 갈수록 선이 가늘게 모여요.</div></li>
+</ol>
+<div class="tw"><table><tr><th>항목</th><th>값</th><th>비고</th></tr><tr><td>버텍스 그룹 이름</td><td>Outline-non</td><td>1 = 선 있음, 0 = 선 없음</td></tr><tr><td>베이크용 매테리얼</td><td>Outline_X</td><td>Attribute → Emission → Output</td></tr><tr><td>마스크 이미지</td><td>Face-Mask</td><td>2048, 흰색 = 선 있음 / 검은색 = 선 없음</td></tr><tr><td>Bake Type</td><td>Emit</td><td>Render Engine이 Cycles일 때만 Bake 메뉴가 나와요</td></tr><tr><td>Viewport Max Samples</td><td>약 64</td><td>렉 걸릴 때</td></tr><tr><td>Render Max Samples</td><td>약 512</td><td>렉 걸릴 때</td></tr></table></div>
+</section>
+<section id="s3"><div class="sec-head"><h2>응용: 머리카락 끝을 뾰족하게 (Hair-Mask)</h2><a class="t" href="https://www.youtube.com/watch?v=Wcm2llkvYIU&t=504s">8:24~12:36</a></div>
+<p class="lead">머리카락 끝으로 갈수록 외곽선이 가늘어지는 Hair-Mask를 만들어 봐요. 원하는 사람만 쓰는 선택 기능이에요.</p>
+<ol class="steps">
+<li><h3>Armature 모디파이어 다시 넣기<em>모디파이어</em></h3><div class="how">머리카락 메쉬 선택 → Modifiers 탭 → Armature 모디파이어를 다시 추가</div><div class="why">뼈를 새로 이식하면서 머리카락 메쉬들의 Armature 모디파이어가 빠져 있었어요. 이게 있어야 뼈를 따라 움직여요.</div><div class="nt">강사가 작업 중간에 발견해서 고친 부분이에요. 내 파일에도 빠져 있는지 확인하세요.</div></li>
+<li><h3>머리에 Outline_X 넣기<em>재질·텍스처</em></h3><div class="how">머리카락 선택 → Material 탭 → 원래 매테리얼을 잠시 빼고 Outline_X 를 선택</div><div class="why">얼굴 때 만든 베이크용 매테리얼을 그대로 다시 써요.</div></li>
+<li><h3>같은 이름의 버텍스 그룹 추가<em>웨이트</em></h3><div class="how">Data 탭 → Vertex Groups → + → 이름을 Attribute 노드에 쓴 것과 똑같이 Outline-non 으로</div><div class="why">Outline_X 매테리얼이 이 이름의 그룹을 읽기 때문에 이름이 같아야 해요.</div></li>
+<li><h3>Cycles + Rendered로<em>화면</em></h3><div class="how">그 메쉬만 따로 보이게 한 뒤 Render Engine을 Cycles로, Viewport Shading을 4번째(Rendered)로</div><div class="why">흑백이 어떻게 들어가는지 보면서 작업해요.</div></li>
+<li><h3>전체에 Weight 1<em>웨이트</em></h3><div class="how">Edit Mode에서 전체 선택 → Weight 1 → Assign</div><div class="why">먼저 전부 흰색(선 있음)으로 만들어요.</div></li>
+<li><h3>끝 라인에만 Weight 0<em>웨이트</em></h3><div class="how">머리카락 끝 라인의 버텍스만 선택 → Weight 0 → Assign</div><div class="why">끝만 검은색이 되어, 끝으로 갈수록 선이 가늘어져요.</div><div class="nt">렉 때문에 선택이 안 되면 가벼운 쉐이딩 모드로 바꿔서 선택하세요.</div></li>
+<li><h3>Hair-Mask 이미지 만들기<em>재질·텍스처</em></h3><div class="how">Shader Editor의 Image Texture 노드에서 New → 이름 Hair-Mask</div><div class="why">머리카락용 마스크가 담길 새 이미지예요.</div></li>
+<li><h3>Hair-Mask Bake<em>재질·텍스처</em></h3><div class="how">머리 메쉬(트윈테일) 선택 + Hair-Mask 노드 선택 → Render 탭 → Bake → Bake Type이 Emit 인지 확인 → Bake</div><div class="why">머리카락의 웨이트가 흑백 이미지로 구워져요.</div></li>
+<li><h3>매테리얼을 hair로 되돌리기<em>재질·텍스처</em></h3><div class="how">Material 탭에서 Outline_X 대신 원래 hair 매테리얼을 선택</div><div class="why">임시 매테리얼은 베이크할 때만 써요.</div></li>
+<li><h3>Hair-Mask 저장 후 넣기<em>재질·텍스처</em></h3><div class="how">이미지 에디터 Image → Save → hair 매테리얼의 Outline 이미지 칸 폴더 버튼으로 그 파일 불러오기</div><div class="why">얼굴 때와 같아요. 파일로 저장해야 칸에 들어가요.</div></li>
+<li><h3>Edit Mode 다녀오기<em>화면</em></h3><div class="how">머리카락을 선택하고 Edit Mode에 들어갔다가 Object Mode로</div><div class="why">화면이 갱신되면서 머리끝 선이 뾰족하게 보여요.</div></li>
+<li><h3>Hair-Mask 빼기(선택)<em>재질·텍스처</em></h3><div class="how">hair 매테리얼 Outline 이미지 칸의 X 버튼 → Edit Mode에 한 번 다녀오기</div><div class="why">강사는 Hair-Mask를 쓰지 않기로 해서 뺐어요. 다시 Edit Mode를 다녀오면 원래 선으로 돌아와요.</div><div class="nt">마음에 들면 빼지 않아도 돼요.</div></li>
+<li><h3>EEVEE로 되돌리고 저장<em>파일·설정</em></h3><div class="how">Render 탭 → Render Engine을 EEVEE로 → 파일 저장</div><div class="why">Cycles 상태로 두면 렉 → 응답 없음 → 저장이 날아가는 일이 생겨요.</div><div class="nt">강사가 강조한 주의점이에요. 저장을 자주 하세요.</div></li>
+</ol>
+<div class="box"><b>강사의 팁</b><ul><li>머리카락 끝에 뭉툭하고 두툼한 선이 생기는 게 싫을 때 쓰는 방법이에요.</li><li>절차는 얼굴 마스크와 똑같아요.</li></ul></div>
+</section>
+<section id="s4"><div class="sec-head"><h2>페이셜 방식 개요</h2><a class="t" href="https://www.youtube.com/watch?v=Wcm2llkvYIU&t=756s">12:36~15:05</a></div>
+<p class="lead">이 시리즈는 립싱크 방식으로 가고, A E I O U + Blink 표정이 필요하다는 것을 알게 돼요.</p>
+<ol class="steps" hidden>
+</ol>
+<div class="tw"><table><tr><th>방식</th><th>필요한 표정</th><th>비고</th></tr><tr><td>립싱크</td><td>A, E, I, O, U, Blink</td><td>쉬움. 눈 깜빡임은 자동</td></tr><tr><td>아이폰/아이패드 (iFacialMocap)</td><td>52가지</td><td>어려움. 이 시리즈에서는 안 다룸</td></tr></table></div>
+<div class="box"><b>강사의 팁</b><ul><li>립싱크 방식은 마이크 소리의 모음을 분석해 입 모양을 바꿔요. 눈 깜빡임은 자동이라, 내가 눈을 감아도 캐릭터가 따라 감지는 않아요.</li><li>아이폰/아이패드 방식(iFacialMocap 앱)은 52가지 표정이 필요해 훨씬 어려워요. 이 시리즈에서는 다루지 않아요.</li><li>아이폰 방식을 쓰더라도 립싱크 표정은 꼭 갖춰 두면 좋아요. 기기가 고장 났을 때 대비가 돼요.</li></ul></div>
+</section>
+<section id="s5"><div class="sec-head"><h2>쉐이프 키 준비</h2><a class="t" href="https://www.youtube.com/watch?v=Wcm2llkvYIU&t=905s">15:05~18:00</a></div>
+<p class="lead">얼굴과 속눈썹에 Basis, Blink 쉐이프 키가 생기고, Mio3 ShapeKey로 값이 같이 움직이게 돼요.</p>
+<ol class="steps">
+<li><h3>얼굴 관련만 보이게<em>화면</em></h3><div class="how">Outliner에서 Head 관련 오브젝트만 보이게 하고 나머지 컬렉션과 뼈는 숨겨요</div><div class="why">표정 작업에 필요한 것만 남겨 화면을 가볍고 보기 쉽게 해요.</div><div class="nt">강사는 Body를 의상 컬렉션 쪽에 넣어 뒀어요.</div></li>
+<li><h3>무서운 얼굴 되돌리기<em>화면</em></h3><div class="how">Shader Editor에서 색이 들어 있는 Lit Color 텍스처 노드를 <span class="mouse">클릭</span></div><div class="why">2번째 쉐이딩(Solid)에서 얼굴이 흑백으로 무섭게 보이는 건 마스크 이미지 노드가 활성이라서예요. 색 텍스처 노드를 누르면 원래대로 보여요.</div></li>
+<li><h3>왼쪽 뷰를 옆모습으로<em>화면</em></h3><div class="how">왼쪽 뷰에 마우스를 두고 <kbd>`</kbd> → Right (강의는 넘패드 3)</div><div class="why">옆모습과 정면을 동시에 보면서 작업해요.</div></li>
+<li><h3>가운데 뷰를 정면으로<em>화면</em></h3><div class="how">가운데 뷰는 얼굴 정면이 보이게 맞춰요</div><div class="why">눈 감는 모양은 정면에서 가장 잘 보여요.</div></li>
+<li><h3>햇빛 끄기<em>화면</em></h3><div class="how">Outliner에서 햇빛(라이트)을 꺼요</div><div class="why">그림자 없이 형태만 보려고요.</div></li>
+<li><h3>Basis 만들기<em>쉐이프 키</em></h3><div class="how">Head(얼굴) 메쉬 선택 → Data 탭 → Shape Keys → +</div><div class="why">쉐이프 키는 같은 메쉬의 다른 모양을 저장해 두는 기능이에요. 처음 누른 +는 기준 모양인 Basis를 만들어요.</div></li>
+<li><h3>Blink 키 만들기<em>쉐이프 키</em></h3><div class="how">Shape Keys → + 한 번 더 → 새 키 이름을 Blink 로</div><div class="why">눈 감은 모양을 담을 키예요.</div></li>
+<li><h3>속눈썹에도 Basis, Blink<em>쉐이프 키</em></h3><div class="how">속눈썹/아이라인 오브젝트 선택 → Data 탭 → Shape Keys → + (Basis) → + → 이름 Blink</div><div class="why">눈을 감으면 아이라인도 같이 움직여야 해서 같은 이름의 키가 필요해요.</div></li>
+<li><h3>Mio3 ShapeKey 연동<em>애드온</em></h3><div class="how">사이드바 Tool 탭 → Mio3 ShapeKey → Collection을 Head 로 지정</div><div class="why">그 컬렉션 안 오브젝트들이 같은 이름의 쉐이프 키를 가지면 값이 서로 연동돼요. 한 곳의 Blink를 움직이면 나머지도 같이 움직여요.</div><div class="nt">Mio3 ShapeKey는 1편에서 설치한 애드온이에요. 연동이 안 되면 얼굴(Head)을 선택한 상태에서 값을 움직이세요.</div></li>
+</ol>
+</section>
+<section id="s6"><div class="sec-head"><h2>Blink 만들기: 얼굴 메쉬</h2><a class="t" href="https://www.youtube.com/watch?v=Wcm2llkvYIU&t=1080s">18:00~22:47</a></div>
+<p class="lead">얼굴 메쉬의 Blink 키에서 윗꺼풀과 아랫꺼풀이 거의 맞닿아 눈이 감겨요.</p>
+<ol class="steps">
+<li><h3>감은 눈 선 그리기<em>기타</em></h3><div class="how">Annotate 도구로 원하는 감은 눈 선을 화면에 그려요</div><div class="why">목표 선을 먼저 그려 두고 그 선에 맞춰 점을 옮기면 모양 잡기가 쉬워요. Annotate는 화면에 메모용 선을 그리는 펜이에요.</div><div class="nt">선은 눈 중간보다 살짝 아래에 그려요. 윗꺼풀만 내려오는 게 아니라 위아래가 모이기 때문이에요. 눈꼬리는 안쪽으로 모이게 짧게 그려요. 원래 눈꼬리 위치까지 길게 그리면 나중에 징그러워져요.</div></li>
+<li><h3>Blink 키에서 Edit Mode<em>쉐이프 키</em></h3><div class="how">얼굴 메쉬 선택 → Shape Keys 목록에서 Blink <span class="mouse">클릭</span> → Edit Mode</div><div class="why">선택된 키에 변형이 저장돼요.</div><div class="nt">Basis에 작업해 버렸다면 바로 <kbd>Ctrl</kbd> <kbd>Z</kbd>로 되돌리세요. 반드시 Blink 키에서 작업해요.</div></li>
+<li><h3>윗꺼풀 내리기<em>이동·변형</em></h3><div class="how">내려와야 하는 윗꺼풀 엣지들을 선택해서 조금씩 아래로 내려요. 눈 중앙 부분은 그대로 내려요</div><div class="why">눈을 감으면 윗꺼풀이 내려와요.</div><div class="nt">강의 자막에 수치가 없어요. 화면을 보고 맞추세요.</div></li>
+<li><h3>앞머리, 눈꼬리 쪽 내리기<em>이동·변형</em></h3><div class="how">눈 앞머리와 뒷꼬리 쪽 엣지 선택 → <kbd>G</kbd> <kbd>G</kbd> → 마우스를 움직여 내려요</div><div class="why">G를 두 번 누르면 점이 이어진 선을 따라 미끄러져요(엣지 슬라이드). 면의 모양을 덜 망가뜨리고 옮길 수 있어요.</div><div class="nt">자막은 'G G'라고만 말해요. 엣지 슬라이드로 보여요.</div></li>
+<li><h3>아랫꺼풀 올리기<em>이동·변형</em></h3><div class="how">아랫꺼풀 선택 → <kbd>G</kbd> <kbd>Z</kbd> → 위로</div><div class="why">G 다음 Z를 누르면 위아래(Z축)로만 움직여요.</div></li>
+<li><h3>Pivot을 Active Element로<em>이동·변형</em></h3><div class="how">3D 뷰 위쪽 Pivot Point 메뉴 → Active Element</div><div class="why">Pivot은 크기 조절이나 회전의 기준점이에요. Active Element로 두면 마지막에 선택한 점이 기준이 돼요.</div></li>
+<li><h3>위아래 버텍스 모으기<em>이동·변형</em></h3><div class="how">모을 버텍스들을 선택하고 목표가 될 버텍스를 마지막에 선택(흰색으로 표시) → <kbd>S</kbd> → 마우스를 움직여 모아요</div><div class="why">활성 버텍스 쪽으로 다른 점이 모여서 윗꺼풀과 아랫꺼풀이 거의 맞닿아요.</div><div class="nt">짝이 애매한 버텍스는 양옆 사이 중간 지점으로 나눠 보내요. 거의 맞닿을 만큼 가깝게 만들어야 해요.</div></li>
+<li><h3>Value 1로 확인<em>쉐이프 키</em></h3><div class="how">Object Mode로 → Shape Keys에서 Blink 의 Value를 1로</div><div class="why">Value가 0이면 변형이 안 보여요. 1로 올려야 감은 눈이 보여요.</div><div class="nt">'오브젝트 모드로 가니 없어졌어요'는 Value가 0이라서 그런 흔한 실수예요.</div></li>
+</ol>
+<div class="box"><b>강사의 팁</b><ul><li>눈 감는 스타일은 두 가지예요. 평범하게(시크하게) 감는 형태와 웃는 눈(눈웃음) 형태. 캐릭터 성격에 맞춰 골라요. 강사는 밝은 캐릭터라 웃는 눈으로 했어요.</li><li>Basis에 작업해 버렸으면 바로 <kbd>Ctrl</kbd> <kbd>Z</kbd>로 되돌려요.</li></ul></div>
+</section>
+<section id="s7"><div class="sec-head"><h2>Blink: 아이라인/속눈썹 오브젝트</h2><a class="t" href="https://www.youtube.com/watch?v=Wcm2llkvYIU&t=1367s">22:47~31:10</a></div>
+<p class="lead">아이라인, 언더라인, 속눈썹의 Blink가 감은 눈꺼풀에 맞게 따라와요.</p>
+<ol class="steps">
+<li><h3>아웃라인 모디파이어 끄기<em>모디파이어</em></h3><div class="how">아이라인, 얼굴, 입속 오브젝트 각각 → Modifiers 탭 → MToon 아웃라인 모디파이어의 뷰포트 표시(모니터 아이콘)를 꺼요</div><div class="why">외곽선 때문에 Edit Mode에서 선택한 곳이 잘 안 보여요. 화면 표시만 끄는 거라 결과물에는 영향이 없어요.</div><div class="nt">Ep.11 마지막에 다시 켜요.</div></li>
+<li><h3>언더라인만 남기고 숨기기<em>화면</em></h3><div class="how">아이라인 오브젝트의 Blink 키에서 Edit Mode → 쌍꺼풀, 눈썹, 윗 아이라인 선택 → <kbd>H</kbd></div><div class="why">H는 선택한 것을 숨겨요. 언더라인(아래 아이라인)부터 고치려고 나머지를 치워요.</div></li>
+<li><h3>언더라인 올리기<em>이동·변형</em></h3><div class="how">언더라인 전체를 선택해서 위로 올려요</div><div class="why">아랫꺼풀이 올라간 만큼 언더라인도 따라 올라가야 해요.</div><div class="nt">언더라인이 실눈 뜬 것처럼 거슬리면 더 올려요.</div></li>
+<li><h3>비례 편집으로 맞추기<em>이동·변형</em></h3><div class="how">Proportional Editing을 켜고 언더라인을 아랫꺼풀 위치에 맞춰요</div><div class="why">비례 편집은 선택한 점 주변도 부드럽게 같이 끌고 가는 기능이에요.</div></li>
+<li><h3>파묻힌 부분 꺼내기<em>이동·변형</em></h3><div class="how">얼굴 속으로 파묻힌 언더라인 부분을 선택해서 앞으로 꺼내요</div><div class="why">얼굴 안에 들어가면 선이 안 보여요.</div><div class="nt">감은 눈에서 언더라인이 꼭 보일 필요는 없어서 가늘어지게 처리해도 돼요.</div></li>
+<li><h3>중간값 0.5로 확인<em>쉐이프 키</em></h3><div class="how">Shape Keys에서 Blink 의 Value를 0.5 정도로</div><div class="why">반쯤 감았을 때 언더라인과 눈꺼풀 사이에 틈이 생기면 마감이 안 된 거예요.</div><div class="nt">완벽히 맞지 않아도 돼요. 위쪽 아이라인이 덮어 주니 움직임이 자연스러우면 충분해요.</div></li>
+<li><h3>Shape Key Edit Mode 켜기<em>쉐이프 키</em></h3><div class="how">Shape Keys 목록 아래의 네모 버튼(Shape Key Edit Mode)을 켜요</div><div class="why">편집 모드에서도 지금 Value 그대로 모양이 보여요. 중간값 상태를 보면서 고칠 수 있어요.</div></li>
+<li><h3>숨긴 것 다시 보이기<em>화면</em></h3><div class="how"><kbd>Alt</kbd> <kbd>H</kbd></div><div class="why">숨겼던 것을 전부 다시 보여 줘요.</div></li>
+<li><h3>윗 아이라인만 남기기<em>화면</em></h3><div class="how">언더라인, 쌍꺼풀, 눈썹, 속눈썹 선택 → <kbd>H</kbd></div><div class="why">이번에는 위쪽 아이라인만 작업해요.</div></li>
+<li><h3>윗 아이라인 내리기<em>이동·변형</em></h3><div class="how">Proportional Editing 범위를 크게 잡고 윗 아이라인을 각도에 맞춰 내려요. 눈 앞머리가 자연스럽게 되도록 다듬어요</div><div class="why">윗꺼풀이 내려온 자리로 아이라인을 옮겨요.</div><div class="nt">강의 자막에 수치가 없어요. 화면을 보고 맞추세요.</div></li>
+<li><h3>눈꼬리 납작하게<em>이동·변형</em></h3><div class="how">구부러진 눈꼬리 부분 선택 → <kbd>S</kbd> <kbd>Y</kbd></div><div class="why">S 다음 Y는 앞뒤(Y축)로만 크기를 줄여요. 눈꼬리를 납작하게 만들어요.</div></li>
+<li><h3>눈꼬리 말기<em>이동·변형</em></h3><div class="how"><kbd>S</kbd> <kbd>Z</kbd></div><div class="why">위아래(Z축)로 크기를 조절해 눈꼬리가 말리게 해요.</div></li>
+<li><h3>눈꼬리 위로 올리기<em>이동·변형</em></h3><div class="how">눈꼬리 부분을 위로 올려요</div><div class="why">감은 눈 선에 맞춰요.</div></li>
+<li><h3>삐져나온 곳 넣기<em>이동·변형</em></h3><div class="how">삐져나온 부분을 Y 방향으로 당겨 얼굴 안으로 넣어요</div><div class="why">이렇게 안쪽으로 정리하면 눈꼬리가 길어 보이지 않아요.</div></li>
+<li><h3>옆모습에서 다듬기<em>이동·변형</em></h3><div class="how">옆에서 보면서 눈 앞머리를 당기고, 윗부분은 <kbd>G</kbd> <kbd>Y</kbd>로 눈꺼풀에 가깝게 옮겨요. 너무 깊이 들어간 곳은 적당히 꺼내요</div><div class="why">정면만 보고 고치면 옆에서 어색해요. G 다음 Y는 앞뒤로만 움직여요.</div><div class="nt">딱 붙일 필요는 없어요. 모양이 예쁘면 돼요.</div></li>
+<li><h3>반쯤 감았을 때 틈 메우기<em>이동·변형</em></h3><div class="how">Blink를 반쯤 올려 보고, 아이라인과 눈꺼풀 사이에 공간이 보이는 부분을 잡아 내려요</div><div class="why">중간 과정에서 살색 틈이 보이지 않게 해요.</div></li>
+<li><h3>속눈썹 내리기<em>이동·변형</em></h3><div class="how">Proportional Editing을 끄고 속눈썹을 선택해 내려요</div><div class="why">속눈썹만 따로 움직이려고 비례 편집을 꺼요.</div></li>
+<li><h3>속눈썹 각도 틀기<em>이동·변형</em></h3><div class="how">X-Ray를 켜고 보면서 속눈썹 각도를 조금 틀고 위치를 보정해요</div><div class="why">감을 때 각도를 그대로 두지 않고 살짝 휘게 하면 자연스러워요. X-Ray는 메쉬를 반투명하게 보여 줘요.</div><div class="nt">너무 내리면 정면에서 속눈썹이 안 보여요. 삐죽 나온 게 보일 만큼 다시 올려요.</div></li>
+</ol>
+</section>
+<section id="s8"><div class="sec-head"><h2>Blink: 눈(Eye) 오브젝트로 뽀용한 연출</h2><a class="t" href="https://www.youtube.com/watch?v=Wcm2llkvYIU&t=1874s">31:14~33:30</a></div>
+<p class="lead">눈을 감을 때 눈동자가 안으로 들어가고 하이라이트가 작아지는 연출이 들어가요.</p>
+<ol class="steps">
+<li><h3>Eye에 Basis, Blink 추가<em>쉐이프 키</em></h3><div class="how">Eye 오브젝트 선택 → Data 탭 → Shape Keys → + (Basis) → + → 이름 Blink</div><div class="why">눈동자도 Blink에 맞춰 움직이게 하려고요.</div></li>
+<li><h3>연동 확인<em>쉐이프 키</em></h3><div class="how">얼굴(Head)을 선택하고 Blink Value를 1로 올려서 Eye의 Blink도 1이 되는지 확인</div><div class="why">Mio3 ShapeKey 연동이 Eye에도 걸렸는지 봐요.</div></li>
+<li><h3>Blink 0.7에서 편집 준비<em>쉐이프 키</em></h3><div class="how">Blink Value를 약 0.7로 → Shape Keys 아래 네모 버튼(Shape Key Edit Mode)을 켠 채 Eye의 Blink 키에서 Edit Mode</div><div class="why">감다 만 상태를 보면서 눈동자를 고쳐요.</div></li>
+<li><h3>눈 전체 안으로 밀기<em>이동·변형</em></h3><div class="how">눈 전체 선택 → Y 방향(안쪽)으로 살짝 밀어 넣어요</div><div class="why">눈을 감을 때 눈이 안으로 들어가요.</div><div class="nt">강의 자막에 수치가 없어요. 화면을 보고 맞추세요.</div></li>
+<li><h3>Pivot을 Median Point로<em>이동·변형</em></h3><div class="how">Pivot Point 메뉴 → Median Point</div><div class="why">선택한 것들의 가운데를 기준으로 크기를 줄이려고 되돌려요.</div></li>
+<li><h3>하이라이트 줄이기<em>이동·변형</em></h3><div class="how">하이라이트 영역 선택 → 조금 축소하고 위치를 옮겨요</div><div class="why">눈을 뜰 때 하이라이트가 커지면서 집중하는 느낌이 나요. 대각선에서 보면 눈동자와 거리감이 생겨 유리구슬처럼 보여요.</div><div class="nt">강의 자막에 수치가 없어요. 화면을 보고 맞추세요.</div></li>
+</ol>
+</section>
+<div class="pn"><a href="ep09.html">← Ep.9 옷을 더 사랑스럽게: 옷 텍스처 페인팅</a><a href="ep11.html">Ep.11 입모양 완성: A, E, I, O, U 쉐이프 키 →</a></div>
+<footer>강의 자막을 정리한 노트에서 뽑은 내용이에요. 자막에 없는 수치는 강의 화면을 보고 맞추세요. 단축키는 Blender 기본 키맵 기준이에요.
+강의: <a href="https://www.youtube.com/playlist?list=PLAR5yRjFCe9sOjK9pbKqRPGTGlaXgfUIA">[SD 버츄얼 캐릭터 만들기] DyeoV</a></footer>
+</div></body></html>

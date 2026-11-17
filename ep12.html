@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ep.12 특별한 표정 (Happy / Surprise / Angry), 버텍스 수 점검, 모디파이어 적용</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap">
+<link rel="stylesheet" href="style.css"></head><body><div class="wrap">
+<div class="top"><a href="index.html">기초</a><a href="ep01.html">Ep.1</a><a href="ep02.html">Ep.2</a><a href="ep03.html">Ep.3</a><a href="ep04.html">Ep.4</a><a href="ep05.html">Ep.5</a><a href="ep06.html">Ep.6</a><a href="ep07.html">Ep.7</a><a href="ep08.html">Ep.8</a><a href="ep09.html">Ep.9</a><a href="ep10.html">Ep.10</a><a href="ep11.html">Ep.11</a><a href="ep12.html" class="on">Ep.12</a><a href="ep13.html">Ep.13</a><a href="lookup.html">찾아보기</a></div>
+<header><div class="ep">EP.12</div><h1>특별한 표정 (Happy / Surprise / Angry), 버텍스 수 점검, 모디파이어 적용</h1><p>립싱크 말고 추가로 쓰는 표정 Happy, Surprise, Angry를 만들어요. 그다음 쉐이프 키마다 버텍스 수가 같은지 점검하고, 쉐이프 키를 지킨 채 모디파이어를 적용해요.</p>
+<a class="vid" href="https://www.youtube.com/watch?v=cESH7oHd5Js">강의 영상 열기</a>
+</header>
+<nav class="toc"><a href="#s1">공통 원칙</a><a href="#s2">Happy</a><a href="#s3">Surprise</a><a href="#s4">Angry</a><a href="#s5">필수 점검: 쉐이프 키별 버텍스 수가 같은지</a><a href="#s6">쉐이프 키를 유지한 채 모디파이어 적용</a></nav>
+<section id="s1"><div class="sec-head"><h2>공통 원칙</h2></div>
+<p class="lead">새 표정을 만들 때 매번 반복하는 준비와 방법을 알게 돼요.</p>
+<ol class="steps">
+<li><h3>기존 키 섞어서 출발<em>쉐이프 키</em></h3><div class="how">비슷한 기존 키(Blink, A, U, I 등)의 Value를 올려 원하는 모양에 가깝게 조합 → Shape Keys ▼ 메뉴 → New Shape from Mix → 이름 변경 → 조합에 쓴 키들을 0으로</div><div class="why">처음부터 만드는 것보다 훨씬 빨라요. New Shape from Mix는 지금 보이는 섞인 모양을 새 키로 복제해요.</div><div class="nt">관련 오브젝트 각각에서 반복해요.</div></li>
+<li><h3>조합할 게 없으면 +로<em>쉐이프 키</em></h3><div class="how">Shape Keys → + → 이름만 같은 표정 이름으로</div><div class="why">섞을 키가 없는(전부 0인) 오브젝트는 빈 키를 만들고 이름만 맞춰도 돼요.</div></li>
+<li><h3>옷, 헤어 숨기기<em>화면</em></h3><div class="how">Outliner에서 옷과 헤어를 숨겨요</div><div class="why">얼굴 작업에 방해되지 않게 해요.</div></li>
+<li><h3>아웃라인 표시 끄기<em>모디파이어</em></h3><div class="how">Head → Modifiers 탭 → MToon Outline 모디파이어의 뷰포트 표시를 꺼요</div><div class="why">외곽선이 있으면 편집할 때 선택한 곳이 잘 안 보여요.</div></li>
+<li><h3>Solid 쉐이딩에서 작업<em>화면</em></h3><div class="how">Viewport Shading 2번째 버튼(Solid)</div><div class="why">가볍고 형태가 잘 보여요.</div></li>
+<li><h3>Subdivision 표시 끄고 켜기<em>모디파이어</em></h3><div class="how">Modifiers 탭 → Subdivision 모디파이어의 뷰포트 표시를 형태 잡을 때는 끄고, 확인할 때 켜요</div><div class="why">끄면 실제 점 위치가 보이고, 켜면 최종 모양이 보여요.</div></li>
+<li><h3>Basis 옆 라인 그려 두기<em>이동·변형</em></h3><div class="how">Basis 상태의 옆 라인을 Annotate로 그려 둠(턱 아래, 위 모두) → 표정 키에서 그 선에 맞춰 Y 방향으로 넣고 빼요</div><div class="why">어떤 표정이든 옆얼굴 윤곽은 원래와 같아야 자연스러워요.</div><div class="nt">그냥 당기면 이상한 곳은 Proportional Editing을 켜서 주변과 함께 옮겨요.</div></li>
+</ol>
+<div class="tw"><table><tr><th>표정</th><th>출발 조합</th><th>특징</th></tr><tr><td>Happy</td><td>Blink + U 와 다른 키(자막상 불명확)</td><td>웃는 눈 + 고양이 입</td></tr><tr><td>Surprise</td><td>U + A 조금</td><td>작아진 눈동자와 하이라이트, 벌린 입, 바짝 선 속눈썹</td></tr><tr><td>Angry</td><td>I</td><td>I 입 + 일자(세모) 눈 + 치켜든 눈썹 + 커진 흰 하이라이트</td></tr></table></div>
+<div class="box"><b>강사의 팁</b><ul><li>표정 키 이름은 Happy, Surprise, Angry 예요. 화남, 즐거움, 행복, 놀람, 절망 등 원하는 만큼 추가할 수 있지만 강사는 3개만 만들어요.</li><li>관련 오브젝트(Head 컬렉션)는 얼굴(Head), 속눈썹/아이라인(눈썹, 쌍꺼풀, 언더라인 포함), 눈동자(Eye), 입속(Inner Mouth: 치아, 혀)이에요. 표정에 관여하는 오브젝트마다 같은 이름의 키를 만들어 Mio3 ShapeKey로 연동해요.</li><li>표정 전환은 유니티나 방송 툴에서 스르륵이 아니라 뿅 하고 즉시 바꾸는 방식도 가능해요. 중간 과정이 자연스러운 표정만 만들어야 한다는 부담은 없어도 돼요. 다만 강사는 중간값에서 뭔가 숨거나 망가지지 않는지는 확인해요.</li><li>이동량 등 수치는 화면으로만 보여 줘요. 화면을 보고 맞추세요.</li></ul></div>
+</section>
+<section id="s2"><div class="sec-head"><h2>Happy</h2><a class="t" href="https://www.youtube.com/watch?v=cESH7oHd5Js&t=25s">0:25~7:55</a></div>
+<p class="lead">웃는 눈에 고양이 입(ω 모양)을 한 Happy 표정이 생겨요.</p>
+<ol class="steps">
+<li><h3>Blink 켜기<em>쉐이프 키</em></h3><div class="how">Head 선택 → Shape Keys에서 Blink 의 Value를 올려요</div><div class="why">Blink가 웃는 눈 모양이라 Happy의 눈으로 그대로 쓸 수 있어요.</div></li>
+<li><h3>입 모양 조합하기<em>쉐이프 키</em></h3><div class="how">A, U 등을 대 본 뒤 U 와 다른 키를 함께 올려서 스케치한 선에 입꼬리가 잘 붙는 조합을 찾아요</div><div class="why">고양이 입에 가장 가까운 출발점을 만들어요.</div><div class="nt">자막은 'U랑 애를 조합'이라고 해요. A 또는 E로 보이지만 확실하지 않아요. 화면을 보고 맞추세요. 값도 자막에 없어요.</div></li>
+<li><h3>Head에 Happy 만들기<em>쉐이프 키</em></h3><div class="how">Shape Keys ▼ 메뉴 → New Shape from Mix → 이름 Happy</div><div class="why">지금 섞인 모양이 Happy 키가 돼요.</div></li>
+<li><h3>속눈썹, 입속에도 Happy<em>쉐이프 키</em></h3><div class="how">속눈썹 오브젝트, Inner Mouth 오브젝트를 각각 선택 → ▼ 메뉴 → New Shape from Mix → 이름 Happy</div><div class="why">같은 이름의 키가 있어야 얼굴과 함께 움직여요.</div></li>
+<li><h3>조합 키 0으로<em>쉐이프 키</em></h3><div class="how">Blink, U 등 조합에 쓴 키의 Value를 0으로</div><div class="why">그대로 두면 Happy와 겹쳐서 모양이 두 배로 변해요.</div></li>
+<li><h3>입 주변 넓히기<em>이동·변형</em></h3><div class="how">Happy 키에서 Edit Mode → 입 주변 버텍스를 넓혀 자리를 만들어요</div><div class="why">눈은 Blink와 거의 같아 그대로 두고 입 모양만 고쳐요.</div></li>
+<li><h3>고양이 입 모양 잡기<em>이동·변형</em></h3><div class="how">Subdivision 뷰포트 표시를 끔 → 버텍스를 고양이 입 형태로 배치 → Subdivision을 켜서 확인</div><div class="why">가운데가 올라가고 양옆이 둥근 ω 모양을 만들어요.</div><div class="nt">강의 자막에 수치가 없어요. 화면을 보고 맞추세요.</div></li>
+<li><h3>입속 동굴 주변 꺼내기<em>이동·변형</em></h3><div class="how">튀어나와 보이는 입속 동굴은 그대로 두고, 그 주변 버텍스를 앞으로 꺼내요</div><div class="why">동굴이 튀어나온 게 아니라 주변이 안으로 들어간 거예요. 그래서 동굴을 넣는 게 아니라 주변을 꺼내야 해요.</div></li>
+<li><h3>옆 라인 맞추기<em>이동·변형</em></h3><div class="how">옆에서 보며 Basis 실루엣 스케치에 맞춰 튀어나온 곳은 Y로 넣고, 나와야 할 곳은 꺼내요</div><div class="why">턱이 라인에 맞으면 돼요.</div></li>
+<li><h3>Blink 볼살 보정<em>이동·변형</em></h3><div class="how">Blink 키 선택 → 눈 아래 볼(홍조) 부분 버텍스들을 <kbd>G</kbd> <kbd>G</kbd>로 눈 감은 만큼 올려요</div><div class="why">눈을 감으면 볼(홍조)이 늘어나 보여요. G를 두 번 누르면 점이 선을 따라 미끄러져요(엣지 슬라이드).</div><div class="nt">뒤늦게 발견한 문제예요. 홍조 원을 통째로 올리는 게 아니라 늘어나 보이지만 않게 하는 정도면 돼요.</div></li>
+<li><h3>보정을 Happy로 가져오기<em>쉐이프 키</em></h3><div class="how">Happy 키 선택(Blink는 꺼진 상태) → 고친 볼 부분 선택 → <kbd>Q</kbd> → Blend from Shape → Shape를 Blink 로</div><div class="why">Blend from Shape는 선택한 부분을 다른 키의 모양으로 맞춰 줘요. Blink에서 고친 것이 Happy에 그대로 들어와요.</div><div class="nt">Shape는 Basis가 아니라 Blink예요. Q 메뉴는 Ep.11에서 Blend from Shape를 등록해 둔 Quick Favorites예요.</div></li>
+</ol>
+</section>
+<section id="s3"><div class="sec-head"><h2>Surprise</h2><a class="t" href="https://www.youtube.com/watch?v=cESH7oHd5Js&t=475s">7:55~13:00</a></div>
+<p class="lead">눈동자가 작아지고 입을 벌린 놀란 얼굴 Surprise가 생겨요.</p>
+<ol class="steps">
+<li><h3>입 모양 조합<em>쉐이프 키</em></h3><div class="how">Head에서 U 를 올리고 A 를 조금 섞어 더 크게 벌려요</div><div class="why">놀란 입에 가까운 출발점이에요.</div><div class="nt">강의 자막에 값이 없어요. 화면을 보고 맞추세요.</div></li>
+<li><h3>Surprise 만들기<em>쉐이프 키</em></h3><div class="how">Shape Keys ▼ 메뉴 → New Shape from Mix → 이름 Surprise → 조합에 쓴 키를 0으로</div><div class="why">섞인 모양이 Surprise 키가 돼요.</div></li>
+<li><h3>다른 오브젝트에도 Surprise<em>쉐이프 키</em></h3><div class="how">눈(속눈썹), 입속, 눈동자 오브젝트에도 각각 Surprise 키를 만들어요</div><div class="why">눈썹, 치아, 눈동자도 이 표정에서 같이 움직여요.</div></li>
+<li><h3>눈동자 줄이기<em>이동·변형</em></h3><div class="how">Eye의 Surprise 키에서 Edit Mode → 눈동자 전체 크기를 줄이고, 하이라이트는 더 작게 줄여요</div><div class="why">놀라면 눈동자가 작아져요.</div><div class="nt">강의 자막에 수치가 없어요. 화면을 보고 맞추세요.</div></li>
+<li><h3>눈썹 회전<em>이동·변형</em></h3><div class="how">속눈썹 오브젝트의 Surprise 키에서 눈썹을 선택해 회전시켜 살짝 갈매기 모양으로</div><div class="why">놀란 눈썹을 만들어요.</div></li>
+<li><h3>쌍꺼풀 살짝 이동<em>이동·변형</em></h3><div class="how">Proportional Editing을 끄고 쌍꺼풀을 살짝 옮겨요</div><div class="why">눈썹이 움직이면 주변 피부도 움직인 것이니 쌍꺼풀도 따라가야 해요.</div></li>
+<li><h3>속눈썹 세우기<em>이동·변형</em></h3><div class="how">속눈썹을 더 바짝 서게 고쳐요</div><div class="why">눈을 크게 뜬 느낌이 나요.</div></li>
+<li><h3>입속 꼬인 곳 풀기<em>이동·변형</em></h3><div class="how">Head의 Surprise 키에서 꼬인 버텍스 선택 → <kbd>G</kbd> <kbd>G</kbd></div><div class="why">입을 크게 벌리면서 꼬인 면을 풀어요.</div><div class="nt"><kbd>G</kbd> <kbd>G</kbd>가 선을 타고 가지 않으면 Subdivision을 끄고 보세요. 버텍스가 서로 겹쳐 있는 것이 원인이에요. 겹친 것을 찾아 풀면 움직여요.</div></li>
+<li><h3>입천장 올리고 펴기<em>이동·변형</em></h3><div class="how">입천장 버텍스를 올림 → 움푹 들어간 곳은 꺼냄 → Smooth로 펴요</div><div class="why">입속 그림자가 사라져요.</div></li>
+<li><h3>치아, 혀 위치 조정<em>이동·변형</em></h3><div class="how">Inner Mouth의 Surprise 키에서 치아가 살짝만 보이게 위치를 옮기고 혀도 조정해요</div><div class="why">치아가 다 숨겨져 있어서 살짝 보이게 해요.</div></li>
+</ol>
+</section>
+<section id="s4"><div class="sec-head"><h2>Angry</h2><a class="t" href="https://www.youtube.com/watch?v=cESH7oHd5Js&t=786s">13:06~26:16</a></div>
+<p class="lead">'으~' 하는 귀여운 화난 얼굴 Angry가 생겨요. I 입, 윗선이 일자인 세모 눈, 치켜 올라간 눈썹, 커진 흰 하이라이트예요.</p>
+<ol class="steps">
+<li><h3>I에서 Angry 만들기<em>쉐이프 키</em></h3><div class="how">Head에서 I 를 켠 상태로 Shape Keys ▼ 메뉴 → New Shape from Mix → 이름 Angry → I 를 0으로</div><div class="why">화난 입은 I 모양을 바탕으로 해요.</div></li>
+<li><h3>Inner Mouth에도 Angry<em>쉐이프 키</em></h3><div class="how">Inner Mouth 선택 → I 를 켠 상태로 ▼ 메뉴 → New Shape from Mix → 이름 Angry</div><div class="why">치아도 I 모양에서 출발해요.</div></li>
+<li><h3>눈썹, 눈동자에 Angry 추가<em>쉐이프 키</em></h3><div class="how">아이라인 오브젝트와 눈동자 오브젝트 각각 Shape Keys → + → 이름 Angry</div><div class="why">섞을 키가 없어서 빈 키로 시작해요.</div><div class="nt">Head에서 Angry 값을 한 번 움직이면 연동돼요.</div></li>
+<li><h3>눈 윗선을 일자로<em>이동·변형</em></h3><div class="how">Head의 Angry 키에서 Edit Mode → Subdivision 뷰포트 표시를 끔 → 눈 위쪽 둥근 윤곽을 일자로 올려요</div><div class="why">윗선이 일자면 세모 눈이 되어 화난 느낌이 나요.</div><div class="nt">강의 자막에 수치가 없어요. 화면을 보고 맞추세요.</div></li>
+<li><h3>흰자위 따로 정리<em>이동·변형</em></h3><div class="how">따라 올라온 안쪽 흰자위 부분을 따로 정리하고 Y 방향으로 보정해요. 그림자가 생기면 흰자 부분 위치를 조절해 키워요</div><div class="why">윤곽을 올리다 보면 흰자위가 딸려 와서 모양이 망가져요.</div></li>
+<li><h3>윗 아이라인만 남기기<em>화면</em></h3><div class="how">아이라인 오브젝트의 Angry 키에서 Edit Mode → 쌍꺼풀, 눈썹, 언더라인, 속눈썹을 숨겨요</div><div class="why">윗 아이라인부터 일자 눈에 맞춰요.</div></li>
+<li><h3>윗 아이라인 내리기<em>이동·변형</em></h3><div class="how">윗 아이라인을 내려서 일자 눈에 맞추고 눈꺼풀과 서로 닿게 배치해요</div><div class="why">색을 켜고 봤을 때 살색이 틈으로 보이면 안 돼요.</div></li>
+<li><h3>아이라인 두께 다듬기<em>이동·변형</em></h3><div class="how">너무 두꺼운 부분은 <kbd>G</kbd> <kbd>G</kbd>로 줄이고 경사지게 만들어요</div><div class="why">눈매가 날렵해져요.</div><div class="nt">너무 날카로우면 둥근 느낌을 조금 살려요.</div></li>
+<li><h3>속눈썹 얹기<em>이동·변형</em></h3><div class="how"><kbd>Alt</kbd> <kbd>H</kbd> → 속눈썹만 선택 → 아이라인 위에 얹히게 내리고 Y 보정</div><div class="why">Alt+H는 숨긴 것을 다시 보여 줘요. 내려간 아이라인에 속눈썹을 맞춰요.</div></li>
+<li><h3>쌍꺼풀 라인 내리기<em>이동·변형</em></h3><div class="how">쌍꺼풀 라인을 같이 내리고 일자에 가깝게 만들어요</div><div class="why">쌍꺼풀만 붕 떠 있지 않게 해요.</div></li>
+<li><h3>눈썹 화난 각도로<em>이동·변형</em></h3><div class="how">눈썹을 과감하게 화난 각도로 → 얼굴 속으로 들어간 부분은 Y로 빼고, 쭈글쭈글해진 곳은 피부에 가깝게 정리</div><div class="why">치켜 올라간 눈썹이 화난 표정의 핵심이에요.</div></li>
+<li><h3>중간값 점검<em>쉐이프 키</em></h3><div class="how">Angry 의 Value를 움직여 봐요</div><div class="why">중간에서 숨거나 망가지는 곳이 없는지 확인해요.</div></li>
+<li><h3>하이라이트 영역 스케치<em>기타</em></h3><div class="how">눈동자(Eye)의 Angry 키에서 Annotate로 흰색 하이라이트가 필요한 영역을 그려요</div><div class="why">흰색 하이라이트를 크게 키울 범위를 먼저 정해요.</div></li>
+<li><h3>하이라이트 늘리기<em>이동·변형</em></h3><div class="how">뒤의 눈동자는 숨김 → 하이라이트를 Proportional Editing으로 늘림 → Proportional Editing을 끄고 균일한 두께로 정리</div><div class="why">큰 흰 하이라이트가 만화 같은 화난 눈을 만들어요.</div><div class="nt">혹처럼 튀어나온 부분은 없애지 말고 같이 늘려요.</div></li>
+<li><h3>하늘색 하이라이트 숨기기<em>이동·변형</em></h3><div class="how">하늘색(눈동자 쪽) 하이라이트를 안쪽으로 밀어 넣어요</div><div class="why">이 표정에서는 안 보여야 해요.</div><div class="nt">옆에서도 안 보이게 더 밀어 넣어요.</div></li>
+<li><h3>하이라이트 평탄화<em>이동·변형</em></h3><div class="how">하이라이트만 선택 → <kbd>S</kbd> <kbd>Y</kbd> <kbd>0</kbd></div><div class="why">하이라이트가 옆에서 보면 튀어나오고 쭈글쭈글해요. S, Y, 0 을 차례로 누르면 Y축 크기가 0이 되어 납작하게 펴져요.</div></li>
+<li><h3>X-Ray로 다시 배치<em>이동·변형</em></h3><div class="how"><kbd>Alt</kbd> <kbd>Z</kbd> → 눈동자 각도에 맞게 하이라이트를 다시 배치하고 가로로 조금 키워요</div><div class="why">Alt+Z는 X-Ray예요. 메쉬가 반투명해져서 뒤에 있는 눈동자를 보며 맞출 수 있어요.</div></li>
+<li><h3>세 표정 최종 확인<em>쉐이프 키</em></h3><div class="how">헤어와 옷을 다시 켜고 Happy, Surprise, Angry 값을 차례로 올려 봐요</div><div class="why">전체 모습에서 표정이 어울리는지 확인해요.</div></li>
+</ol>
+</section>
+<section id="s5"><div class="sec-head"><h2>필수 점검: 쉐이프 키별 버텍스 수가 같은지</h2><a class="t" href="https://www.youtube.com/watch?v=cESH7oHd5Js&t=1604s">26:44~31:32</a></div>
+<p class="lead">모든 오브젝트의 모든 쉐이프 키에서 Vertices 수가 Basis와 같아져요.</p>
+<ol class="steps">
+<li><h3>오브젝트 하나만 격리<em>화면</em></h3><div class="how">오브젝트 하나만 선택 → <kbd>/</kbd> (로컬 뷰)</div><div class="why">로컬 뷰는 선택한 것만 화면에 남겨요. 그 오브젝트의 숫자만 보려고요.</div></li>
+<li><h3>Statistics 켜기<em>화면</em></h3><div class="how">Viewport Overlays → Statistics 체크</div><div class="why">화면에 Vertices, Edges, Faces 수가 표시돼요.</div></li>
+<li><h3>아웃라인 표시 끄기<em>모디파이어</em></h3><div class="how">Modifiers 탭 → MToon Outline 모디파이어의 뷰포트 표시를 꺼요</div><div class="why">외곽선 모디파이어가 숫자를 부풀려서 비교가 안 돼요.</div></li>
+<li><h3>키마다 Vertices 비교<em>쉐이프 키</em></h3><div class="how">Shape Keys의 핀을 켠 상태로 키를 하나씩 <span class="mouse">클릭</span> → Vertices 숫자가 Basis와 같은지 봐요</div><div class="why">키마다 숫자가 다르면 나중에 모디파이어를 적용할 수 없어요.</div><div class="nt">강사 예: 헤드 Basis 5,950, Blink 5,946. 4개가 줄어 있었어요.</div></li>
+<li><h3>Mirror 꺼서 원인 확인<em>모디파이어</em></h3><div class="how">Modifiers 탭 → Mirror 모디파이어의 뷰포트 표시를 꺼요</div><div class="why">껐을 때 숫자가 같아지면 Mirror가 원인이에요.</div></li>
+<li><h3>합쳐진 곳 찾기<em>메시 편집</em></h3><div class="how">문제 키(Blink)를 켠 상태로 중앙선에서 합쳐진 곳을 찾아요. 얼굴 면을 숨기고 보면 쉬워요</div><div class="why">Mirror의 Clipping/Merge 때문에 그 키에서만 가운데 점들이 하나로 붙은 곳이 있어요.</div><div class="nt">보통 입 쪽에서 생겨요. 강사 사례는 엣지 3개여야 할 곳이 1개로 합쳐져 있었어요.</div></li>
+<li><h3>버텍스 떼어 주기<em>메시 편집</em></h3><div class="how">Subdivision 뷰포트 표시를 끔 → 합쳐진 버텍스를 옮겨서 떼어 줘요. 아래쪽도 똑같이 해요</div><div class="why">점이 중앙에서 떨어지면 Mirror가 합치지 않아 숫자가 원래대로 돌아와요.</div></li>
+<li><h3>숫자 재확인<em>쉐이프 키</em></h3><div class="how">Vertices 숫자가 Basis와 같아졌는지 다시 확인</div><div class="why">고쳐졌는지 봐요.</div></li>
+<li><h3>모든 오브젝트 반복<em>쉐이프 키</em></h3><div class="how">속눈썹, 눈동자, 입속 오브젝트도 같은 방법으로 모든 키를 확인</div><div class="why">하나라도 다르면 적용할 때 문제가 생겨요.</div><div class="nt">강사 파일은 속눈썹 1,248, 눈동자 109, 입속 718로 전부 문제없었어요. 입처럼 가려진 곳에서 문제가 잘 생겨요.</div></li>
+</ol>
+<div class="tw"><table><tr><th>오브젝트</th><th>Vertices 수 (강사 파일)</th><th>비고</th></tr><tr><td>헤드</td><td>Basis 5,950 / Blink 5,946</td><td>Blink에서 4개 감소 → 수정 필요</td></tr><tr><td>속눈썹</td><td>1,248</td><td>문제없음</td></tr><tr><td>눈동자</td><td>109</td><td>문제없음</td></tr><tr><td>입속</td><td>718</td><td>문제없음</td></tr></table></div>
+<div class="box"><b>강사의 팁</b><ul><li>Mirror 모디파이어의 Clipping/Merge 때문에 특정 쉐이프 키에서 중앙 버텍스가 합쳐지면 키마다 최종 버텍스 수가 달라져요.</li><li>이 상태로는 나중에 Mirror/Subdivision을 적용할 수 없거나, 쉐이프 키가 날아가고 형태가 이상해지거나, 블렌더가 강제 종료될 수 있어요.</li></ul></div>
+</section>
+<section id="s6"><div class="sec-head"><h2>쉐이프 키를 유지한 채 모디파이어 적용</h2><a class="t" href="https://www.youtube.com/watch?v=cESH7oHd5Js&t=1892s">31:32~끝</a></div>
+<p class="lead">얼굴 관련 네 오브젝트에 Mirror, Subdivision, Smooth by Angle이 적용되고 쉐이프 키는 그대로 남아요.</p>
+<ol class="steps">
+<li><h3>먼저 저장<em>파일·설정</em></h3><div class="how">파일을 저장해요</div><div class="why">적용 중에 블렌더가 꺼지거나 형태가 망가질 수 있어서요.</div><div class="nt">쉐이프 키가 있으면 모디파이어 패널의 <kbd>Ctrl</kbd> <kbd>A</kbd>(일반 Apply)로는 적용되지 않아요.</div></li>
+<li><h3>Head에 적용<em>애드온</em></h3><div class="how">Head 선택 → 상단 Object 메뉴 → Keep Shapekeys → 가장 아래 Apply Chosen Modifiers → Mirror, Subdivision, Smooth by Angle 만 체크 → 적용</div><div class="why">애드온이 쉐이프 키를 지킨 채 모디파이어를 적용해 줘요. 모디파이어 수가 줄고 쉐이프 키는 그대로 남아요.</div><div class="nt">Armature와 MToon Outline은 체크하지 말고 남겨요. 메뉴 이름으로 보아 SKkeeper 애드온이에요. 영상에서는 'Keep Shapekeys라는 에드온'이라고만 말해요.</div></li>
+<li><h3>속눈썹에 적용<em>애드온</em></h3><div class="how">속눈썹 선택 → Shape Keys 목록에서 Basis 를 선택해 둠 → Object → Keep Shapekeys → Apply Chosen Modifiers</div><div class="why">같은 방법으로 속눈썹의 모디파이어를 적용해요.</div><div class="nt">목록에서 Basis가 선택된 상태로 실행해요.</div></li>
+<li><h3>눈동자에 적용<em>애드온</em></h3><div class="how">눈동자 선택 → Object → Keep Shapekeys → Apply Chosen Modifiers → Mirror, Smooth by Angle 체크</div><div class="why">눈동자에는 Mirror와 Smooth by Angle을 적용해요.</div></li>
+<li><h3>입속에 적용<em>애드온</em></h3><div class="how">입속 선택 → Object → Keep Shapekeys → Apply Chosen Modifiers → Mirror, Subdivision, Smooth by Angle 체크</div><div class="why">입속까지 끝나면 다음 편에서 이 오브젝트들을 하나로 합쳐요.</div></li>
+</ol>
+<div class="tw"><table><tr><th>오브젝트</th><th>적용하는 모디파이어</th><th>비고</th></tr><tr><td>Head</td><td>Mirror, Subdivision, Smooth by Angle</td><td>Armature, MToon Outline은 남김</td></tr><tr><td>속눈썹</td><td>Mirror, Subdivision, Smooth by Angle 중 있는 것</td><td>Basis를 선택한 상태로 실행</td></tr><tr><td>눈동자</td><td>Mirror, Smooth by Angle</td><td></td></tr><tr><td>입속</td><td>Mirror, Subdivision, Smooth by Angle</td><td></td></tr></table></div>
+</section>
+<div class="pn"><a href="ep11.html">← Ep.11 입모양 완성: A, E, I, O, U 쉐이프 키</a><a href="ep13.html">Ep.13 블렌더에서 VRM 추출 + 유니티 최종 설정 →</a></div>
+<footer>강의 자막을 정리한 노트에서 뽑은 내용이에요. 자막에 없는 수치는 강의 화면을 보고 맞추세요. 단축키는 Blender 기본 키맵 기준이에요.
+강의: <a href="https://www.youtube.com/playlist?list=PLAR5yRjFCe9sOjK9pbKqRPGTGlaXgfUIA">[SD 버츄얼 캐릭터 만들기] DyeoV</a></footer>
+</div></body></html>

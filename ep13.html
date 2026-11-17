@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ep.13 블렌더에서 VRM 추출 + 유니티 최종 설정</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap">
+<link rel="stylesheet" href="style.css"></head><body><div class="wrap">
+<div class="top"><a href="index.html">기초</a><a href="ep01.html">Ep.1</a><a href="ep02.html">Ep.2</a><a href="ep03.html">Ep.3</a><a href="ep04.html">Ep.4</a><a href="ep05.html">Ep.5</a><a href="ep06.html">Ep.6</a><a href="ep07.html">Ep.7</a><a href="ep08.html">Ep.8</a><a href="ep09.html">Ep.9</a><a href="ep10.html">Ep.10</a><a href="ep11.html">Ep.11</a><a href="ep12.html">Ep.12</a><a href="ep13.html" class="on">Ep.13</a><a href="lookup.html">찾아보기</a></div>
+<header><div class="ep">EP.13</div><h1>블렌더에서 VRM 추출 + 유니티 최종 설정</h1><p>블렌더에서 오브젝트를 합치고 정리해 VRM으로 내보내요. 유니티(Warudo SDK 프로젝트)에서 표정, 시선, 머리 흔들림, 콜라이더를 설정한 뒤 VRM 0.x로 다시 내보내요.</p>
+<a class="vid" href="https://www.youtube.com/watch?v=XKpaghnfAy8">강의 영상 열기</a>
+</header>
+<nav class="toc"><a href="#s1">A-1. 얼굴 오브젝트 합치기</a><a href="#s2">A-2. Hair 합치기, 탈부착 파츠</a><a href="#s3">A-3. Body, 의상</a><a href="#s4">A-4. 합친 뒤 본 연결 점검</a><a href="#s5">A-5. 컬렉션, 이름 정리</a><a href="#s6">B. 블렌더: VRM Export</a><a href="#s7">C. 유니티 준비</a><a href="#s8">D. 유니티: VRM 메타 정보</a><a href="#s9">E. 유니티: BlendShape 클립 연결</a><a href="#s10">F. 유니티: 시선(Look At) 설정</a><a href="#s11">G. 유니티: 애니메이션으로 동작 테스트</a><a href="#s12">H. 유니티: 스프링본(머리 흔들림)</a><a href="#s13">I. 유니티: 콜라이더(머리카락이 얼굴을 뚫지 않게)</a><a href="#s14">J. 모델을 고쳐야 할 때</a><a href="#s15">K. 최종 확인과 VRM 0.x Export</a></nav>
+<section id="s1"><div class="sec-head"><h2>A-1. 얼굴 오브젝트 합치기</h2><a class="t" href="https://www.youtube.com/watch?v=XKpaghnfAy8&t=0s">0:00~2:20</a></div>
+<p class="lead">Head, 눈, 아이라인, InnerMouth가 하나의 오브젝트가 되고 쉐이프 키도 합쳐져요.</p>
+<ol class="steps">
+<li><h3>All Transforms 적용<em>이동·변형</em></h3><div class="how">Head, 눈, 아이라인, InnerMouth를 하나씩 선택 → <kbd>Ctrl</kbd> <kbd>A</kbd> → All Transforms</div><div class="why">오브젝트마다 원점(주황색 점) 위치가 다르면 합칠 때 문제가 생길 수 있어요. 적용하면 위치, 회전, 크기 값이 초기화되어 원점이 통일돼요.</div></li>
+<li><h3>얼굴 오브젝트 합치기<em>메시 편집</em></h3><div class="how">네 오브젝트를 전부 선택하고 Head를 마지막에 선택해 활성(노란 테두리)으로 → <kbd>Ctrl</kbd> <kbd>J</kbd></div><div class="why">Ctrl+J는 선택한 오브젝트를 활성 오브젝트 하나로 합쳐요.</div><div class="nt">합칠 수 있는 조건은 뼈(Armature)가 같고 MToon(아웃라인) 모디파이어가 같은 것이에요. 매테리얼은 서로 달라도 돼요.</div></li>
+<li><h3>쉐이프 키 확인<em>쉐이프 키</em></h3><div class="how">Data 탭 → Shape Keys 목록 확인</div><div class="why">같은 이름의 키끼리 합쳐졌는지 봐요.</div></li>
+<li><h3>합친 뒤 덩어리 격리(필요할 때)<em>선택</em></h3><div class="how">Edit Mode → 필요한 덩어리의 버텍스 선택 → <kbd>Ctrl</kbd> <kbd>L</kbd> → <kbd>Shift</kbd> <kbd>H</kbd></div><div class="why">합친 뒤에 쉐이프 키를 더 만들 때 써요. Ctrl+L은 이어진 덩어리를 선택하고, Shift+H는 선택한 것 말고 전부 숨겨요.</div></li>
+<li><h3>X축 대칭 켜고 작업<em>메시 편집</em></h3><div class="how">Edit Mode의 X축 대칭(Mirror X) 옵션을 켜고 작업 → 끝나면 반드시 꺼요</div><div class="why">Mirror 모디파이어가 이제 없어서, 한쪽을 고치면 반대쪽도 같이 움직이게 하려고 켜요.</div><div class="nt">안 끄면 이후 다른 작업에서 문제가 생겨요.</div></li>
+</ol>
+</section>
+<section id="s2"><div class="sec-head"><h2>A-2. Hair 합치기, 탈부착 파츠</h2><a class="t" href="https://www.youtube.com/watch?v=XKpaghnfAy8&t=140s">2:20~5:00</a></div>
+<p class="lead">머리카락이 Hair 하나로 합쳐지고, 양갈래는 Hair-Twintail로 따로 남아요.</p>
+<ol class="steps">
+<li><h3>Hair 모디파이어 일반 Apply<em>모디파이어</em></h3><div class="how">Hair 조각 선택 → Modifiers 탭 → 모디파이어 위에서 <kbd>Ctrl</kbd> <kbd>A</kbd> (일반 Apply)</div><div class="why">Keep Shapekeys 메뉴는 쉐이프 키가 있는 오브젝트에서만 쓸 수 있어요. 쉐이프 키가 없는 Hair와 의상은 일반 Apply로 적용해요.</div><div class="nt">Hair는 이전 편에서 원점을 통일해 둬서 적용 후 바로 합쳐요.</div></li>
+<li><h3>Hair 합치기<em>메시 편집</em></h3><div class="how">양갈래를 뺀 머리 조각을 전부 선택하고 앞머리를 활성으로 → <kbd>Ctrl</kbd> <kbd>J</kbd> → 이름 Hair</div><div class="why">머리카락을 오브젝트 하나로 만들어요.</div><div class="nt">Armature 모디파이어가 없는 머리 조각은 지금 추가하지 않아요. Armature가 있는 쪽에 합치면 자동으로 딸려 와요.</div></li>
+<li><h3>양갈래는 따로 두기<em>기타</em></h3><div class="how">양갈래는 합치지 않고 이름을 Hair-Twintail 로</div><div class="why">탈부착하고 싶은 파츠는 따로 둬요. 와루도 등에서 그 오브젝트만 숨기는 기능으로 켜고 끌 수 있어요.</div><div class="nt">한쪽씩 따로 쓰려면 좌우를 별도 오브젝트로 둬요. 강사는 이후 L / R로 이름을 구분해요.</div></li>
+</ol>
+</section>
+<section id="s3"><div class="sec-head"><h2>A-3. Body, 의상</h2><a class="t" href="https://www.youtube.com/watch?v=XKpaghnfAy8&t=300s">5:00~6:35</a></div>
+<p class="lead">Body의 모디파이어가 적용되고, 의상이 옷 한 벌 오브젝트 하나로 합쳐져요.</p>
+<ol class="steps">
+<li><h3>Body 쉐이프 키 준비<em>쉐이프 키</em></h3><div class="how">Body 선택 → Shape Keys에서 Cloth-On 을 0으로 → Basis 를 선택</div><div class="why">Body에는 Cloth-On 쉐이프 키가 있어요. 0으로 두고 Basis가 선택된 상태에서 적용해야 해요.</div></li>
+<li><h3>Body 모디파이어 적용<em>애드온</em></h3><div class="how">Object → Keep Shapekeys → Apply Chosen Modifiers → Mirror, Subdivision, Smooth by Angle 체크</div><div class="why">쉐이프 키를 지킨 채 모디파이어를 적용해요.</div></li>
+<li><h3>의상 모디파이어 일반 Apply<em>모디파이어</em></h3><div class="how">리본, 블라우스, 가디건, 바지, 신발 각각 → Modifiers 탭에서 Mirror, Smooth by Angle 등을 일반 Apply</div><div class="why">의상은 쉐이프 키가 없어서 일반 Apply로 돼요.</div></li>
+<li><h3>의상 원점 맞추기<em>이동·변형</em></h3><div class="how">원점이 다른 의상 선택 → <kbd>Ctrl</kbd> <kbd>A</kbd></div><div class="why">합치기 전에 원점을 통일해요.</div></li>
+<li><h3>의상 합치기<em>메시 편집</em></h3><div class="how">의상을 전부 선택하고 아무 의상이나 활성으로 → <kbd>Ctrl</kbd> <kbd>J</kbd></div><div class="why">옷 한 벌(셋업)이 오브젝트 하나가 돼요.</div></li>
+</ol>
+</section>
+<section id="s4"><div class="sec-head"><h2>A-4. 합친 뒤 본 연결 점검</h2><a class="t" href="https://www.youtube.com/watch?v=XKpaghnfAy8&t=395s">6:35~9:28</a></div>
+<p class="lead">Head 본을 돌리면 얼굴과 머리카락이 전부 따라와요.</p>
+<ol class="steps">
+<li><h3>Pose Mode에서 확인<em>리깅</em></h3><div class="how">Armature를 보이게 켬 → Pose Mode → Head 본을 돌려 봐요</div><div class="why">합친 메쉬가 뼈를 잘 따라오는지 확인해요.</div></li>
+<li><h3>Armature Object 다시 지정<em>모디파이어</em></h3><div class="how">Hair 선택 → Modifiers 탭 → Armature 모디파이어의 Object 칸에 아마추어를 다시 지정</div><div class="why">Hair가 안 따라오면 모디파이어가 뼈대를 못 찾고 있는 거예요.</div></li>
+<li><h3>Hair-Root 부모를 Head로<em>리깅</em></h3><div class="how">Hair-Root 본 선택 → Bone 탭 → Parent를 Head 로</div><div class="why">Hair-Root 본이 Head에 연결돼 있지 않아서 머리를 돌려도 안 따라왔어요.</div></li>
+<li><h3>안테나 본 부모 지정<em>리깅</em></h3><div class="how">안테나(더듬이 머리) 첫 본 선택 → Bone 탭 → Parent를 Hair-Root 로</div><div class="why">더듬이 머리도 머리 뿌리를 따라가게 해요.</div></li>
+<li><h3>웨이트 없는 머리에 1<em>웨이트</em></h3><div class="how">Vertex Groups에서 Hair-Root 선택 → Edit Mode에서 그 머리카락을 전부 선택 → Weight 1 → Assign</div><div class="why">그래도 안 따라오는 머리 메쉬는 웨이트(뼈를 따르는 정도)가 없는 거예요.</div></li>
+<li><h3>본 돌려 보기<em>리깅</em></h3><div class="how">Pivot Point를 Individual Origins 로 → 본 선택 → <kbd>R</kbd> <kbd>X</kbd> <kbd>X</kbd>, <kbd>R</kbd> <kbd>Y</kbd> <kbd>Y</kbd>, 또는 <kbd>R</kbd></div><div class="why">축 키를 두 번 누르면 그 본 자신의 축 방향으로 돌아요. 머리카락 본이 잘 움직이는지 봐요.</div><div class="nt">머리가 찰랑거리는 물리는 유니티에서 설정해요. 블렌더에서는 뼈만 심으면 돼요.</div></li>
+</ol>
+</section>
+<section id="s5"><div class="sec-head"><h2>A-5. 컬렉션, 이름 정리</h2><a class="t" href="https://www.youtube.com/watch?v=XKpaghnfAy8&t=568s">9:28~12:08</a></div>
+<p class="lead">모든 오브젝트가 한 컬렉션에 모이고, 이름에 접두어가 붙고, 전부 Armature의 자식이 돼요.</p>
+<ol class="steps">
+<li><h3>컬렉션 하나로 모으기<em>파일·설정</em></h3><div class="how">Outliner에서 Armature, Cloth, Body, Face, Hair를 하나의 컬렉션(예: SD-Character)으로 옮기고 예전 컬렉션(Cloth/Hair/Head)은 삭제</div><div class="why">내보낼 것들을 한곳에 모아 정리해요.</div></li>
+<li><h3>놓친 머리 조각 합치기<em>메시 편집</em></h3><div class="how">놓친 머리 조각(Plane)을 Hair에 합쳐요</div><div class="why">남은 조각이 따로 나가지 않게 해요.</div></li>
+<li><h3>이름에 접두어 붙이기<em>파일·설정</em></h3><div class="how">오브젝트 선택 → <kbd>F2</kbd> → SD-Body, SD-Face, SD-Hair, SD-Cloth 처럼 접두어를 붙여요. 트윈테일은 L / R로 구분</div><div class="why">오브젝트 이름이 Body, Cloth처럼 본 이름과 같거나 비슷하면 유니티에서 인식을 못 할 확률이 높아요.</div><div class="nt">추출 전에 꼭 해요. 이유는 강사도 모른다고 해요.</div></li>
+<li><h3>SD-Face를 Armature 자식으로<em>리깅</em></h3><div class="how">SD-Face 선택 → Armature를 마지막에 선택해 활성으로 → <kbd>Ctrl</kbd> <kbd>P</kbd> → With Empty Groups</div><div class="why">모든 메쉬가 Armature의 자식이어야 Armature만 움직여도 전부 따라와요.</div><div class="nt">자막은 '빈 그룹'이라고만 해요. With Empty Groups로 보여요. 화면을 보고 확인하세요.</div></li>
+<li><h3>햇빛 숨기기<em>화면</em></h3><div class="how">Outliner에서 햇빛(라이트)을 숨겨요</div><div class="why">내보낼 때 필요 없어요.</div></li>
+</ol>
+<div class="tw"><table><tr><th>원래 이름</th><th>바꾼 이름</th><th>비고</th></tr><tr><td>Body</td><td>SD-Body</td><td>본 이름과 겹치지 않게</td></tr><tr><td>Face</td><td>SD-Face</td><td>Head, 눈, 아이라인, InnerMouth를 합친 것</td></tr><tr><td>Hair</td><td>SD-Hair</td><td>양갈래 제외</td></tr><tr><td>Cloth</td><td>SD-Cloth</td><td>의상 한 벌</td></tr><tr><td>Hair-Twintail</td><td>L / R 구분</td><td>탈부착용으로 따로 둠</td></tr></table></div>
+</section>
+<section id="s6"><div class="sec-head"><h2>B. 블렌더: VRM Export</h2><a class="t" href="https://www.youtube.com/watch?v=XKpaghnfAy8&t=728s">12:08~15:11</a></div>
+<p class="lead">본 매핑을 마치고 SD.vrm 파일이 저장돼요.</p>
+<ol class="steps">
+<li><h3>내보낼 것 선택 후 Export<em>파일·설정</em></h3><div class="how">Armature와 메쉬들을 선택 → File → Export → VRM</div><div class="why">VRM은 버추얼 아바타용 파일 형식이에요.</div></li>
+<li><h3>팔다리 본은 Left부터<em>리깅</em></h3><div class="how">본 매핑 창에서 Left 쪽 UpperArm, LowerArm, Hand, UpperLeg, LowerLeg, Foot 을 먼저 채우고, 남은 것 중에서 Right를 골라요</div><div class="why">휴머노이드 본 매핑은 내 뼈가 사람 몸의 어느 부위인지 알려 주는 표예요. Right 항목은 목록 아래쪽에 있어 찾기 번거로워서 Left부터 채우면 쉬워요.</div><div class="nt">본 이름을 규칙대로 지어 놨으면 대부분 자동으로 채워져요. 좌우가 나뉜 팔다리는 특히 조심하세요. 여기서 실수하면 안 돼요.</div></li>
+<li><h3>눈, 어깨, 발가락 본 넣기<em>리깅</em></h3><div class="how">Eye 본을 넣고, Shoulder(왼쪽부터)와 Toes를 넣어요. Jaw와 UpperChest 칸은 비워요</div><div class="why">만든 본만 넣어요. 턱(Jaw)과 UpperChest는 본을 안 만들었으니 비워 둬요.</div></li>
+<li><h3>손가락 본 넣기<em>리깅</em></h3><div class="how">엄지, 검지, 중지, 약지, 새끼를 순서대로 넣어요</div><div class="why">첫 마디를 제대로 고르면 나머지 마디는 알아서 이어져요.</div><div class="nt">강사는 엄지 칸에 Middle을 넣는 실수를 했다가 고쳤어요. 한 번 해 두고 저장하면 다음부터 그대로 유지돼요.</div></li>
+<li><h3>저장 창에서 내보내기<em>파일·설정</em></h3><div class="how">OK → 저장 창에서 파일명을 캐릭터 이름으로(예: SD.vrm) → Export Only Selections 체크 → 저장</div><div class="why">Export Only Selections를 켜면 선택한 것만 나가요.</div><div class="nt">시간이 조금 걸려요. 탐색기에서 아이콘이 흰 종이로 보여도 정상이에요.</div></li>
+</ol>
+<div class="tw"><table><tr><th>본 항목</th><th>처리</th><th>비고</th></tr><tr><td>UpperArm, LowerArm, Hand</td><td>Left부터 채우고 Right</td><td>좌우 실수 주의</td></tr><tr><td>UpperLeg, LowerLeg, Foot</td><td>Left부터 채우고 Right</td><td>좌우 실수 주의</td></tr><tr><td>Eye</td><td>넣음</td><td></td></tr><tr><td>Jaw</td><td>비움</td><td>본을 안 만들었어요</td></tr><tr><td>UpperChest</td><td>비움</td><td>본을 안 만들었어요</td></tr><tr><td>Shoulder</td><td>넣음</td><td>왼쪽부터</td></tr><tr><td>Toes</td><td>넣음</td><td></td></tr><tr><td>손가락 (엄지, 검지, 중지, 약지, 새끼)</td><td>순서대로 넣음</td><td>첫 마디를 고르면 나머지는 이어져요</td></tr></table></div>
+</section>
+<section id="s7"><div class="sec-head"><h2>C. 유니티 준비</h2><a class="t" href="https://www.youtube.com/watch?v=XKpaghnfAy8&t=911s">15:11~19:30</a></div>
+<p class="lead">Warudo SDK 프로젝트가 열리고 SD.vrm이 씬에 올라와요.</p>
+<ol class="steps">
+<li><h3>설치 안내 페이지 열기<em>Unity</em></h3><div class="how">영상 설명란의 Warudo Docs 'Unity &amp; Warudo SDK 설치' 페이지(docs.warudo.app/docs/modding/…)를 열어요</div><div class="why">이 페이지 순서대로 설치해요.</div></li>
+<li><h3>Unity Hub 설치, 로그인<em>Unity</em></h3><div class="how">Unity Hub를 설치하고 로그인</div><div class="why">유니티 에디터와 프로젝트를 관리하는 프로그램이에요.</div></li>
+<li><h3>Unity Editor 2021.3.18 설치<em>Unity</em></h3><div class="how">Unity Editor 2021.3.18 을 내려받음 → Unity Hub → Installs → Locate 로 등록</div><div class="why">와루도 SDK가 이 버전에 맞춰져 있어요.</div><div class="nt">자막에는 2021.3.18까지만 나와요. 정확한 패치 접미사는 Warudo Docs 페이지에서 확인하세요.</div></li>
+<li><h3>전용 프로젝트 템플릿 받기<em>Unity</em></h3><div class="how">와루도가 제공하는 Warudo SDK 0.12.0 Modding Project 를 내려받아 용량 넉넉한 드라이브에 압축 해제</div><div class="why">VRM 추출과 와루도용 추출 기능이 이미 다 들어 있는 프로젝트예요.</div></li>
+<li><h3>프로젝트 열기<em>Unity</em></h3><div class="how">Unity Hub → Add → Add project from disk → 압축 푼 폴더 선택 → 열기</div><div class="why">Hub에 프로젝트를 등록하고 열어요.</div><div class="nt">첫 로딩이 매우 길어요.</div></li>
+<li><h3>캐릭터 폴더 만들기<em>Unity</em></h3><div class="how">Project 창에서 Assets <span class="mouse">우클릭</span> → Create → Folder → 이름 Character → 그 안에 캐릭터 이름 폴더 SD</div><div class="why">캐릭터 파일을 넣을 자리를 만들어요.</div></li>
+<li><h3>VRM 넣기<em>Unity</em></h3><div class="how">SD.vrm 을 SD 폴더로 <span class="mouse">드래그</span></div><div class="why">유니티가 VRM을 읽어 프리팹(재사용할 수 있는 묶음)을 만들어요.</div><div class="nt">임포트에 시간이 걸려요.</div></li>
+<li><h3>프리팹을 씬에 올리기<em>Unity</em></h3><div class="how">생긴 프리팹을 Hierarchy로 <span class="mouse">드래그</span></div><div class="why">씬에 올려야 설정을 만질 수 있어요.</div></li>
+<li><h3>뷰 회전<em>Unity</em></h3><div class="how">Scene 뷰에서 <kbd>Alt</kbd> + <span class="mouse">좌클릭 드래그</span></div><div class="why">화면을 돌려 캐릭터를 여러 방향에서 봐요.</div></li>
+<li><h3>원근/직교 전환<em>Unity</em></h3><div class="how">Scene 뷰 기즈모의 Persp 글자를 <span class="mouse">클릭</span></div><div class="why">원근감 있는 화면과 없는 화면을 오가요.</div></li>
+</ol>
+</section>
+<section id="s8"><div class="sec-head"><h2>D. 유니티: VRM 메타 정보</h2><a class="t" href="https://www.youtube.com/watch?v=XKpaghnfAy8&t=1170s">19:30~23:39</a></div>
+<p class="lead">썸네일, 이름, 버전, 작가 같은 VRM 기본 정보가 채워져요.</p>
+<ol class="steps">
+<li><h3>캐릭터 선택<em>Unity</em></h3><div class="how">Hierarchy에서 캐릭터(SD) <span class="mouse">클릭</span> → Inspector 확인</div><div class="why">처음에는 정보가 비어 있어요.</div></li>
+<li><h3>카메라 돌리기<em>Unity</em></h3><div class="how">Main Camera 선택 → Inspector에서 Rotation Y를 180 으로 → 캐릭터에 가깝게 배치</div><div class="why">썸네일을 찍으려고 카메라가 캐릭터 정면을 보게 해요. SD라 작아서 가까이 둬요.</div></li>
+<li><h3>조명 조정<em>Unity</em></h3><div class="how">조명 선택 → Position -0.51 / 1 / 1.5, Rotation 8 / -180 / 0</div><div class="why">얼굴이 밝게 보이게 해요.</div><div class="nt">강사 값이에요. 자유롭게 바꿔도 출력에 영향이 없어요.</div></li>
+<li><h3>썸네일 찍기<em>Unity</em></h3><div class="how">Game 뷰에 캐릭터가 잘 잡혔는지 확인 → Inspector의 스크린샷 버튼 → Assets/Character/SD 폴더에 저장</div><div class="why">저장하면 썸네일 칸에 자동으로 들어가요.</div></li>
+<li><h3>메타 정보 입력<em>Unity</em></h3><div class="how">Inspector에서 Title에 SD, 버전에 0.00, 작가 이름 입력. 배포할 거면 연락처 이메일도 입력</div><div class="why">VRM 파일에 들어가는 기본 정보예요.</div><div class="nt">사용 허가(폭력/성적 표현 등)는 기본값(불허)으로 둬요.</div></li>
+</ol>
+<div class="tw"><table><tr><th>항목</th><th>값</th><th>비고</th></tr><tr><td>Main Camera Rotation Y</td><td>180</td><td></td></tr><tr><td>조명 Position</td><td>-0.51 / 1 / 1.5</td><td>강사 값, 자유</td></tr><tr><td>조명 Rotation</td><td>8 / -180 / 0</td><td>강사 값, 자유</td></tr><tr><td>Title</td><td>SD</td><td></td></tr><tr><td>버전</td><td>0.00</td><td></td></tr><tr><td>사용 허가</td><td>기본값(불허)</td><td></td></tr></table></div>
+</section>
+<section id="s9"><div class="sec-head"><h2>E. 유니티: BlendShape 클립 연결</h2><a class="t" href="https://www.youtube.com/watch?v=XKpaghnfAy8&t=1419s">23:39~25:54</a></div>
+<p class="lead">VRM 표정 클립마다 SD-Face의 쉐이프 키가 연결돼요.</p>
+<ol class="steps">
+<li><h3>BlendShape 편집 창 열기<em>Unity</em></h3><div class="how">Inspector의 BlendShape(BlendShapeAvatar 에셋)를 <span class="mouse">더블클릭</span></div><div class="why">표정 클립을 편집하는 창이 열려요. 아래쪽 미리보기 영역으로 확인해요.</div><div class="nt">기본 클립 버튼을 눌러도 처음에는 아무 표정도 안 나와요.</div></li>
+<li><h3>립싱크 클립 연결<em>Unity</em></h3><div class="how">클립 A 선택 → SD-Face 의 쉐이프 키 A 슬라이더를 올려 저장. I, U, E, O, Blink 도 같은 이름끼리 똑같이</div><div class="why">클립은 '이 표정일 때 어떤 쉐이프 키를 얼마나 올릴지'를 적어 두는 칸이에요.</div></li>
+<li><h3>표정 슬롯에 넣기<em>Unity</em></h3><div class="how">Joy 클립에 Happy 슬라이더, Angry 클립에 Angry 슬라이더를 올려요. 놀람(Surprise)은 남는 슬롯에 넣어요</div><div class="why">Joy, Angry, Sorrow, Fun은 VRM 기본 표정 슬롯이에요. 같은 이름의 표정을 안 만들었어도 슬롯에 원하는 표정을 넣으면 돼요.</div><div class="nt">놀람을 어느 슬롯에 넣었는지는 자막으로 확실하지 않아요. 화면상 Sorrow나 Fun 중 하나로 보여요. 화면을 보고 맞추세요.</div></li>
+<li><h3>Is Binary 체크<em>Unity</em></h3><div class="how">Angry처럼 즉시 바뀌었으면 하는 클립에서 Is Binary 체크</div><div class="why">체크하면 표정이 0 아니면 1로 확 바뀌어요. 체크하지 않으면 스르륵 바뀌어요.</div></li>
+<li><h3>나머지 슬롯 비워 두기<em>Unity</em></h3><div class="how">넣을 게 없는 슬롯과 Blink_L / Blink_R, LookLeft / LookRight 등은 건너뛰어요</div><div class="why">립싱크 캐릭터에는 필요 없어요. 데이터를 안 넣은 클립은 값을 올려도 아무 일도 안 생겨요.</div></li>
+</ol>
+<div class="tw"><table><tr><th>VRM 클립</th><th>넣는 쉐이프 키 (SD-Face)</th><th>비고</th></tr><tr><td>A</td><td>A</td><td></td></tr><tr><td>I</td><td>I</td><td></td></tr><tr><td>U</td><td>U</td><td></td></tr><tr><td>E</td><td>E</td><td></td></tr><tr><td>O</td><td>O</td><td></td></tr><tr><td>Blink</td><td>Blink</td><td></td></tr><tr><td>Joy</td><td>Happy</td><td></td></tr><tr><td>Angry</td><td>Angry</td><td>Is Binary 체크</td></tr><tr><td>Sorrow 또는 Fun</td><td>Surprise</td><td>어느 슬롯인지 자막상 불명확</td></tr><tr><td>Blink_L / Blink_R, LookLeft / LookRight 등</td><td>비움</td><td>립싱크 캐릭터에 필요 없음</td></tr></table></div>
+</section>
+<section id="s10"><div class="sec-head"><h2>F. 유니티: 시선(Look At) 설정</h2><a class="t" href="https://www.youtube.com/watch?v=XKpaghnfAy8&t=1554s">25:54~33:10</a></div>
+<p class="lead">눈이 타깃을 따라 움직이고, 눈알이 뒤집히지 않게 각도 범위가 맞춰져요.</p>
+<ol class="steps">
+<li><h3>Inspector 잠그기<em>Unity</em></h3><div class="how">Inspector 오른쪽 위 자물쇠 <span class="mouse">클릭</span></div><div class="why">다른 것을 클릭해도 Inspector가 캐릭터를 계속 보여 줘요. 본을 드래그해 넣을 때 필요해요.</div></li>
+<li><h3>Head 본 넣기<em>Unity</em></h3><div class="how">Hierarchy에서 Hips → Spine → Chest → Neck → Head 본을 찾아 VRM Look At Head 의 Head 칸으로 <span class="mouse">드래그</span></div><div class="why">시선 계산의 기준이 되는 머리 본을 알려 줘요. 처음에는 칸이 비어 있어요.</div></li>
+<li><h3>타깃 큐브 만들기<em>Unity</em></h3><div class="how">Hierarchy 빈 곳 <span class="mouse">우클릭</span> → 3D Object → Cube → Position 0, 0, 0 / Scale 0.1 → 너무 커서 0.01 로 → 미간 앞에 배치</div><div class="why">눈이 따라갈 임시 목표물이에요.</div></li>
+<li><h3>Target에 큐브 넣기<em>Unity</em></h3><div class="how">큐브를 VRM Look At Head 의 Target 칸으로 <span class="mouse">드래그</span></div><div class="why">눈이 이 큐브를 바라보게 돼요.</div></li>
+<li><h3>Play 하고 큐브 움직이기<em>Unity</em></h3><div class="how">Play(재생) 버튼 → Scene 탭으로 가서 큐브를 움직여요</div><div class="why">재생해야 동작해요. 큐브를 움직이면 눈이 따라와요.</div></li>
+<li><h3>Degree Mapping 조정<em>Unity</em></h3><div class="how">VRM Look At Bone Applyer 의 Degree Mapping을 펼쳐 커브의 Y Range/Degree 값 조정: Horizontal Outer 12, Horizontal Inner 13, Vertical Up 18, Vertical Down 5</div><div class="why">눈이 최대로 돌아가는 각도예요. 값이 너무 크면 눈알이 바깥으로 나가거나 뒤집혀 무서워져요.</div><div class="nt">기본값은 Outer 10, Up 20, Down 10이에요. Down 기본값은 너무 아래를 봐요.</div></li>
+<li><h3>Copy Component<em>Unity</em></h3><div class="how">재생 중에 그 컴포넌트 오른쪽 ⋮ → Copy Component</div><div class="why">재생 중 바꾼 값은 재생을 풀면 초기화돼요. 그래서 먼저 복사해 둬요.</div></li>
+<li><h3>정지 후 Paste<em>Unity</em></h3><div class="how">재생 정지 → 같은 컴포넌트 ⋮ → Paste Component Values</div><div class="why">복사해 둔 값을 붙여 넣어 남겨요.</div></li>
+<li><h3>타깃 정리<em>Unity</em></h3><div class="how">VRM Look At Head 의 Target을 None으로 → 큐브 삭제</div><div class="why">임시 목표물은 이제 필요 없어요.</div><div class="nt">또 쓸 거면 삭제하지 말고 체크박스로 비활성화해요.</div></li>
+<li><h3>매테리얼 위치 확인<em>Unity</em></h3><div class="how">Project 창 → Assets/Character/SD/SD.Materials 폴더</div><div class="why">매테리얼이 MToon으로 넘어와 있어요. 더 고치려면 여기서 수정해요.</div></li>
+</ol>
+<div class="tw"><table><tr><th>항목</th><th>강사 값</th><th>기본값</th></tr><tr><td>Horizontal Outer</td><td>12</td><td>10</td></tr><tr><td>Horizontal Inner</td><td>13</td><td>자막에 없음</td></tr><tr><td>Vertical Up</td><td>18</td><td>20</td></tr><tr><td>Vertical Down</td><td>5</td><td>10</td></tr><tr><td>타깃 큐브 Scale</td><td>0.01</td><td>처음에 0.1로 했다가 줄임</td></tr></table></div>
+</section>
+<section id="s11"><div class="sec-head"><h2>G. 유니티: 애니메이션으로 동작 테스트</h2><a class="t" href="https://www.youtube.com/watch?v=XKpaghnfAy8&t=2020s">33:40~41:54</a></div>
+<p class="lead">Mixamo 테스트 동작을 캐릭터에 걸어 재생해 볼 수 있어요.</p>
+<ol class="steps">
+<li><h3>Mixamo 테스트 팩 받기<em>Unity</em></h3><div class="how">mixamo.com (무료 가입) → test 검색 → Free Test Pack → Download: Format FBX Binary, Skin은 No Character(Without Skin), FPS 30 그대로</div><div class="why">동작만 들어 있는 테스트용 애니메이션 묶음이에요.</div></li>
+<li><h3>Assets에 넣기<em>Unity</em></h3><div class="how">압축을 풀어 폴더째 프로젝트 Assets 로 <span class="mouse">드래그</span></div><div class="why">파일 11개가 들어와요.</div></li>
+<li><h3>Humanoid로 바꾸기<em>Unity</em></h3><div class="how">FBX 선택 → Inspector Rig 탭 → Animation Type을 Generic에서 Humanoid 로 → Apply</div><div class="why">사람형 뼈대로 인식시켜야 내 캐릭터에 동작을 입힐 수 있어요.</div><div class="nt">Humanoid로 바꾸지 않으면 미리보기가 안 떠요. 11개 모두 반복해요.</div></li>
+<li><h3>Loop Time 체크<em>Unity</em></h3><div class="how">Inspector Animation 탭 → Loop Time 체크 → Apply</div><div class="why">동작이 끝나도 계속 반복돼요.</div><div class="nt">11개 모두 반복해요.</div></li>
+<li><h3>Animator Controller 만들기<em>Unity</em></h3><div class="how">Assets/Character/SD 에서 <span class="mouse">우클릭</span> → Create → Animator Controller → 이름 SD-AnimationController → <span class="mouse">더블클릭</span>으로 Animator 창 열기</div><div class="why">어떤 동작을 재생할지 정하는 파일이에요.</div></li>
+<li><h3>클립 이름 바꾸기<em>Unity</em></h3><div class="how">FBX를 펼침(▶) → Animation 탭(Edit)에서 클립 이름을 파일 이름으로 → Apply</div><div class="why">클립 이름이 전부 mixamo.com 이라 구분이 안 돼요.</div><div class="nt">Apply가 안 눌리면 Loop Pose 같은 것을 하나 체크했다가 적용하세요. 이름이 안 바뀐 것은 테스트용이라 그냥 빼요.</div></li>
+<li><h3>클립 배치<em>Unity</em></h3><div class="how">클립들을 Animator 창으로 <span class="mouse">드래그</span></div><div class="why">컨트롤러에 동작이 등록돼요.</div></li>
+<li><h3>Controller 연결 후 Play<em>Unity</em></h3><div class="how">SD-AnimationController 를 캐릭터 Inspector의 Animator → Controller (None) 칸으로 <span class="mouse">드래그</span> → Play</div><div class="why">캐릭터가 동작을 재생해요.</div></li>
+<li><h3>다른 동작 보기<em>Unity</em></h3><div class="how">Animator 창에서 해당 상태 <span class="mouse">우클릭</span> → 두 번째 항목 Set as Layer Default State</div><div class="why">기본으로 재생할 동작을 바꿔요.</div></li>
+</ol>
+</section>
+<section id="s12"><div class="sec-head"><h2>H. 유니티: 스프링본(머리 흔들림)</h2><a class="t" href="https://www.youtube.com/watch?v=XKpaghnfAy8&t=2514s">41:54~44:51</a></div>
+<p class="lead">머리카락 본이 스프링본에 등록되어 움직일 때 찰랑거려요.</p>
+<ol class="steps">
+<li><h3>Root Bones에 Hair-Root 등록<em>Unity</em></h3><div class="how">캐릭터 아래 secondary 오브젝트 선택 → VRM Spring Bone 컴포넌트 → Hierarchy의 Head 아래 Hair-Root 본을 Root Bones 글자 위로 <span class="mouse">드래그</span></div><div class="why">스프링본은 뼈를 물리로 흔들어 주는 기능이에요. 추가로 넣은 머리카락 본은 직접 등록해야 흔들려요.</div><div class="nt">등록되면 노란 기즈모가 보여요. Head, Neck 같은 휴머노이드 본은 VRM이 알아서 처리해요.</div></li>
+<li><h3>Play 중 값 조정<em>Unity</em></h3><div class="how">Play 상태에서 값을 <span class="mouse">드래그</span>하며 조정: 힘 관련 값 0.7, Drag Force 0.3</div><div class="why">Drag Force가 크면 천천히 느리게, 작으면 빨리 돌아와요.</div><div class="nt">0.7을 넣는 칸을 자막은 '이 값'이라고만 해요. Stiffness Force로 보이지만 확실하지 않아요. 그 외 추천 값은 화면으로만 나와요. 화면을 보고 맞추세요.</div></li>
+<li><h3>격한 모션에서 점검<em>Unity</em></h3><div class="how">백플립 같은 격한 모션을 재생해 보고 앞머리가 뒤집힐 정도면 값을 조절해 덜 움직이게</div><div class="why">심한 동작에서도 머리가 망가지지 않게 해요.</div></li>
+<li><h3>Copy → 정지 → Paste<em>Unity</em></h3><div class="how">VRM Spring Bone 의 ⋮ → Copy Component → 재생 정지 → secondary 의 VRM Spring Bone ⋮ → Paste Component Values</div><div class="why">재생 중 바꾼 값은 정지하면 사라져서 복사해 붙여 넣어요.</div></li>
+</ol>
+<div class="tw"><table><tr><th>항목</th><th>강사 값</th><th>비고</th></tr><tr><td>Root Bones</td><td>Hair-Root</td><td>Head 아래에 있는 본</td></tr><tr><td>힘 관련 값 (Stiffness Force로 보임)</td><td>0.7</td><td>자막상 불명확</td></tr><tr><td>Drag Force</td><td>0.3</td><td>크면 느리게, 작으면 빨리 돌아옴</td></tr></table></div>
+</section>
+<section id="s13"><div class="sec-head"><h2>I. 유니티: 콜라이더(머리카락이 얼굴을 뚫지 않게)</h2><a class="t" href="https://www.youtube.com/watch?v=XKpaghnfAy8&t=2691s">44:51~48:48</a></div>
+<p class="lead">머리 콜라이더가 등록되어 머리카락이 얼굴을 뚫지 않고, 설정이 프리팹에 저장돼요.</p>
+<ol class="steps">
+<li><h3>HeadCollider 만들기<em>Unity</em></h3><div class="how">Hierarchy에서 Head 본 <span class="mouse">우클릭</span> → Create Empty → 이름 HeadCollider</div><div class="why">머리를 따라다니는 빈 오브젝트를 만들어 거기에 충돌 영역을 달아요.</div></li>
+<li><h3>Collider Group 추가<em>Unity</em></h3><div class="how">Inspector → Add Component → collider 검색 → VRM Spring Bone Collider Group</div><div class="why">콜라이더는 머리카락이 못 들어오게 막는 보이지 않는 공이에요. 핫핑크 구가 생겨요.</div></li>
+<li><h3>Radius, Offset 조정<em>Unity</em></h3><div class="how">Colliders → Element 0 을 펼침 → Radius(반지름)와 Offset으로 얼굴을 적당히 감싸게 조정</div><div class="why">공이 얼굴 크기와 위치에 맞아야 해요.</div><div class="nt">옆에서 보며 앞쪽으로 옮기고, 소수점을 직접 입력해 미세 조정해요. 수치는 자막에 없어요. 화면을 보고 맞추세요.</div></li>
+<li><h3>Collider Groups에 등록<em>Unity</em></h3><div class="how">secondary 의 VRM Spring Bone → Collider Groups 를 펼침 → HeadCollider 를 <span class="mouse">드래그</span></div><div class="why">스프링본이 이 콜라이더를 피해 가게 돼요.</div></li>
+<li><h3>Play로 확인<em>Unity</em></h3><div class="how">Play → 고개 돌리는 모션으로 확인</div><div class="why">머리카락이 얼굴을 뚫지 않는지 봐요.</div><div class="nt">차이가 안 보이면 반지름을 일부러 키워 머리카락이 밀려나는지 확인하세요.</div></li>
+<li><h3>Overrides → Apply All<em>Unity</em></h3><div class="how">재생을 풀고 캐릭터(SD) 선택 → Inspector 상단 Overrides → Apply All</div><div class="why">씬에서 바꾼 설정을 프리팹에 저장해요.</div></li>
+</ol>
+<div class="box"><b>강사의 팁</b><ul><li>긴 머리 캐릭터라면 몸 관절 곳곳에 콜라이더를 만들어 같은 방식으로 등록해요.</li></ul></div>
+</section>
+<section id="s14"><div class="sec-head"><h2>J. 모델을 고쳐야 할 때</h2><a class="t" href="https://www.youtube.com/watch?v=XKpaghnfAy8&t=2934s">48:54~51:46</a></div>
+<p class="lead">블렌더에서 고친 모델을 다시 가져와서, 앞에서 한 유니티 설정을 그대로 옮겨요.</p>
+<ol class="steps">
+<li><h3>블렌더에서 다시 Export<em>파일·설정</em></h3><div class="how">블렌더에서 수정 → 같은 방법으로 전부 선택 → File → Export → VRM</div><div class="why">고친 모델을 새 VRM으로 뽑아요.</div></li>
+<li><h3>새 폴더에 임포트<em>Unity</em></h3><div class="how">유니티 Project 창에 새 폴더(예: SD-수정)를 만들고 거기에 VRM을 <span class="mouse">드래그</span></div><div class="why">같은 이름으로 같은 폴더에 넣으면 겹쳐서 안 돼요.</div></li>
+<li><h3>두 프리팹 씬에 꺼내기<em>Unity</em></h3><div class="how">수정 전, 수정 후 프리팹을 둘 다 Hierarchy로 <span class="mouse">드래그</span> → 하나는 Hips를 옆으로 옮겨요</div><div class="why">둘이 겹쳐 있어서 하나를 옆으로 빼요.</div></li>
+<li><h3>컴포넌트 설정 옮기기<em>Unity</em></h3><div class="how">수정 전 것의 컴포넌트 ⋮ → Copy → 수정 후 것의 같은 컴포넌트 ⋮ → Paste</div><div class="why">처음부터 다시 설정하지 않아도 돼요.</div></li>
+<li><h3>Root Bones 다시 지정<em>Unity</em></h3><div class="how">수정 후 캐릭터의 secondary → VRM Spring Bone → Root Bones 에 수정 후 캐릭터의 Hair-Root 를 다시 넣어요</div><div class="why">secondary(VRM Spring Bone)를 그대로 복사하면 Root Bones가 수정 전 캐릭터의 Hair-Root를 가리켜요.</div><div class="nt">잊기 쉬운 주의점이에요.</div></li>
+</ol>
+</section>
+<section id="s15"><div class="sec-head"><h2>K. 최종 확인과 VRM 0.x Export</h2><a class="t" href="https://www.youtube.com/watch?v=XKpaghnfAy8&t=3106s">51:46~끝</a></div>
+<p class="lead">표정 클립, 스프링본, 콜라이더 정보가 모두 들어간 최종 VRM 파일이 나와요.</p>
+<ol class="steps">
+<li><h3>Play 중 표정 확인<em>Unity</em></h3><div class="how">Play → 캐릭터 Inspector(BlendShape Proxy)에서 A 등의 슬라이더를 올려요</div><div class="why">재생 화면에서 표정이 바뀌는지 확인해요.</div><div class="nt">스프링본 노란 기즈모가 달랑거리는지도 같이 봐요.</div></li>
+<li><h3>VRM 0.x로 Export<em>Unity</em></h3><div class="how">재생 정지 → 캐릭터 선택 → 상단 메뉴 VRM0 → Export to VRM 0.x → 메타 정보 확인 → Export</div><div class="why">유니티에서 한 설정이 전부 들어간 최종 VRM을 뽑아요.</div><div class="nt">저장 위치 예: Assets/Character/완성/SD.vrm</div></li>
+<li><h3>탐색기에서 파일 찾기<em>Unity</em></h3><div class="how">Project 창에서 <span class="mouse">우클릭</span> → Show in Explorer</div><div class="why">폴더를 찾기 귀찮을 때 바로 열 수 있어요. 이 파일을 복사해 와루도에서 써요(Ep.14).</div></li>
+</ol>
+</section>
+<div class="pn"><a href="ep12.html">← Ep.12 특별한 표정 (Happy / Surprise / Angry), 버텍스 수 점검, 모디파이어 적용</a><a href="lookup.html">찾아보기 →</a></div>
+<footer>강의 자막을 정리한 노트에서 뽑은 내용이에요. 자막에 없는 수치는 강의 화면을 보고 맞추세요. 단축키는 Blender 기본 키맵 기준이에요.
+강의: <a href="https://www.youtube.com/playlist?list=PLAR5yRjFCe9sOjK9pbKqRPGTGlaXgfUIA">[SD 버츄얼 캐릭터 만들기] DyeoV</a></footer>
+</div></body></html>

@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ep.5 바디를 움직이자! 몸 리깅하고 색칠하기</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap">
+<link rel="stylesheet" href="style.css"></head><body><div class="wrap">
+<div class="top"><a href="index.html">기초</a><a href="ep01.html">Ep.1</a><a href="ep02.html">Ep.2</a><a href="ep03.html">Ep.3</a><a href="ep04.html">Ep.4</a><a href="ep05.html" class="on">Ep.5</a><a href="ep06.html">Ep.6</a><a href="ep07.html">Ep.7</a><a href="ep08.html">Ep.8</a><a href="ep09.html">Ep.9</a><a href="ep10.html">Ep.10</a><a href="ep11.html">Ep.11</a><a href="ep12.html">Ep.12</a><a href="ep13.html">Ep.13</a><a href="lookup.html">찾아보기</a></div>
+<header><div class="ep">EP.05</div><h1>바디를 움직이자! 몸 리깅하고 색칠하기</h1><p>손과 팔을 완전히 붙이고, 팔꿈치와 무릎 관절을 만든 뒤 몸 전체에 웨이트를 넣어 뼈를 따라 움직이게 해요. 마지막에 바디 재질을 만들고 UV를 펴서 피부와 속옷을 색칠해요.</p>
+<a class="vid" href="https://www.youtube.com/watch?v=WdMylTuJmyk">강의 영상 열기</a>
+</header>
+<nav class="toc"><a href="#s1">손과 손목 접합 마무리</a><a href="#s2">팔꿈치와 무릎 관절 토폴로지</a><a href="#s3">몸 버텍스 그룹 준비</a><a href="#s4">초기 웨이트 수동 Assign</a><a href="#s5">뼈 부모 수정</a><a href="#s6">웨이트 스무스 작업 흐름</a><a href="#s7">팔꿈치·손목·무릎 수치 웨이트</a><a href="#s8">발, 발끝, 다리 옆</a><a href="#s9">바디 머티리얼</a><a href="#s10">UV 펼치기</a><a href="#s11">텍스처 페인트</a></nav>
+<section id="s1"><div class="sec-head"><h2>손과 손목 접합 마무리</h2><a class="t" href="https://www.youtube.com/watch?v=WdMylTuJmyk&t=0s">0:00~0:48</a></div>
+<p class="lead">손목 점들이 팔 끝 점과 진짜로 하나로 합쳐져 있어요.</p>
+<ol class="steps">
+<li><h3>손목 점 병합하기<em>메시 편집</em></h3><div class="how">손 쪽 점 먼저 선택 → <span class="mouse">Shift+클릭</span> 으로 팔 쪽 가까운 점 선택 → <kbd>M</kbd> → At Last</div><div class="why">지난 편에 스냅으로 붙인 점은 겹쳐만 있고 합쳐지지 않았어요. At Last는 마지막에 고른 팔 쪽 점 위치로 합쳐요.</div><div class="nt">선택 순서가 중요해요. 손 쪽 먼저, 팔 쪽 나중이에요.</div></li>
+<li><h3>나머지 쌍 반복하기<em>메시 편집</em></h3><div class="how">같은 순서로 다음 점 쌍 선택 → <kbd>Shift</kbd> <kbd>R</kbd></div><div class="why">Repeat Last는 방금 한 작업을 한 번 더 해 줘요. 메뉴를 다시 열지 않아도 돼요.</div><div class="nt">중간에 다른 키를 누르면 반복되는 작업이 바뀌어요.</div></li>
+</ol>
+</section>
+<section id="s2"><div class="sec-head"><h2>팔꿈치와 무릎 관절 토폴로지</h2><a class="t" href="https://www.youtube.com/watch?v=WdMylTuJmyk&t=48s">0:48~3:50</a></div>
+<p class="lead">팔꿈치와 무릎에 3줄 관절이 생겨서 잘 접히는 구조가 되어 있어요.</p>
+<ol class="steps">
+<li><h3>팔꿈치 베벨하기<em>메시 편집</em></h3><div class="how">팔꿈치 루프 선택 → <kbd>Ctrl</kbd> <kbd>B</kbd> → 가운데 선이 하나 더 생기게(3줄)</div><div class="why">Bevel로 선 하나를 3줄로 벌려요. 손가락 관절과 같은 구조예요.</div><div class="nt">강의 자막에는 Ctrl P라고 나오지만 베벨은 Ctrl+B예요.</div></li>
+<li><h3>팔꿈치 안쪽 엣지 지우기<em>메시 편집</em></h3><div class="how">접히는 안쪽 엣지 선택 → <kbd>Ctrl</kbd> <kbd>X</kbd></div><div class="why">접히는 쪽은 살이 포개지니 줄을 줄여요. Dissolve는 구멍 없이 선만 지워요.</div></li>
+<li><h3>팔꿈치 면 정리하기<em>메시 편집</em></h3><div class="how">점 두 개 선택 → <kbd>J</kbd></div><div class="why">선을 지우고 남은 면을 점과 점을 이어서 깔끔하게 나눠요.</div></li>
+<li><h3>딱딱한 구간에 루프 컷<em>메시 편집</em></h3><div class="how"><kbd>Ctrl</kbd> <kbd>R</kbd> → 경사가 가파르고 딱딱해 보이는 구간에 넣어요</div><div class="why">줄을 하나 더 넣으면 급하게 꺾인 면이 부드러워져요.</div></li>
+<li><h3>비례 편집으로 다듬기<em>이동·변형</em></h3><div class="how">Proportional Editing 켜기 → 점을 옮겨 형태를 다듬어요</div><div class="why">주변 점이 함께 따라와서 자연스러운 곡면이 돼요.</div></li>
+<li><h3>버텍스 Smooth로 펴기<em>메시 편집</em></h3><div class="how">울퉁불퉁한 점 선택 → 버텍스 Smooth</div><div class="why">점들의 간격을 고르게 해서 표면을 펴 줘요.</div><div class="nt">옷으로 가려질 부분이라 약간 딱딱한 음영은 무시해도 돼요.</div></li>
+<li><h3>무릎 베벨하기<em>메시 편집</em></h3><div class="how">무릎 루프 선택 → <kbd>Ctrl</kbd> <kbd>B</kbd> → 가운데 선 추가</div><div class="why">무릎도 팔꿈치와 같은 방법으로 3줄 관절을 만들어요.</div></li>
+<li><h3>무릎 안쪽 엣지 지우기<em>메시 편집</em></h3><div class="how">안쪽 면의 엣지 선택 → <kbd>Ctrl</kbd> <kbd>X</kbd></div><div class="why">무릎 뒤 접히는 쪽 줄을 줄여요.</div></li>
+<li><h3>무릎 면 정리하기<em>메시 편집</em></h3><div class="how">점 두 개 선택 → <kbd>J</kbd></div><div class="why">남은 면을 이어서 정리해요.</div></li>
+<li><h3>날카로운 곳 살짝 펴기<em>메시 편집</em></h3><div class="how">날카로운 부분의 점을 살짝 펴요</div><div class="why">너무 각진 곳만 부드럽게 해요.</div><div class="nt">너무 많이 펴면 관절을 움직일 때 이상해져요.</div></li>
+</ol>
+</section>
+<section id="s3"><div class="sec-head"><h2>몸 버텍스 그룹 준비</h2><a class="t" href="https://www.youtube.com/watch?v=WdMylTuJmyk&t=230s">3:50~6:55</a></div>
+<p class="lead">몸 뼈 이름의 빈 버텍스 그룹이 생기고, 목록이 부위별로 정리되어 있어요.</p>
+<ol class="steps">
+<li><h3>바디를 뼈에 연결하기<em>리깅</em></h3><div class="how">바디 선택 → <span class="mouse">Shift+클릭</span> 으로 아마추어 선택 → <kbd>Ctrl</kbd> <kbd>P</kbd> → Armature Deform → With Empty Groups</div><div class="why">몸 뼈 이름과 같은 빈 버텍스 그룹이 추가돼요. 기존 손가락 그룹은 그대로 남아요.</div><div class="nt">아마추어를 마지막에 선택해요.</div></li>
+<li><h3>구분용 그룹 만들기<em>웨이트</em></h3><div class="how">버텍스 그룹 목록에서 새 그룹 추가 → 기호로 된 이름(구분선)으로 바꿔요 (여러 개)</div><div class="why">그룹이 너무 많아 알아보기 어려워서, 기능은 없고 칸막이 역할만 하는 그룹을 끼워 넣어요.</div><div class="nt">강의 자막에 정확한 기호 이름이 없어요. 화면을 보고 맞추세요.</div></li>
+<li><h3>그룹 순서 정리하기<em>웨이트</em></h3><div class="how">그룹 선택 → 목록 옆 위/아래 화살표로 옮겨요: 손가락 / Hand / 팔·어깨 L·R / 다리 L·R / 몸통</div><div class="why">부위별로 묶어 두면 웨이트 작업할 때 그룹을 빨리 찾아요.</div></li>
+</ol>
+</section>
+<section id="s4"><div class="sec-head"><h2>초기 웨이트 수동 Assign</h2><a class="t" href="https://www.youtube.com/watch?v=WdMylTuJmyk&t=415s">6:55~9:10</a></div>
+<p class="lead">몸의 모든 부위가 자기 뼈 그룹에 Weight 1로 들어가 있어요.</p>
+<ol class="steps">
+<li><h3>X-Ray 켜기<em>화면</em></h3><div class="how">Edit Mode → X-Ray 켜기</div><div class="why">X-Ray를 켜야 뒤쪽에 가려진 점까지 한꺼번에 선택돼요.</div><div class="nt">꼭 켜세요. 안 켜면 앞쪽 점만 들어가요.</div></li>
+<li><h3>엉덩이 → Hips<em>웨이트</em></h3><div class="how">엉덩이 영역 선택 → Hips 그룹 → Weight 1 → Assign</div><div class="why">엉덩이 부분이 Hips 뼈를 따라가게 해요.</div><div class="nt">선택 범위는 화면을 보고 맞추세요.</div></li>
+<li><h3>허리 → Spine<em>웨이트</em></h3><div class="how">허리 영역 선택(경계선 포함) → Spine 그룹 → Weight 1 → Assign</div><div class="why">허리 부분이 Spine 뼈를 따라가게 해요.</div></li>
+<li><h3>가슴 → Chest<em>웨이트</em></h3><div class="how">가슴 영역 선택 → Chest 그룹 → Weight 1 → Assign</div><div class="why">가슴 부분이 Chest 뼈를 따라가게 해요.</div></li>
+<li><h3>목 → Neck<em>웨이트</em></h3><div class="how">목 영역 선택 → Neck 그룹 → Weight 1 → Assign</div><div class="why">목 부분이 Neck 뼈를 따라가게 해요.</div><div class="nt">Head와 Eye는 지난 편에서 끝냈어요.</div></li>
+<li><h3>어깨 → Shoulder.L<em>웨이트</em></h3><div class="how">어깨 쪽 네 칸 정도 선택 → Shoulder.L 그룹 → Weight 1 → Assign</div><div class="why">어깨 부분이 어깨 뼈를 따라가게 해요.</div></li>
+<li><h3>위팔 → UpperArm.L<em>웨이트</em></h3><div class="how">위팔 루프 선택 → 메뉴 Select → More 로 선택 넓히기 (강의는 Ctrl+넘패드 +) → UpperArm.L 그룹 → Weight 1 → Assign</div><div class="why">Select More는 선택한 곳 옆 칸까지 선택을 넓혀 줘요. 위팔 전체를 빠르게 골라요.</div></li>
+<li><h3>아래팔 → LowerArm.L<em>웨이트</em></h3><div class="how">아래팔 루프 선택 → 메뉴 Select → More (강의는 Ctrl+넘패드 +) → LowerArm.L 그룹 → Weight 1 → Assign</div><div class="why">아래팔이 LowerArm 뼈를 따라가게 해요.</div></li>
+<li><h3>허벅지 → UpperLeg.L<em>웨이트</em></h3><div class="how">허벅지 루프 선택 → 메뉴 Select → More (강의는 Ctrl+넘패드 +) → UpperLeg.L 그룹 → Weight 1 → Assign</div><div class="why">허벅지가 UpperLeg 뼈를 따라가게 해요.</div></li>
+<li><h3>종아리 → LowerLeg.L<em>웨이트</em></h3><div class="how">발목 쪽까지 선택 → LowerLeg.L 그룹 → Weight 1 → Assign</div><div class="why">종아리가 LowerLeg 뼈를 따라가게 해요.</div></li>
+<li><h3>발 부분은 빼기<em>웨이트</em></h3><div class="how">발 부분 선택 → LowerLeg.L 그룹 → Remove</div><div class="why">발까지 같이 선택됐다면 발은 LowerLeg에서 빼야 해요. 발은 Foot 뼈가 맡아요.</div><div class="nt">발까지 선택됐을 때만 해요.</div></li>
+<li><h3>발 → Foot.L<em>웨이트</em></h3><div class="how">발 전체 선택 → Foot.L 그룹 → Weight 1 → Assign</div><div class="why">발이 Foot 뼈를 따라가게 해요.</div></li>
+<li><h3>발끝 → Toe.L<em>웨이트</em></h3><div class="how">발끝만 선택 → Toe.L 그룹 → Weight 1 → Assign</div><div class="why">발끝이 Toe 뼈를 따라가게 해요.</div><div class="nt">Foot과 Toe가 거의 겹쳐 들어가요. 뒤에서 조정해요.</div></li>
+</ol>
+<div class="tw"><table><tr><th>영역</th><th>버텍스 그룹</th><th>비고</th></tr><tr><td>엉덩이</td><td>Hips</td><td></td></tr><tr><td>허리</td><td>Spine</td><td>경계선 포함</td></tr><tr><td>가슴</td><td>Chest</td><td></td></tr><tr><td>목</td><td>Neck</td><td></td></tr><tr><td>어깨 쪽 네 칸 정도</td><td>Shoulder.L</td><td></td></tr><tr><td>위팔</td><td>UpperArm.L</td><td>선택 확장 사용</td></tr><tr><td>아래팔</td><td>LowerArm.L</td><td>선택 확장 사용</td></tr><tr><td>허벅지</td><td>UpperLeg.L</td><td>선택 확장 사용</td></tr><tr><td>종아리(발목 쪽)</td><td>LowerLeg.L</td><td>발 부분은 Remove</td></tr><tr><td>발 전체</td><td>Foot.L</td><td></td></tr><tr><td>발끝</td><td>Toe.L</td><td>Foot과 겹침, 이후 조정</td></tr></table></div>
+<div class="box"><b>강사의 팁</b><ul><li>강사는 .L 쪽에만 Assign 해요. 바디에 Mirror 모디파이어가 있어서 반대쪽 그룹으로 대칭되는 것으로 보이지만, 이 편 자막에는 따로 설명이 없어요.</li></ul></div>
+</section>
+<section id="s5"><div class="sec-head"><h2>뼈 부모 수정</h2><a class="t" href="https://www.youtube.com/watch?v=WdMylTuJmyk&t=550s">9:10~9:50</a></div>
+<p class="lead">손 뼈가 아래팔 뼈의 자식이 되어 팔을 움직이면 손이 따라와요.</p>
+<ol class="steps">
+<li><h3>Hand.L 부모 지정<em>리깅</em></h3><div class="how">뼈 Edit Mode → Hand.L 선택 → Bone 탭 → Parent → LowerArm.L</div><div class="why">Hand.L의 부모가 비어 있어서 팔을 움직여도 손이 안 따라와요. 아래팔을 부모로 정해요.</div></li>
+<li><h3>Hand.R 부모 지정<em>리깅</em></h3><div class="how">Hand.R 선택 → Bone 탭 → Parent → LowerArm.R</div><div class="why">반대쪽은 자동으로 되지 않아서 직접 정해 줘야 해요.</div></li>
+</ol>
+</section>
+<section id="s6"><div class="sec-head"><h2>웨이트 스무스 작업 흐름</h2><a class="t" href="https://www.youtube.com/watch?v=WdMylTuJmyk&t=590s">9:50~19:20</a></div>
+<p class="lead">허리, 가슴, 엉덩이, 어깨를 움직여도 경계가 딱딱하게 꺾이지 않아요.</p>
+<ol class="steps">
+<li><h3>뼈 돌려 문제 찾기<em>리깅</em></h3><div class="how">Pose Mode → 뼈 선택 → <kbd>R</kbd> <kbd>Z</kbd></div><div class="why">뼈를 돌려 봐야 어색한 곳이 드러나요. 몸통은 옆으로 기울이는 R Z가 문제를 가장 빨리 보여 줘요.</div></li>
+<li><h3>포즈 상태로 편집하기<em>모디파이어</em></h3><div class="how">바디의 Armature 모디파이어 → Edit Mode 버튼(네모)과 On Cage 버튼(세모) 켜기</div><div class="why">뼈를 돌린 자세 그대로 Edit Mode에서 점을 고를 수 있어요.</div></li>
+<li><h3>문제 영역 스무스<em>웨이트</em></h3><div class="how">Edit Mode에서 어색한 영역의 버텍스나 면 선택 → Weight Paint 모드 → 마스크 켜기 → 관련 그룹을 하나씩 선택 → <kbd>Q</kbd> → Smooth (2~3회)</div><div class="why">마스크를 켜면 선택한 곳에만 Smooth가 걸려요. 이웃 점끼리 웨이트가 섞여 부드러워져요.</div><div class="nt">이 절차를 부위마다 반복해요.</div></li>
+<li><h3>점 값 직접 고치기<em>웨이트</em></h3><div class="how">문제 버텍스 선택 → <kbd>N</kbd> 패널 → Vertex Weights 값을 직접 조정</div><div class="why">Smooth로 안 고쳐지는 점은 숫자를 직접 바꿔요.</div></li>
+<li><h3>잘 맞는 값 복사하기<em>웨이트</em></h3><div class="how">복사 받을 점들 선택 → 잘 맞는 점을 마지막에 선택 → <kbd>N</kbd> 패널 Vertex Weights → Copy 버튼</div><div class="why">잘 맞춘 점의 웨이트를 선택한 다른 점들에 똑같이 넣어 줘요.</div></li>
+<li><h3>허리 스무스<em>웨이트</em></h3><div class="how">Spine을 돌려 확인 → 경계 영역 선택 → Spine, Chest, Hips 순으로 Smooth</div><div class="why">허리 경계에 세 뼈의 값이 고르게 섞여야 부드럽게 휘어요.</div><div class="nt">Hips를 돌리면 몸 전체가 돌아가요. Hips는 주변 뼈(Spine, 다리)를 움직여서 확인하세요.</div></li>
+<li><h3>가슴 스무스<em>웨이트</em></h3><div class="how">Chest 선택 → <kbd>R</kbd> <kbd>Z</kbd> → 어색한 면 선택 → Spine, Chest 그룹 Smooth</div><div class="why">가슴과 허리 사이 경계를 부드럽게 해요.</div></li>
+<li><h3>엉덩이·다리 뿌리 스무스<em>웨이트</em></h3><div class="how">다리를 들어 확인 → 어색한 영역 선택 → Hips, UpperLeg 그룹 Smooth</div><div class="why">다리를 들었을 때 엉덩이가 자연스럽게 따라오게 해요.</div><div class="nt">Hips Smooth가 오히려 어색하면 Spine만 하세요.</div></li>
+<li><h3>비어 보이는 곳 채우기<em>웨이트</em></h3><div class="how">비어 보이는 점 선택 → Vertex Weights 에서 Spine, Hips 값을 직접 조절</div><div class="why">웨이트가 모자라 안 따라오는 점에 값을 채워 줘요.</div><div class="nt">강의 자막에 수치가 없어요. 화면을 보고 맞추세요.</div></li>
+<li><h3>팔꿈치·무릎 튀는 점<em>웨이트</em></h3><div class="how">튀는 버텍스 선택 → UpperArm, LowerArm (무릎은 UpperLeg, LowerLeg) 그룹 Smooth</div><div class="why">관절 주변에서 혼자 튀어나오는 점을 주변과 맞춰요.</div></li>
+<li><h3>어깨 스무스<em>웨이트</em></h3><div class="how">Shoulder를 올려 확인 → 어색한 영역 선택 → Shoulder, UpperArm 그룹 Smooth</div><div class="why">어깨와 팔 사이 경계를 부드럽게 해요.</div></li>
+<li><h3>어깨에 Chest 값 넣기<em>웨이트</em></h3><div class="how">어깨 주변 선택 → Chest 그룹 Smooth</div><div class="why">어깨가 몸에 안 붙으면 Chest 값이 빠져 있어서 그래요. 어깨, 가슴, 팔 세 그룹이 이어져야 해요.</div><div class="nt">뭔가 이상하면 대개 어깨, 가슴, 팔이 서로 이어져 있지 않아서예요.</div></li>
+<li><h3>움푹한 곳 고치기<em>웨이트</em></h3><div class="how">움푹 들어가는 점 선택 → Vertex Weights 에서 Shoulder 값을 줄여요</div><div class="why">어깨 뼈를 너무 많이 따라가서 꺼지는 거라 값을 낮춰요.</div><div class="nt">강의 자막에 수치가 없어요. 화면을 보고 맞추세요.</div></li>
+<li><h3>필요 없는 그룹 지우기<em>웨이트</em></h3><div class="how">점 선택 → Vertex Weights 목록에서 필요 없는 그룹 옆 X 버튼 → 그 자리는 UpperArm 그룹 Smooth 로 채워요</div><div class="why">한 점에 뼈 4개가 영향을 주면 복잡해져요. 0.0015 같은 아주 작은 값은 지워요.</div></li>
+<li><h3>어깨와 팔 함께 테스트<em>리깅</em></h3><div class="how">Shoulder와 팔 뼈 함께 선택 → 피벗 Individual Origins → <kbd>R</kbd> <kbd>X</kbd> <kbd>X</kbd> 또는 <kbd>R</kbd> <kbd>Z</kbd> <kbd>Z</kbd></div><div class="why">실제 사람은 팔만 따로 올리지 못해요. 어깨와 팔을 같이 돌려 봐야 진짜 쓰는 포즈가 보여요.</div><div class="nt">어깨를 고정하고 팔만 돌렸을 때 생기는 알통이나 꺼짐은 고민하지 않아도 돼요.</div></li>
+</ol>
+</section>
+<section id="s7"><div class="sec-head"><h2>팔꿈치·손목·무릎 수치 웨이트</h2><a class="t" href="https://www.youtube.com/watch?v=WdMylTuJmyk&t=1160s">19:20~26:40</a></div>
+<p class="lead">팔꿈치, 손목, 무릎이 0.5 / 0.8 / 0.9 규칙으로 깔끔하게 꺾여요.</p>
+<ol class="steps">
+<li><h3>팔 펴기<em>리깅</em></h3><div class="how">팔 뼈의 포즈를 되돌려 편 상태로 만들어요</div><div class="why">팔을 편 상태에서 작업해야 줄이 잘 보여요.</div></li>
+<li><h3>팔꿈치 가운데 0.5<em>웨이트</em></h3><div class="how">팔꿈치 가운데 줄의 점 선택 → Vertex Weights → UpperArm 0.5, LowerArm 0.5</div><div class="why">관절 가운데는 두 뼈를 반반씩 따라가요.</div></li>
+<li><h3>팔꿈치 옆 줄 0.8 / 0.2<em>웨이트</em></h3><div class="how">가운데 옆 줄 선택 → 가까운 쪽 뼈 0.8, 반대쪽 뼈 0.2</div><div class="why">가운데에서 한 칸 멀어지면 가까운 뼈를 더 많이 따라가요.</div></li>
+<li><h3>팔꿈치 바깥 줄 0.9 / 0.1<em>웨이트</em></h3><div class="how">그 바깥 줄 선택 → 가까운 쪽 뼈 0.9, 반대쪽 뼈 0.1</div><div class="why">값이 서서히 바뀌어야 관절이 자연스럽게 꺾여요.</div></li>
+<li><h3>같은 줄에 복사하기<em>웨이트</em></h3><div class="how">같은 줄의 점들 선택 → 값을 넣은 점을 마지막에 선택 → Vertex Weights → Copy 버튼</div><div class="why">점 하나에 넣은 값을 같은 줄 전체에 한 번에 넣어요.</div></li>
+<li><h3>손목에 루프 컷 추가<em>메시 편집</em></h3><div class="how"><kbd>Ctrl</kbd> <kbd>R</kbd> → 손목에 1개</div><div class="why">손목은 줄이 모자라서 관절 3줄을 만들려면 하나 더 필요해요.</div></li>
+<li><h3>손목 가운데 0.5<em>웨이트</em></h3><div class="how">손목 가운데 줄 선택 → Hand 0.5, LowerArm 0.5</div><div class="why">손목 가운데는 손과 아래팔을 반반씩 따라가요.</div></li>
+<li><h3>손목 팔 쪽 줄<em>웨이트</em></h3><div class="how">팔 쪽 줄 선택 → LowerArm 0.9, Hand 0.1</div><div class="why">팔에 가까운 줄은 아래팔을 더 많이 따라가요.</div></li>
+<li><h3>손목 손 쪽 줄<em>웨이트</em></h3><div class="how">손 쪽 줄 선택 → Hand 0.9, LowerArm 0.1</div><div class="why">손에 가까운 줄은 손을 더 많이 따라가요.</div></li>
+<li><h3>다리 펴기<em>리깅</em></h3><div class="how">다리 뼈의 포즈를 되돌려 편 상태로 만들어요</div><div class="why">다리도 편 상태에서 작업해야 잘 보여요.</div></li>
+<li><h3>무릎 웨이트 넣기<em>웨이트</em></h3><div class="how">무릎 가운데 줄: UpperLeg 0.5, LowerLeg 0.5 → 옆 줄: 가까운 쪽 0.8, 반대쪽 0.2 → 바깥 줄: 가까운 쪽 0.9, 반대쪽 0.1</div><div class="why">무릎도 팔꿈치와 똑같은 규칙이에요.</div></li>
+</ol>
+<div class="tw"><table><tr><th>관절</th><th>줄</th><th>웨이트</th></tr><tr><td>팔꿈치</td><td>가운데 줄</td><td>UpperArm 0.5 / LowerArm 0.5</td></tr><tr><td>팔꿈치</td><td>가운데 옆 줄</td><td>가까운 쪽 0.8 / 반대쪽 0.2</td></tr><tr><td>팔꿈치</td><td>그 바깥 줄</td><td>가까운 쪽 0.9 / 반대쪽 0.1</td></tr><tr><td>손목</td><td>가운데 줄</td><td>Hand 0.5 / LowerArm 0.5</td></tr><tr><td>손목</td><td>팔 쪽 줄</td><td>LowerArm 0.9 / Hand 0.1</td></tr><tr><td>손목</td><td>손 쪽 줄</td><td>Hand 0.9 / LowerArm 0.1</td></tr><tr><td>무릎</td><td>가운데 줄</td><td>UpperLeg 0.5 / LowerLeg 0.5</td></tr><tr><td>무릎</td><td>가운데 옆 줄</td><td>가까운 쪽 0.8 / 반대쪽 0.2</td></tr><tr><td>무릎</td><td>그 바깥 줄</td><td>가까운 쪽 0.9 / 반대쪽 0.1</td></tr></table></div>
+<div class="box"><b>강사의 팁</b><ul><li>더 뾰족한 팔꿈치를 원하면 루프 컷과 뼈를 더 추가해야 하지만 SD에서는 생략해요.</li><li>관절이 호스처럼 둥글게 휘도록 너무 부드럽게 하면 안 돼요. 강사 말로는 교통사고 난 다리처럼 보여요. 꺾이는 느낌은 남겨 두세요.</li></ul></div>
+</section>
+<section id="s8"><div class="sec-head"><h2>발, 발끝, 다리 옆</h2><a class="t" href="https://www.youtube.com/watch?v=WdMylTuJmyk&t=1600s">26:40~30:05</a></div>
+<p class="lead">발목과 다리 뿌리가 움직여도 어색하지 않아요.</p>
+<ol class="steps">
+<li><h3>발목 스무스<em>웨이트</em></h3><div class="how">발 전체 면 선택 → LowerLeg, Foot, Toe 그룹을 각각 Smooth 약 3회</div><div class="why">발목 주변에 세 뼈의 값을 섞어서 부드럽게 해요.</div><div class="nt">정답은 없어요.</div></li>
+<li><h3>파묻히는 곳 고치기<em>웨이트</em></h3><div class="how">파묻히는 점 선택 → Vertex Weights 값을 직접 조절하거나 Smooth를 더 해요</div><div class="why">발목을 꺾을 때 안으로 들어가는 점을 꺼내요.</div><div class="nt">가장 좋은 해법은 루프 컷으로 면을 늘리는 것이에요. 강사는 Smooth를 더 하는 것으로 대신했어요.</div></li>
+<li><h3>다리 뿌리 스무스<em>웨이트</em></h3><div class="how">다리를 옆으로 벌려 확인 → 다리 뿌리 면 선택 → UpperLeg.L 그룹만 Smooth</div><div class="why">다리를 옆으로 벌렸을 때 뿌리가 부드럽게 이어지게 해요.</div><div class="nt">Hips 값은 건드리지 마세요. SD 특유의 통통한 엉덩이 볼륨이 사라져요. L과 R 그룹을 헷갈리지 않게 조심하세요.</div></li>
+</ol>
+<div class="box"><b>강사의 팁</b><ul><li>Toe 뼈는 안짱다리 같은 발끝 방향을 표현하는 용도예요. 문제가 거의 없어요.</li></ul></div>
+</section>
+<section id="s9"><div class="sec-head"><h2>바디 머티리얼</h2><a class="t" href="https://www.youtube.com/watch?v=WdMylTuJmyk&t=1805s">30:05~31:15</a></div>
+<p class="lead">바디에 body 재질이 있고, 흰색 2048 이미지가 그대로 보이게 연결되어 있어요.</p>
+<ol class="steps">
+<li><h3>Shader Editor 창 열기<em>화면</em></h3><div class="how">창을 하나 더 나눠요 → 에디터 종류를 Shader Editor 로</div><div class="why">Shader Editor는 재질을 노드(상자)로 이어서 만드는 창이에요.</div></li>
+<li><h3>새 머티리얼 만들기<em>재질·텍스처</em></h3><div class="how">바디 선택 → 새 머티리얼 추가 → 이름 body</div><div class="why">머티리얼은 물체의 색과 질감을 정하는 재질이에요.</div></li>
+<li><h3>Principled BSDF 지우기<em>재질·텍스처</em></h3><div class="how">Principled BSDF 노드 선택 → 삭제</div><div class="why">빛 계산을 하는 기본 노드를 빼요. Head와 같은 방식으로 이미지 색이 그대로 보이게 하려는 거예요.</div></li>
+<li><h3>Image Texture 노드 추가<em>재질·텍스처</em></h3><div class="how">Image Texture 노드를 추가해요</div><div class="why">그림 파일을 재질에 쓰게 해 주는 노드예요.</div></li>
+<li><h3>새 이미지 만들기<em>재질·텍스처</em></h3><div class="how">Image Texture 노드 → New → 이름 body, 2048 × 2048, 색 흰색</div><div class="why">여기에 피부와 속옷을 색칠해요. 2048은 그림의 가로세로 픽셀 수예요.</div></li>
+<li><h3>출력에 직접 연결<em>재질·텍스처</em></h3><div class="how">Image Texture 노드의 Color → Material Output 에 직접 연결</div><div class="why">그림자 계산 없이 이미지 색이 그대로 보여요. 이런 방식을 언릿이라고 해요.</div></li>
+</ol>
+</section>
+<section id="s10"><div class="sec-head"><h2>UV 펼치기</h2><a class="t" href="https://www.youtube.com/watch?v=WdMylTuJmyk&t=1875s">31:15~38:30</a></div>
+<p class="lead">바디의 UV가 부위별로 펴져서 색칠할 수 있게 배치되어 있어요.</p>
+<ol class="steps">
+<li><h3>부위 경계에 Seam<em>UV</em></h3><div class="how">다리 뿌리, 팔(어깨 쪽), 손목 엣지 선택 → Mark Seam</div><div class="why">UV는 입체를 평면으로 펼친 전개도예요. Seam은 가위로 자르는 선이라 부위별로 나눠 줘요. UV를 안 펴면 색칠이 안 돼요.</div></li>
+<li><h3>팔다리 길이 방향 Seam<em>UV</em></h3><div class="how">팔과 다리의 길이 방향 엣지 한 줄 선택 → Mark Seam</div><div class="why">팔다리는 원통이라 길게 한 줄 잘라야 평평하게 펴져요.</div><div class="nt">다리는 티가 덜 나는 안쪽을 자르세요.</div></li>
+<li><h3>발 Seam<em>UV</em></h3><div class="how">발목 엣지와 발바닥 둘레 엣지 선택 → Mark Seam</div><div class="why">발을 다리에서 떼고 발바닥도 따로 떼어 내요.</div></li>
+<li><h3>손가락 Seam<em>UV</em></h3><div class="how">손가락 뿌리 엣지를 각각 선택 → Mark Seam</div><div class="why">손가락을 하나씩 따로 떼면 색칠하기 편해요.</div></li>
+<li><h3>손등·손바닥 Seam<em>UV</em></h3><div class="how">손을 손등과 손바닥으로 반 가르는 엣지 선택 → Mark Seam</div><div class="why">손이 장갑 모양으로 펴져요.</div><div class="nt">손톱 반대 방향(손바닥 쪽)을 자르세요. 손톱 그릴 면이 온전히 남아요.</div></li>
+<li><h3>Unwrap 하기<em>UV</em></h3><div class="how">전체 선택 → Unwrap</div><div class="why">Seam을 따라 메시를 평면으로 펼쳐요.</div></li>
+<li><h3>덜 갈린 곳 다시 자르기<em>UV</em></h3><div class="how">덜 갈린 곳의 엣지 선택 → Mark Seam → 다시 Unwrap</div><div class="why">펼친 결과가 찌그러져 있으면 자를 선이 모자란 거예요.</div><div class="nt">여러 번 반복하게 돼요.</div></li>
+<li><h3>아일랜드 확인하기<em>UV</em></h3><div class="how">UV Editor → UV 동기화 선택 버튼 켜기 → UV 조각을 눌러 3D 뷰에서 어느 부위인지 확인</div><div class="why">아일랜드는 UV에서 따로 떨어진 조각이에요. 동기화를 켜면 UV에서 고른 것이 3D 뷰에도 선택돼요.</div><div class="nt">이 상태에서 UV를 움직이면 꼬여요. 확인용으로만 쓰고 다시 끄세요.</div></li>
+<li><h3>비례 편집 끄기<em>파일·설정</em></h3><div class="how">Proportional Editing 끄기</div><div class="why">켜져 있으면 조각 하나를 옮길 때 다른 조각까지 끌려와요.</div></li>
+<li><h3>UV 조각 배치하기<em>UV</em></h3><div class="how">조각을 옮겨 배치해요: 바디 / 다리와 발바닥 / 팔 / 손등·손바닥 / 손가락(중지, 새끼, 약지, 엄지, 검지 순)</div><div class="why">어느 조각이 어느 부위인지 알아볼 수 있게 묶어 둬요.</div></li>
+<li><h3>UV 크기 나누기<em>UV</em></h3><div class="how">손 조각은 크게, 팔다리와 몸통 조각은 작게 줄여요</div><div class="why">크게 놓은 조각일수록 그림이 선명해요. 손은 손톱을 그려야 하고, 팔다리와 몸통은 옷에 가려져요.</div><div class="nt">남는 공간은 그대로 둬도 돼요.</div></li>
+</ol>
+</section>
+<section id="s11"><div class="sec-head"><h2>텍스처 페인트</h2><a class="t" href="https://www.youtube.com/watch?v=WdMylTuJmyk&t=2310s">38:30~45:30</a></div>
+<p class="lead">바디에 피부색, 목 그림자, 손톱, 속옷이 칠해지고 이미지가 파일로 저장되어 있어요.</p>
+<ol class="steps">
+<li><h3>피부색으로 채우기<em>페인트</em></h3><div class="how">Image Editor → Paint 모드 → Fill(페인트 통) 도구 → 피부색 선택 → <span class="mouse">클릭</span></div><div class="why">이미지 전체를 피부색 한 가지로 채워요.</div></li>
+<li><h3>목 그림자 칠하기<em>페인트</em></h3><div class="how">가장 어두운 피부 그림자색 선택 → 목 부분을 강하게 칠해요</div><div class="why">턱 아래 그림자를 그림으로 넣는 거예요. 버추얼 캐릭터 채색의 큰 특징이에요.</div><div class="nt">옷에 가려지니 넉넉하게 칠하세요. 브이넥처럼 파인 옷이면 가슴 위쪽까지 명암을 더 줘야 자연스러워요.</div></li>
+<li><h3>손톱 칠하기<em>페인트</em></h3><div class="how">손가락 끝에 손톱을 칠해요 (강의는 임시로 빨간색)</div><div class="why">손가락에는 명암을 넣지 않고 손톱만 그려요.</div></li>
+<li><h3>와이어프레임 켜기<em>화면</em></h3><div class="how">와이어프레임 표시를 켜요</div><div class="why">메시 선이 보여야 속옷 경계를 선에 맞춰 그릴 수 있어요.</div></li>
+<li><h3>속옷 경계선 그리기<em>페인트</em></h3><div class="how">브러시 설정 → Stroke Method → Line → <span class="mouse">드래그</span> 로 경계선을 그려요</div><div class="why">Line은 누른 곳부터 뗀 곳까지 직선을 그어 줘요. 속옷은 모델링하지 않고 그림으로 그려요.</div></li>
+<li><h3>속옷 안쪽 칠하기<em>페인트</em></h3><div class="how">Stroke Method → Space 로 되돌리기 → 경계선 안쪽을 칠해요</div><div class="why">Space는 평소처럼 붓질하는 방식이에요. 선 안쪽을 채워요.</div></li>
+<li><h3>리본 장식 그리기<em>페인트</em></h3><div class="how">속옷 앞면에 리본 장식을 그려요</div><div class="why">작은 장식을 넣어 포인트를 줘요.</div></li>
+<li><h3>와이어프레임 끄고 확인<em>화면</em></h3><div class="how">와이어프레임 표시를 끄고 선이 삐뚤지 않은지 봐요</div><div class="why">선을 끄고 보면 삐뚤어 보일 수 있어요.</div></li>
+<li><h3>이미지 저장하기<em>파일·설정</em></h3><div class="how">Image Editor → Image → Save → 바디 이미지 이름으로 저장</div><div class="why">칠한 그림은 블렌더 파일과 따로 저장해야 해요. 안 하면 그림이 사라질 수 있어요.</div><div class="nt">페인트 후 이미지 저장을 잊지 마세요.</div></li>
+</ol>
+</section>
+<div class="pn"><a href="ep04.html">← Ep.4 손 모델링과 리깅</a><a href="ep06.html">Ep.6 트윈테일 머리 모델링 →</a></div>
+<footer>강의 자막을 정리한 노트에서 뽑은 내용이에요. 자막에 없는 수치는 강의 화면을 보고 맞추세요. 단축키는 Blender 기본 키맵 기준이에요.
+강의: <a href="https://www.youtube.com/playlist?list=PLAR5yRjFCe9sOjK9pbKqRPGTGlaXgfUIA">[SD 버츄얼 캐릭터 만들기] DyeoV</a></footer>
+</div></body></html>

@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ep.1 블렌더 기본 세팅 &amp; 필수 에드온</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap">
+<link rel="stylesheet" href="style.css"></head><body><div class="wrap">
+<div class="top"><a href="index.html">기초</a><a href="ep01.html" class="on">Ep.1</a><a href="ep02.html">Ep.2</a><a href="ep03.html">Ep.3</a><a href="ep04.html">Ep.4</a><a href="ep05.html">Ep.5</a><a href="ep06.html">Ep.6</a><a href="ep07.html">Ep.7</a><a href="ep08.html">Ep.8</a><a href="ep09.html">Ep.9</a><a href="ep10.html">Ep.10</a><a href="ep11.html">Ep.11</a><a href="ep12.html">Ep.12</a><a href="ep13.html">Ep.13</a><a href="lookup.html">찾아보기</a></div>
+<header><div class="ep">EP.01</div><h1>블렌더 기본 세팅 &amp; 필수 에드온</h1><p>모델링을 시작하기 전에 Blender 설정과 애드온을 준비하고, 키 1m 기준으로 정면·측면·후면 레퍼런스 그림을 세워서 잠가 둬요.</p>
+<a class="vid" href="https://www.youtube.com/watch?v=82SAHN4-YHE">강의 영상 열기</a>
+</header>
+<nav class="toc"><a href="#s1">시리즈 개요</a><a href="#s2">블렌더 환경 설정</a><a href="#s3">에드온 설치</a><a href="#s4">씬 초기화 &amp; 렌더 설정</a><a href="#s5">뷰 조작</a><a href="#s6">캐릭터 키 기준 잡기</a><a href="#s7">레퍼런스 이미지 배치</a><a href="#s8">레퍼런스 잠금</a></nav>
+<section id="s1"><div class="sec-head"><h2>시리즈 개요</h2><a class="t" href="https://www.youtube.com/watch?v=82SAHN4-YHE&t=0s">0:00~1:20</a></div>
+<p class="lead">어떤 순서로 무엇을 만들지, 어떤 프로그램이 필요한지 알게 돼요.</p>
+<ol class="steps">
+<li><h3>프로그램 준비<em>파일·설정</em></h3><div class="how">Blender 4.3, Unity, Warudo(와루도)를 준비해요</div><div class="why">강의가 이 세 프로그램을 기준으로 진행돼요. 다른 버전이나 다른 버추얼 프로그램도 되지만 화면이 달라서 따라 하기 불편할 수 있어요.</div></li>
+</ol>
+<div class="box"><b>강사의 팁</b><ul><li>만드는 순서는 모델링 → 리깅 → 텍스처 → 페이셜 → VRM 설정이에요.</li><li>SD 캐릭터는 등신이 높은 캐릭터보다 과정이 훨씬 단순해서 처음 버추얼을 만드는 사람에게 맞아요.</li><li>강사는 큐브 꺼내기, 이동, 루프컷 같은 기초는 다른 강의에서 익히고 오라고 해요(9:23~10:25).</li><li>화면 왼쪽에 강사가 누르는 키와 마우스가 표시돼요. 느린 배속으로 보면서 따라 하세요.</li></ul></div>
+</section>
+<section id="s2"><div class="sec-head"><h2>블렌더 환경 설정</h2><a class="t" href="https://www.youtube.com/watch?v=82SAHN4-YHE&t=85s">1:25~4:00</a></div>
+<p class="lead">언어가 English이고, Tab을 누르면 모드 고르는 파이 메뉴가 떠요.</p>
+<ol class="steps">
+<li><h3>언어를 English로<em>파일·설정</em></h3><div class="how">Blender 언어를 English로 맞춰요</div><div class="why">대부분의 블렌더 강의가 영어 화면 기준이라서 메뉴 이름을 그대로 따라갈 수 있어요.</div><div class="nt">노트에 메뉴 위치는 적혀 있지 않아요.</div></li>
+<li><h3>시작 화면 닫기<em>화면</em></h3><div class="how">스플래시 화면 바깥 빈 곳을 <span class="mouse">클릭</span></div><div class="why">Blender를 켜면 가운데에 뜨는 안내 창(스플래시)을 닫아요.</div></li>
+<li><h3>Tab for Pie Menu 켜기<em>파일·설정</em></h3><div class="how">Edit → Preferences → Keymap → 3D View 항목의 첫 체크박스 Tab for Pie Menu 체크</div><div class="why"><kbd>Tab</kbd>을 누르면 둥근 메뉴(파이 메뉴)가 떠서 Edit, Object, Sculpt, Texture Paint, Weight Paint 같은 모드를 바로 고를 수 있어요. 체크하지 않으면 Tab이 Edit Mode와 Object Mode만 오가요.</div><div class="nt">강사는 항상 이 설정으로 작업해요. 강의에서 갑자기 텍스처 페인트나 웨이트 페인트로 바뀌는 것처럼 보이면 이 설정 때문이에요.</div></li>
+</ol>
+</section>
+<section id="s3"><div class="sec-head"><h2>에드온 설치</h2><a class="t" href="https://www.youtube.com/watch?v=82SAHN4-YHE&t=243s">4:03~6:30</a></div>
+<p class="lead">모델링, 리깅, VRM, 쉐이프 키에 필요한 애드온이 설치돼 있어요.</p>
+<ol class="steps">
+<li><h3>LoopTools 설치<em>애드온</em></h3><div class="how">Edit → Preferences → Get Extensions → LoopTools → Install</div><div class="why">모델링에서 아주 자주 쓰는 애드온이에요. 구멍을 동그랗게 만드는 Circle 같은 기능이 들어 있고, 자세한 쓰임은 모델링 편에서 나와요.</div><div class="nt">온라인 접속 허용이 필요해요.</div></li>
+<li><h3>Rigify 켜기<em>애드온</em></h3><div class="how">Preferences → Get Extensions에 없으면 Add-ons 탭에서 Rigify 체크</div><div class="why">리깅(캐릭터에 뼈대를 넣는 일)을 편하게 해 주는 애드온이에요.</div></li>
+<li><h3>VRM Format 설치<em>애드온</em></h3><div class="how">Preferences → Get Extensions → VRM 검색 → Install</div><div class="why">Blender에서 버추얼 캐릭터(VRM 파일)를 만들 때 꼭 필요해요. 작업이 훨씬 쉬워져요.</div></li>
+<li><h3>외부 에드온 zip 설치<em>애드온</em></h3><div class="how">zip 내려받기 → Preferences → Add-ons 탭 오른쪽 위 아래 화살표 → Install from Disk → zip 선택</div><div class="why">Blender 안에서 검색되지 않는 애드온은 파일로 받아서 설치해요. Mio3 ShapeKey, Shapekey Tools, SKkeeper 세 가지를 이렇게 넣어요.</div><div class="nt">강사는 네 가지라고 말하지만 영상 설명란에는 이 3개만 링크돼 있어요. 네 번째는 확인이 안 돼요. 각 애드온의 쓰임도 이 영상에서는 설명하지 않아요(이름으로 보아 쉐이프 키 관련이에요).</div></li>
+<li><h3>설치 확인<em>애드온</em></h3><div class="how">Add-ons 목록 위의 Enabled Only <span class="mouse">클릭</span></div><div class="why">켜져 있는 애드온만 모아서 보여 줘요. 방금 설치한 것이 다 들어 있는지 확인해요.</div></li>
+</ol>
+<div class="box"><b>강사의 팁</b><ul><li>강사가 깜빡한 애드온이 더 있어요. Ep.2 처음에 Extra Mesh Objects와 QuickMenu를 추가로 설치하고, 쉐이더 작업 때 Add-ons에서 node를 검색해 체크해요.</li></ul></div>
+</section>
+<section id="s4"><div class="sec-head"><h2>씬 초기화 &amp; 렌더 설정</h2><a class="t" href="https://www.youtube.com/watch?v=82SAHN4-YHE&t=401s">6:41~8:30</a></div>
+<p class="lead">빈 씬에서, 고른 색이 그대로 보이는 렌더 설정으로 시작해요.</p>
+<ol class="steps">
+<li><h3>기본 오브젝트 전부 삭제<em>선택</em></h3><div class="how"><kbd>A</kbd> → <kbd>X</kbd> → Delete</div><div class="why">모델링만 할 거라서 처음부터 놓여 있는 라이트, 카메라, 큐브를 모두 지워요. <kbd>A</kbd>는 전체 선택이에요.</div></li>
+<li><h3>Render Properties 열기<em>파일·설정</em></h3><div class="how">오른쪽 Properties에서 카메라 아이콘 탭(Render Properties) <span class="mouse">클릭</span></div><div class="why">렌더(최종 그림을 뽑는 일)와 관련된 설정이 모여 있는 탭이에요.</div></li>
+<li><h3>Render Engine 확인<em>파일·설정</em></h3><div class="how">Render Engine이 EEVEE인지 확인(기본값 그대로)</div><div class="why">EEVEE는 빠르게 보여 주는 렌더 방식이에요. 강의는 EEVEE 기준으로 진행돼요.</div><div class="nt">필요하면 잠깐 Cycles를 쓸 때도 있어요.</div></li>
+<li><h3>배경 투명하게<em>파일·설정</em></h3><div class="how">Film → Transparent 체크</div><div class="why">렌더했을 때 배경이 투명하게 나와요. 강사는 어떤 작업이든 항상 켜고 시작해요.</div></li>
+<li><h3>View Transform을 Standard로<em>파일·설정</em></h3><div class="how">Color Management → View Transform: AgX를 Standard로 변경</div><div class="why">AgX는 Blender가 색감을 알아서 보정해요. Standard로 두면 고른 색이 그대로 보여서 애니풍 색이 의도대로 나와요.</div></li>
+</ol>
+</section>
+<section id="s5"><div class="sec-head"><h2>뷰 조작</h2><a class="t" href="https://www.youtube.com/watch?v=82SAHN4-YHE&t=514s">8:34~9:20</a></div>
+<p class="lead">정면, 옆면, 뒷면으로 화면을 바로 돌릴 수 있어요.</p>
+<ol class="steps">
+<li><h3>정면 보기<em>화면</em></h3><div class="how"><kbd>`</kbd> → Front (강의는 넘패드 1)</div><div class="why">캐릭터를 정면에서 똑바로 봐요. 레퍼런스 그림에 맞출 때 계속 써요.</div></li>
+<li><h3>옆면 보기<em>화면</em></h3><div class="how"><kbd>`</kbd> → Right (강의는 넘패드 3)</div><div class="why">캐릭터를 옆에서 똑바로 봐요.</div></li>
+<li><h3>뒷면 보기<em>화면</em></h3><div class="how"><kbd>`</kbd> → Back (강의는 Ctrl+넘패드 1)</div><div class="why">캐릭터를 뒤에서 똑바로 봐요.</div></li>
+</ol>
+<div class="box"><b>강사의 팁</b><ul><li>강사는 넘패드 없는 키보드용 방법을 알려 주지 않아요. 이 안내에서는 <kbd>`</kbd> 뷰 메뉴로 바꿔 적었어요.</li></ul></div>
+</section>
+<section id="s6"><div class="sec-head"><h2>캐릭터 키 기준 잡기</h2><a class="t" href="https://www.youtube.com/watch?v=82SAHN4-YHE&t=625s">10:25~12:00</a></div>
+<p class="lead">높이 1m짜리 기준 상자가 바닥 위에 놓여 있어요.</p>
+<ol class="steps">
+<li><h3>큐브 꺼내기<em>메시 편집</em></h3><div class="how"><kbd>Shift</kbd> <kbd>A</kbd> → Mesh → Cube</div><div class="why">키를 재는 자로 쓸 상자예요. 기본 큐브는 가로, 세로, 높이가 모두 2m예요.</div></li>
+<li><h3>Edit Mode로 전환<em>화면</em></h3><div class="how"><kbd>Tab</kbd> → Edit Mode</div><div class="why">점, 선, 면을 직접 고칠 수 있는 모드예요.</div></li>
+<li><h3>가로 루프컷 1줄<em>메시 편집</em></h3><div class="how"><kbd>Ctrl</kbd> <kbd>R</kbd> → 가로 방향 1줄, 가운데에 넣기</div><div class="why">루프컷은 메시를 한 바퀴 도는 선을 새로 넣는 기능이에요. 2m 상자를 위아래 1m씩으로 나눠요.</div></li>
+<li><h3>아래쪽 버텍스 삭제<em>메시 편집</em></h3><div class="how">아래쪽 버텍스(점) 선택 → 삭제</div><div class="why">아래 절반을 지우면 바닥에서 1m 높이까지만 남는 기준 상자가 돼요.</div></li>
+</ol>
+<div class="box"><b>강사의 팁</b><ul><li>강사의 기준은 캐릭터 키 1m예요. 등신이 높은 버추얼은 여성형 약 160cm, 남성형 약 180cm가 보통이에요.</li><li>SD를 160cm로 만들면 2등신 기준으로 머리만 80cm가 돼요. 다른 캐릭터와 나란히 섰을 때 귀엽게 보이도록 작게 만들어요.</li></ul></div>
+</section>
+<section id="s7"><div class="sec-head"><h2>레퍼런스 이미지 배치</h2><a class="t" href="https://www.youtube.com/watch?v=82SAHN4-YHE&t=722s">12:02~14:50</a></div>
+<p class="lead">앞에서 보면 Front, 옆에서 보면 Side, 뒤에서 보면 Back 그림이 반투명하게 보여요.</p>
+<ol class="steps">
+<li><h3>레퍼런스 이미지 받기<em>파일·설정</em></h3><div class="how">영상 설명란의 booth 링크(dvdvdv.booth.pm/items/7143306)에서 압축 파일을 받아 풀기</div><div class="why">따라 그릴 밑그림이에요. Body-Front, Body-Side, Body-Back과 나중에 쓰는 Cloth 이미지가 들어 있어요.</div></li>
+<li><h3>정면 이미지 불러오기<em>화면</em></h3><div class="how"><kbd>Shift</kbd> <kbd>A</kbd> → Image → Body-Front 파일 선택</div><div class="why">정면 밑그림을 3D 화면 안에 세워요.</div><div class="nt">Image 안의 어떤 종류인지는 자막에 없어요. 노트는 Reference로 추정해요.</div></li>
+<li><h3>큐브를 뚫고 보이는 문제 해결<em>화면</em></h3><div class="how">이미지 선택 → Properties의 Object Data(Data) 탭 → 첫 번째 버튼으로 켜져 있는 항목들을 모두 가운데 버튼으로 변경</div><div class="why">이미지가 큐브를 뚫고 보이는 문제를 고쳐요.</div><div class="nt">강의 자막에 항목 이름이 없어요. 화면을 보고 맞추세요.</div></li>
+<li><h3>반투명하게<em>화면</em></h3><div class="how">Data 탭 → Opacity 약 0.3</div><div class="why">밑그림이 비쳐 보여야 그 위에서 모델을 만들기 편해요.</div></li>
+<li><h3>이미지 크기를 기준 상자에 맞추기<em>이동·변형</em></h3><div class="how">이미지 크기를 1m 기준 큐브에 대략 맞추기</div><div class="why">캐릭터 키가 약 1m가 되게 밑그림 크기를 정해요.</div><div class="nt">정확히 1m로 맞추지 않아요. 머리카락과 신발을 더하면 키가 더 커지기 때문이에요.</div></li>
+<li><h3>기준 큐브 삭제<em>메시 편집</em></h3><div class="how">기준 큐브 선택 → 삭제</div><div class="why">키를 맞췄으니 자로 쓴 상자는 필요 없어요.</div></li>
+<li><h3>정면 이미지 복제<em>이동·변형</em></h3><div class="how">정면 이미지 선택 → <kbd>Shift</kbd> <kbd>D</kbd> → <span class="mouse">우클릭</span></div><div class="why"><kbd>Shift</kbd> <kbd>D</kbd>는 복제예요. 바로 <span class="mouse">우클릭</span>하면 움직이지 않고 제자리에 복제돼요.</div></li>
+<li><h3>90도 돌려 측면용으로<em>이동·변형</em></h3><div class="how"><kbd>R</kbd> <kbd>Z</kbd> 90</div><div class="why">복제한 그림을 위아래 축(Z) 기준으로 90도 돌려서 옆을 보게 해요.</div></li>
+<li><h3>옆면에서 확인<em>화면</em></h3><div class="how"><kbd>`</kbd> → Right (강의는 넘패드 3)</div><div class="why">돌린 그림이 옆면에서 똑바로 보이는지 확인해요.</div></li>
+<li><h3>Body-Side로 교체<em>화면</em></h3><div class="how">Data 탭의 이미지 폴더 버튼 → Body-Side 선택</div><div class="why">복제한 그림의 내용만 옆모습 그림으로 바꿔요. 크기는 정면과 똑같이 유지돼요.</div></li>
+<li><h3>한 번 더 복제<em>이동·변형</em></h3><div class="how"><kbd>Shift</kbd> <kbd>D</kbd> → <span class="mouse">우클릭</span></div><div class="why">뒷모습용 그림을 하나 더 만들어요.</div></li>
+<li><h3>돌려서 후면용으로<em>이동·변형</em></h3><div class="how"><kbd>R</kbd> <kbd>Z</kbd> 90</div><div class="why">복제한 그림을 돌려서 뒤쪽을 보게 해요.</div><div class="nt">자막에서는 R Z 90이라고 말해요. 실제 각도는 화면을 보고 맞추세요.</div></li>
+<li><h3>뒷면에서 확인<em>화면</em></h3><div class="how"><kbd>`</kbd> → Back (강의는 Ctrl+넘패드 1)</div><div class="why">뒤에서 봤을 때 그림이 똑바로 보이는지 확인해요.</div></li>
+<li><h3>Body-Back으로 교체<em>화면</em></h3><div class="how">Data 탭의 이미지 폴더 버튼 → Body-Back 선택</div><div class="why">세 번째 그림을 뒷모습 그림으로 바꿔요.</div></li>
+</ol>
+<div class="box"><b>강사의 팁</b><ul><li>나중에 머리카락과 옷을 만들 때는 같은 이미지 오브젝트에 Cloth 이미지를 바꿔 끼우면 돼요. 크기를 다시 맞출 필요가 없어요.</li></ul></div>
+</section>
+<section id="s8"><div class="sec-head"><h2>레퍼런스 잠금</h2><a class="t" href="https://www.youtube.com/watch?v=82SAHN4-YHE&t=893s">14:53~16:20</a></div>
+<p class="lead">레퍼런스 3장이 img 컬렉션에 모여 있고 클릭해도 선택되지 않아요.</p>
+<ol class="steps">
+<li><h3>이미지 3개 선택<em>선택</em></h3><div class="how">레퍼런스 이미지 3개를 모두 선택</div><div class="why">한 번에 같은 컬렉션(오브젝트를 담는 폴더)으로 옮기려고 골라요.</div></li>
+<li><h3>img 컬렉션 만들기<em>파일·설정</em></h3><div class="how">3D 뷰에서 <kbd>M</kbd> → New Collection → 이름 img</div><div class="why"><kbd>M</kbd>은 선택한 것을 컬렉션으로 옮기는 기능이에요. 레퍼런스만 따로 모아 둬요.</div></li>
+<li><h3>선택 가능 아이콘 표시<em>화면</em></h3><div class="how">아웃라이너 오른쪽 위 필터(깔때기) <span class="mouse">클릭</span> → 두 번째 마우스 커서(Selectable) 아이콘 체크</div><div class="why">아웃라이너(오른쪽 위 목록)에 선택을 막는 스위치가 보이게 해요.</div></li>
+<li><h3>img 컬렉션 선택 불가로<em>선택</em></h3><div class="how">아웃라이너에서 img 컬렉션의 커서 아이콘 끄기</div><div class="why">레퍼런스를 실수로 클릭하거나 옮기는 일을 막아요.</div></li>
+<li><h3>투명도 다시 바꾸기<em>화면</em></h3><div class="how">아웃라이너에서 이미지 선택 → Data 탭 → Opacity 수정</div><div class="why">잠근 뒤에는 3D 화면에서 선택이 안 되니 목록에서 골라서 바꿔요.</div><div class="nt">투명도를 바꾸고 싶을 때만 하면 돼요.</div></li>
+<li><h3>컬렉션 색 바꾸기<em>파일·설정</em></h3><div class="how">img 컬렉션 <span class="mouse">우클릭</span> → 색상 변경</div><div class="why">색으로 구분해 두면 img 컬렉션에 실수로 메시를 넣는 일을 줄일 수 있어요.</div></li>
+</ol>
+</section>
+<div class="pn"><a href="index.html">← 기초</a><a href="ep02.html">Ep.2 얼굴 모델링부터 색칠까지 →</a></div>
+<footer>강의 자막을 정리한 노트에서 뽑은 내용이에요. 자막에 없는 수치는 강의 화면을 보고 맞추세요. 단축키는 Blender 기본 키맵 기준이에요.
+강의: <a href="https://www.youtube.com/playlist?list=PLAR5yRjFCe9sOjK9pbKqRPGTGlaXgfUIA">[SD 버츄얼 캐릭터 만들기] DyeoV</a></footer>
+</div></body></html>

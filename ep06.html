@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ep.6 트윈테일 머리 모델링</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap">
+<link rel="stylesheet" href="style.css"></head><body><div class="wrap">
+<div class="top"><a href="index.html">기초</a><a href="ep01.html">Ep.1</a><a href="ep02.html">Ep.2</a><a href="ep03.html">Ep.3</a><a href="ep04.html">Ep.4</a><a href="ep05.html">Ep.5</a><a href="ep06.html" class="on">Ep.6</a><a href="ep07.html">Ep.7</a><a href="ep08.html">Ep.8</a><a href="ep09.html">Ep.9</a><a href="ep10.html">Ep.10</a><a href="ep11.html">Ep.11</a><a href="ep12.html">Ep.12</a><a href="ep13.html">Ep.13</a><a href="lookup.html">찾아보기</a></div>
+<header><div class="ep">EP.06</div><h1>트윈테일 머리 모델링</h1><p>평면(Plane), 커브(Path), 구(UV Sphere)를 써서 앞머리부터 뒷머리, 트윈테일까지 머리카락 덩어리를 하나씩 만들어요. 이번 편은 모델링만 하고 색은 다음 편에서 칠해요.</p>
+<a class="vid" href="https://www.youtube.com/watch?v=oYI_m44hLb8">강의 영상 열기</a>
+</header>
+<nav class="toc"><a href="#s1">머리카락 제작 방식 요약</a><a href="#s2">참조 이미지</a><a href="#s3">앞머리</a><a href="#s4">앞 옆머리</a><a href="#s5">뒷면 메꾸기 (닫힌 입체로 만드는 법)</a><a href="#s6">윗머리 / 옆 덮는 머리</a><a href="#s7">두피</a><a href="#s8">애교머리(꼬랑지)</a><a href="#s9">가느다란 옆 가닥</a><a href="#s10">바보털(안테나), 커브 방식 1</a><a href="#s11">뒷머리, UV Sphere 조각</a><a href="#s12">뒷머리 덧댄 삐친 가닥</a><a href="#s13">트윈테일, 커브 방식 2</a><a href="#s14">트윈테일 삐친 가닥</a></nav>
+<section id="s1"><div class="sec-head"><h2>머리카락 제작 방식 요약</h2></div>
+<p class="lead">이번 편에서 머리카락을 어떤 방법과 순서로 만드는지 알게 돼요.</p>
+<ol class="steps" hidden>
+</ol>
+<div class="tw"><table><tr><th>순서</th><th>만드는 것</th><th>방식</th></tr><tr><td>1</td><td>앞머리</td><td>Plane</td></tr><tr><td>2</td><td>앞 옆머리</td><td>Plane</td></tr><tr><td>3</td><td>앞머리와 앞 옆머리 뒷면 메꾸기</td><td>Edge Crease + 면 채우기</td></tr><tr><td>4</td><td>윗머리 / 옆 덮는 머리</td><td>Plane</td></tr><tr><td>5</td><td>두피</td><td>Head 면 복제·분리</td></tr><tr><td>6</td><td>애교머리(꼬랑지)</td><td>Plane</td></tr><tr><td>7</td><td>가느다란 옆 가닥</td><td>Plane</td></tr><tr><td>8</td><td>바보털</td><td>Path + Extrude</td></tr><tr><td>9</td><td>뒷머리 3조각</td><td>UV Sphere 조각</td></tr><tr><td>10</td><td>뒷머리 덧댄 삐친 가닥 2개</td><td>뒷머리 가닥 복제</td></tr><tr><td>11</td><td>트윈테일 본체</td><td>Path + Depth</td></tr><tr><td>12</td><td>트윈테일 삐친 가닥 3개</td><td>트윈테일 면 복제</td></tr></table></div>
+<div class="box"><b>강사의 팁</b><ul><li>기본은 메시(Plane)예요. 평면을 세워 루프 컷 → 휘어서 형태 → Mirror + Subdivision + Auto Smooth 80도 → 볼륨(Alt+S) → 가장자리 Edge Crease → 뒷면을 메꿔 닫힌 입체로 만들어요.</li><li>커브(Path)는 2곳에만 써요. 바보털(안테나)은 Path + Extrude(납작한 리본), 트윈테일은 Path + Depth(둥근 튜브)예요. 둘 다 Resolution을 낮춘 뒤 메시로 바꾸고 그 뒤는 메시로 편집해요.</li><li>뒷머리는 UV Sphere에서 조각을 떼어 만들어요.</li><li>두피(머리 속)는 Head 메시의 두피 면을 복제해 떼어 낸 뒤 부풀려요.</li><li>이번 편에는 UV, 텍스처, 쉐이더, 리깅, 애드온 사용이 없어요.</li><li>강의 자막에 Ctrl E로 섭디비전이라고 나오는 곳이 있지만 Subdivision 단축키는 Ctrl+1로 봐요(자막 오기로 추정).</li><li>강의에서 Q 눌러서 거울이라고 하는 것은 Quick Favorites(Q)에 등록해 둔 Mirror 모디파이어 추가로 보여요. 세모 버튼은 Subdivision 모디파이어의 On Cage 버튼이에요.</li></ul></div>
+</section>
+<section id="s2"><div class="sec-head"><h2>참조 이미지</h2><a class="t" href="https://www.youtube.com/watch?v=oYI_m44hLb8&t=0s">0:00~1:10</a></div>
+<p class="lead">머리카락과 옷이 그려진 정면, 옆, 뒤 참조 이미지가 깔려 있어요.</p>
+<ol class="steps">
+<li><h3>정면 이미지 교체<em>파일·설정</em></h3><div class="how"><kbd>`</kbd> → Front → 기존 참조 이미지(대머리 버전)를 Cloth-Front.png 로 바꿔요</div><div class="why">머리카락과 옷이 그려진 그림을 보고 따라 만들어야 해요.</div></li>
+<li><h3>옆 이미지 교체<em>파일·설정</em></h3><div class="how"><kbd>`</kbd> → Right (강의는 넘패드 3) → Cloth-Side.png 로 바꿔요</div><div class="why">옆에서 본 머리카락 모양을 맞출 때 써요.</div></li>
+<li><h3>뒷모습 이미지 불러오기<em>파일·설정</em></h3><div class="how">뒷모습 이미지도 불러와요</div><div class="why">뒷머리를 만들 때 길이와 끝 모양을 맞춰요.</div><div class="nt">강의 자막에 뒷모습 파일 이름이 없어요. 준비 파일에서 찾아 쓰세요.</div></li>
+<li><h3>눈 감긴 상태로 두기<em>기타</em></h3><div class="how">얼굴 모델은 눈을 감긴 상태로 두고 작업해요</div><div class="why">강사가 이 상태로 작업해요.</div></li>
+</ol>
+</section>
+<section id="s3"><div class="sec-head"><h2>앞머리</h2><a class="t" href="https://www.youtube.com/watch?v=oYI_m44hLb8&t=70s">1:10~6:45</a></div>
+<p class="lead">끝이 갈라지고 가운데가 볼록한 앞머리 덩어리가 있어요.</p>
+<ol class="steps">
+<li><h3>Plane 세우기<em>메시 편집</em></h3><div class="how"><kbd>Shift</kbd> <kbd>A</kbd> → Plane → <kbd>R</kbd> <kbd>X</kbd> 90 → 크기를 앞머리에 맞춰요</div><div class="why">Plane은 평평한 네모 면이에요. 머리카락 한 덩어리는 이 면을 세워서 시작해요.</div></li>
+<li><h3>위아래 길이 맞추기<em>이동·변형</em></h3><div class="how">Edit Mode → 위는 머리 꼭대기 쪽, 아래는 앞머리 끝 높이로 옮겨요</div><div class="why">앞머리가 시작하고 끝나는 높이를 참조 그림에 맞춰요.</div></li>
+<li><h3>가로 루프 컷 4개<em>메시 편집</em></h3><div class="how"><kbd>Ctrl</kbd> <kbd>R</kbd> → 가로 방향 4개</div><div class="why">줄이 있어야 면을 이마 곡면을 따라 휘게 할 수 있어요.</div></li>
+<li><h3>이마 따라 휘게 하기<em>이동·변형</em></h3><div class="how"><kbd>`</kbd> → Right → X-Ray 켜기 → 피벗 Median Point → 각 줄을 <kbd>G</kbd> <kbd>Y</kbd> 로 옮겨요</div><div class="why">옆에서 보면서 줄을 앞뒤로 옮겨 이마 곡면을 따라가게 해요.</div><div class="nt">균일할 필요 없어요. 볼륨감만 살리면 돼요.</div></li>
+<li><h3>반으로 자르고 Mirror<em>모디파이어</em></h3><div class="how">세로로 반을 잘라 한쪽을 지워요 → Mirror 모디파이어 추가</div><div class="why">Mirror는 한쪽만 만들면 반대쪽을 거울처럼 만들어 줘요.</div></li>
+<li><h3>나뭇잎 모양 만들기<em>이동·변형</em></h3><div class="how">위쪽 점 선택 → <kbd>S</kbd> <kbd>X</kbd> 로 좁혀요</div><div class="why">위는 모이고 아래로 퍼지는 나뭇잎 모양이에요. 끝에서 한 번 갈래가 나뉘어요.</div></li>
+<li><h3>Auto Smooth 80도<em>음영·노멀</em></h3><div class="how"><span class="mouse">우클릭</span> → Shade Auto Smooth → 80</div><div class="why">면이 각져 보이지 않고 매끈해 보여요. 강사는 약속의 80도라고 불러요.</div></li>
+<li><h3>Subdivision과 On Cage<em>모디파이어</em></h3><div class="how"><kbd>Ctrl</kbd> <kbd>1</kbd> → Subdivision 모디파이어의 On Cage 버튼(세모) 켜기</div><div class="why">Subdivision은 면을 잘게 나눠 둥글게 해 줘요. On Cage를 켜면 둥글어진 모양 위에서 바로 점을 잡을 수 있어요.</div></li>
+<li><h3>세로 루프 컷 추가<em>메시 편집</em></h3><div class="how"><kbd>Ctrl</kbd> <kbd>R</kbd> → 세로 방향 약 2개</div><div class="why">갈래를 나눌 자리에 선이 있어야 해요.</div></li>
+<li><h3>갈래 벌리기<em>메시 편집</em></h3><div class="how">갈래가 될 위치의 엣지 선택 → <kbd>V</kbd></div><div class="why">Rip은 선을 따라 면을 찢어 벌리는 기능이에요. 머리카락 끝이 갈라져요.</div></li>
+<li><h3>벌어진 위쪽 닫기<em>메시 편집</em></h3><div class="how"><kbd>Ctrl</kbd> <kbd>R</kbd> 로 루프 컷 추가 → 너무 벌어진 위쪽 점들을 병합해 닫아요</div><div class="why">끝만 갈라지고 위쪽은 붙어 있어야 해요.</div></li>
+<li><h3>갈래 가운데 루프 추가<em>메시 편집</em></h3><div class="how"><kbd>Ctrl</kbd> <kbd>R</kbd> → 갈래 조각의 가운데에 세로 루프</div><div class="why">부풀릴 가운데 줄이 있어야 볼륨을 줄 수 있어요.</div></li>
+<li><h3>볼륨 주기<em>이동·변형</em></h3><div class="how">부풀릴 점들 선택 → <kbd>Alt</kbd> <kbd>S</kbd></div><div class="why">Shrink/Fatten은 점을 면의 바깥 방향으로 밀어 부풀려요. 가운데가 볼록한 덩어리가 돼요.</div></li>
+<li><h3>옆에서 Y로 내밀기<em>이동·변형</em></h3><div class="how"><kbd>`</kbd> → Right → 점 선택 → <kbd>G</kbd> <kbd>Y</kbd></div><div class="why">옆에서 볼 때 모자란 볼륨은 직접 앞으로 내밀어요.</div></li>
+<li><h3>옆쪽 끝 오므리기<em>이동·변형</em></h3><div class="how">옆쪽 앞머리 끝 점을 안쪽으로 옮겨요</div><div class="why">끝이 안으로 오므라들어야 얼굴을 감싸는 느낌이 나요.</div></li>
+</ol>
+</section>
+<section id="s4"><div class="sec-head"><h2>앞 옆머리</h2><a class="t" href="https://www.youtube.com/watch?v=oYI_m44hLb8&t=420s">7:00~14:50</a></div>
+<p class="lead">머리 옆면을 감싸는 앞 옆머리가 있고, 헤어가 Hair 컬렉션에 모여 있어요.</p>
+<ol class="steps">
+<li><h3>Plane 세우기<em>메시 편집</em></h3><div class="how"><kbd>Shift</kbd> <kbd>A</kbd> → Plane → <kbd>R</kbd> <kbd>X</kbd> 90 → 크기와 Y 위치를 맞춰요</div><div class="why">앞머리와 같은 방식으로 시작해요.</div></li>
+<li><h3>루프 컷 4개로 휘게<em>메시 편집</em></h3><div class="how"><kbd>Ctrl</kbd> <kbd>R</kbd> → 4개 → 줄을 옮겨 휘게 해요</div><div class="why">머리 곡면을 따라 휘어야 해요.</div></li>
+<li><h3>옆으로 길게 당기기<em>이동·변형</em></h3><div class="how">옆(뒤쪽) 점들을 길게 당겨 머리 옆면을 감싸게 해요</div><div class="why">옆에서 보면 허전해서 옆면까지 덮어 줘요.</div></li>
+<li><h3>트랜스폼 적용 후 Mirror<em>모디파이어</em></h3><div class="how"><kbd>Ctrl</kbd> <kbd>A</kbd> → All Transforms → Mirror 모디파이어 추가</div><div class="why">크기와 회전 값을 굳혀 줘야 Mirror가 제자리에 붙어요.</div><div class="nt">Mirror가 엉뚱한 곳에 붙으면 이걸 안 한 거예요.</div></li>
+<li><h3>Subdivision 걸기<em>모디파이어</em></h3><div class="how"><kbd>Ctrl</kbd> <kbd>1</kbd></div><div class="why">면을 둥글게 만들어요.</div></li>
+<li><h3>가운데 중심선 추가<em>메시 편집</em></h3><div class="how"><kbd>Ctrl</kbd> <kbd>R</kbd> → 가운데에 루프 1개</div><div class="why">나중에 부풀릴 가운데 줄이에요.</div></li>
+<li><h3>On Cage와 Auto Smooth<em>음영·노멀</em></h3><div class="how">Subdivision 모디파이어의 On Cage 버튼(세모) 켜기 → <span class="mouse">우클릭</span> → Shade Auto Smooth → 80</div><div class="why">둥글어진 모양 위에서 편집하고, 표면을 매끈하게 보이게 해요.</div></li>
+<li><h3>위에서 보며 맞추기<em>이동·변형</em></h3><div class="how"><kbd>`</kbd> → Top → 옆머리를 밀고 당겨 맞춰요</div><div class="why">위에서 봤을 때 앞머리가 너무 튀어나와 보이지 않게 해요.</div><div class="nt">참조 그림과 완벽히 같지 않아도 느낌이 비슷하면 돼요.</div></li>
+<li><h3>끝 갈래 만들기<em>메시 편집</em></h3><div class="how"><kbd>Ctrl</kbd> <kbd>R</kbd> 로 루프 컷 → 끝 엣지 선택 → <kbd>V</kbd></div><div class="why">옆머리 끝도 갈라지게 해요.</div></li>
+<li><h3>갈래에 볼륨 주기<em>이동·변형</em></h3><div class="how"><kbd>Ctrl</kbd> <kbd>R</kbd> 로 가운데에 루프 → 선택 → <kbd>Alt</kbd> <kbd>S</kbd></div><div class="why">갈래마다 가운데가 볼록해야 통통한 머리카락이 돼요.</div></li>
+<li><h3>어색한 곳 Smooth<em>메시 편집</em></h3><div class="how">어색한 점 선택 → Smooth</div><div class="why">울퉁불퉁한 곳을 펴 줘요.</div></li>
+<li><h3>Hair 컬렉션에 모으기<em>파일·설정</em></h3><div class="how">헤어 오브젝트를 Hair 컬렉션으로 옮겨요</div><div class="why">머리카락 조각이 많아지니 한곳에 모아 관리해요.</div></li>
+<li><h3>로컬 뷰로 헤어만 보기<em>화면</em></h3><div class="how">헤어 선택 → <kbd>/</kbd></div><div class="why">선택한 것만 화면에 남겨 헤어끼리만 확인해요.</div><div class="nt">강의는 넘패드 / 를 써요.</div></li>
+<li><h3>색을 Random으로<em>화면</em></h3><div class="how">뷰포트 셰이딩 옵션 → Color → Random</div><div class="why">오브젝트마다 다른 색으로 보여서 조각이 구분돼요.</div><div class="nt">조각이 구분이 안 될 때 켜요.</div></li>
+<li><h3>돌려 보며 수정하기<em>화면</em></h3><div class="how">뷰를 빙글빙글 돌려 딱딱해 보이는 각도를 찾아 고쳐요</div><div class="why">한 방향에서만 보면 각진 곳을 놓쳐요.</div></li>
+</ol>
+</section>
+<section id="s5"><div class="sec-head"><h2>뒷면 메꾸기 (닫힌 입체로 만드는 법)</h2><a class="t" href="https://www.youtube.com/watch?v=oYI_m44hLb8&t=890s">14:50~20:45</a></div>
+<p class="lead">앞머리와 앞 옆머리가 뒷면까지 막힌 입체가 되어 있어요.</p>
+<ol class="steps">
+<li><h3>가장자리에 Edge Crease<em>메시 편집</em></h3><div class="how">가장자리(외곽) 엣지 전부 선택 → <kbd>Shift</kbd> <kbd>E</kbd> → 1</div><div class="why">Edge Crease는 Subdivision을 걸어도 그 선이 둥글게 뭉개지지 않게 잡아 줘요. 머리카락 윤곽이 날카롭게 남아요.</div><div class="nt">형태가 확정된 뒤에 하세요.</div></li>
+<li><h3>피벗 Active Element<em>파일·설정</em></h3><div class="how">피벗 메뉴 → Active Element → Proportional Editing 끄기</div><div class="why">마지막에 고른 점을 중심으로 모이게 해요.</div></li>
+<li><h3>가장자리 모아 붙이기<em>메시 편집</em></h3><div class="how">마주 보는 가장자리 점 선택 → 병합하거나 <kbd>S</kbd> 로 모아 붙여요</div><div class="why">뒷면을 막으려고 양쪽 가장자리를 뒤에서 만나게 해요.</div></li>
+<li><h3>면 만들고 정리하기<em>메시 편집</em></h3><div class="how">점 선택 → <kbd>F</kbd> → <kbd>J</kbd> 로 정리</div><div class="why">F는 면을 채우고 J는 점 사이에 선을 그어 면을 나눠요.</div></li>
+<li><h3>앞머리 가장자리 뽑기<em>메시 편집</em></h3><div class="how">앞머리 가장자리 엣지 선택 → <kbd>E</kbd> <kbd>X</kbd> → Mirror 모디파이어의 Clipping 켜기</div><div class="why">앞머리는 붙일 상대 엣지가 없어서 면을 뽑아요. Clipping은 점이 가운데 선을 넘지 않고 붙게 해 줘요.</div></li>
+<li><h3>안쪽 엣지 크리즈 빼기<em>메시 편집</em></h3><div class="how">새로 뽑은 안쪽 엣지 선택 → <kbd>Shift</kbd> <kbd>E</kbd> → 0</div><div class="why">안쪽 선까지 날카로우면 모양이 이상해져요. 바깥 윤곽만 날카롭게 둬요.</div></li>
+<li><h3>중복 점 합치기<em>메시 편집</em></h3><div class="how">전체 선택 → <kbd>M</kbd> → By Distance</div><div class="why">같은 자리에 겹친 점을 하나로 합쳐요. 점이 안 붙으면 중복 점이 있는 거예요.</div></li>
+<li><h3>빨갛게 보이는 곳 정리<em>메시 편집</em></h3><div class="how">겹친 면의 한쪽을 내리거나 형태를 정리해요. Mirror 중앙을 뚫고 나간 점도 정리해요</div><div class="why">빨갛게(뒷면 표시) 보이는 곳은 면끼리 너무 가까워서 그래요.</div></li>
+<li><h3>겹친 뒷면 벌리기<em>메시 편집</em></h3><div class="how"><kbd>Ctrl</kbd> <kbd>R</kbd> 로 루프 컷 추가 → 선택 → <kbd>Alt</kbd> <kbd>S</kbd></div><div class="why">뒤쪽 면끼리 바짝 붙어 겹치면 줄을 넣고 부풀려 벌려요.</div><div class="nt">강의 42:45 쯤에 나오는 방법이에요.</div></li>
+</ol>
+<div class="box"><b>강사의 팁</b><ul><li>왜 메꾸나요(강의 26:19): Unity에서 버추얼 캐릭터로 뽑을 때 뒷면이 없는 메시는 테두리(아웃라인)가 생기지 않아요. 아웃라인을 쓸 거면 반드시 입체로 만들어요.</li><li>안쪽 면은 버추얼로 쓸 때 거의 안 보여요. 적당히 메꾸면 돼요.</li></ul></div>
+</section>
+<section id="s6"><div class="sec-head"><h2>윗머리 / 옆 덮는 머리</h2><a class="t" href="https://www.youtube.com/watch?v=oYI_m44hLb8&t=1245s">20:45~28:35</a></div>
+<p class="lead">머리 위와 옆을 덮는 머리 조각이 뒷면까지 막혀 있어요.</p>
+<ol class="steps">
+<li><h3>Plane 놓기<em>메시 편집</em></h3><div class="how">Plane 추가 → <kbd>`</kbd> → Front 에서 위치를 잡아요</div><div class="why">윗머리도 평면에서 시작해요.</div></li>
+<li><h3>Mirror 추가<em>모디파이어</em></h3><div class="how"><kbd>Q</kbd> → Mirror</div><div class="why">강사는 Quick Favorites에 Mirror 모디파이어를 등록해 두고 써요.</div><div class="nt">Q 메뉴에 없으면 모디파이어 패널에서 Mirror를 추가하세요.</div></li>
+<li><h3>Subdivision과 Auto Smooth<em>모디파이어</em></h3><div class="how"><kbd>Ctrl</kbd> <kbd>1</kbd> → <span class="mouse">우클릭</span> → Shade Auto Smooth → 80</div><div class="why">둥글고 매끈하게 보이게 해요.</div></li>
+<li><h3>반 자르고 루프 컷 4개<em>메시 편집</em></h3><div class="how">반으로 잘라 한쪽을 지워요 → <kbd>Ctrl</kbd> <kbd>R</kbd> → 4개</div><div class="why">Mirror용으로 한쪽만 남기고, 휘게 할 줄을 넣어요.</div></li>
+<li><h3>위와 옆으로 휘게 배치<em>이동·변형</em></h3><div class="how">줄을 옮겨 머리 위와 옆을 덮도록 휘게 놓아요</div><div class="why">트윈테일에 가려 참조 형태가 안 보여서 예뻐 보이는 느낌으로 놓아요.</div><div class="nt">강의 자막에 위치 수치가 없어요. 화면을 보고 맞추세요.</div></li>
+<li><h3>볼륨 주기<em>이동·변형</em></h3><div class="how">점 선택 → <kbd>Alt</kbd> <kbd>S</kbd></div><div class="why">가운데를 부풀려요.</div><div class="nt">과하면 되돌려요.</div></li>
+<li><h3>루프 컷으로 부드럽게<em>메시 편집</em></h3><div class="how"><kbd>Ctrl</kbd> <kbd>R</kbd> → 딱딱한 곳에 추가</div><div class="why">줄이 많아지면 곡면이 부드러워져요.</div></li>
+<li><h3>가장자리 Edge Crease<em>메시 편집</em></h3><div class="how">가장자리 엣지 선택 → <kbd>Shift</kbd> <kbd>E</kbd> → 1. 필요 없는 곳은 <kbd>Shift</kbd> <kbd>E</kbd> → 0</div><div class="why">윤곽을 날카롭게 남겨요.</div></li>
+<li><h3>뾰족한 곳 정리하고 메꾸기<em>메시 편집</em></h3><div class="how">뾰족한 점을 다듬어요 → 가장자리를 모아 붙여요 → <kbd>F</kbd> 로 뒷면 채우기</div><div class="why">앞에서 한 뒷면 메꾸기와 같아요.</div><div class="nt">튀어나온 뿌리 쪽은 두피에 박아 넣어도 돼요.</div></li>
+<li><h3>Subdivision 2로 올리기<em>모디파이어</em></h3><div class="how">이 조각의 Subdivision 모디파이어 → 레벨을 2 로</div><div class="why">한 단계 더 잘게 나눠서 더 부드럽게 보여요.</div><div class="nt">딱딱해 보일 때 이 조각에만 해요.</div></li>
+</ol>
+<div class="box"><b>강사의 팁</b><ul><li>이 스타일을 고른 이유: 트윈테일만 떼면 남자 캐릭터 머리처럼도 쓸 수 있어요.</li><li>다른 헤어스타일은 Pinterest에서 3D 헤어 토폴로지 자료를 찾아 연습해 보세요.</li></ul></div>
+</section>
+<section id="s7"><div class="sec-head"><h2>두피</h2><a class="t" href="https://www.youtube.com/watch?v=oYI_m44hLb8&t=1715s">28:35~32:15</a></div>
+<p class="lead">머리카락 사이 빈틈을 가려 주는 두피(머리 속)가 있어요.</p>
+<ol class="steps">
+<li><h3>두피 면 복제해 떼기<em>메시 편집</em></h3><div class="how">Head 메시 Edit Mode → 머리카락이 덮일 두피 영역 면만 선택(귀 제외) → <kbd>Shift</kbd> <kbd>D</kbd> → <kbd>P</kbd></div><div class="why">Separate는 선택한 부분을 다른 오브젝트로 떼어 내요. 머리 모양을 그대로 본뜬 두피가 생겨요.</div></li>
+<li><h3>엣지 정리하기<em>메시 편집</em></h3><div class="how">불필요한 엣지 선택 → <kbd>Ctrl</kbd> <kbd>X</kbd> → 외곽선을 다듬어요</div><div class="why">필요 없는 선을 지워 단순하게 만들어요.</div><div class="nt">삼각형이 되어도 괜찮아요.</div></li>
+<li><h3>전체 살짝 띄우기<em>이동·변형</em></h3><div class="how">전체 선택 → <kbd>Alt</kbd> <kbd>S</kbd></div><div class="why">머리 표면에서 조금 띄워야 머리와 겹쳐 보이지 않아요.</div></li>
+<li><h3>안쪽과 정수리 더 키우기<em>이동·변형</em></h3><div class="how">가장자리 라인을 뺀 안쪽과 정수리 선택 → <kbd>Alt</kbd> <kbd>S</kbd></div><div class="why">가장자리는 머리에 붙이고 가운데만 볼록하게 해요.</div><div class="nt">Alt+S가 과하면 Proportional Editing 으로 다듬어요. 좌우 균형을 맞추세요. 어차피 다른 머리로 덮여요.</div></li>
+<li><h3>가장자리 안으로 넣기<em>메시 편집</em></h3><div class="how">가장자리 엣지 루프 선택 → <kbd>E</kbd> → <kbd>S</kbd></div><div class="why">가장자리를 뽑아 안쪽으로 줄여 넣어요. 머리카락 사이로 빈 공간이 안 보이게 돼요.</div></li>
+<li><h3>Face 머티리얼 제거<em>재질·텍스처</em></h3><div class="how">머티리얼 탭 → Face 머티리얼 슬롯 제거</div><div class="why">Head에서 떼어 냈기 때문에 얼굴 재질이 그대로 붙어 있어요.</div></li>
+</ol>
+</section>
+<section id="s8"><div class="sec-head"><h2>애교머리(꼬랑지)</h2><a class="t" href="https://www.youtube.com/watch?v=oYI_m44hLb8&t=1935s">32:15~38:10</a></div>
+<p class="lead">얼굴 옆으로 내려오는 애교머리가 뒷면까지 막혀 있어요.</p>
+<ol class="steps">
+<li><h3>Plane 세우기<em>메시 편집</em></h3><div class="how">Plane 추가 → <kbd>R</kbd> <kbd>X</kbd> 90 → 크기와 위치를 맞춰요</div><div class="why">같은 방식으로 시작해요.</div></li>
+<li><h3>면을 Y로 옮겨 방향 잡기<em>이동·변형</em></h3><div class="how">면 선택 → <kbd>G</kbd> <kbd>Y</kbd></div><div class="why">회전시키지 않고 면을 앞뒤로 옮겨서 방향을 잡아요.</div><div class="nt">회전시키지 마세요.</div></li>
+<li><h3>루프 컷 후 점 이동<em>메시 편집</em></h3><div class="how"><kbd>Ctrl</kbd> <kbd>R</kbd> → 점을 옮겨 모양을 잡아요</div><div class="why">줄을 넣어야 휘게 만들 수 있어요.</div></li>
+<li><h3>트랜스폼 적용<em>이동·변형</em></h3><div class="how"><kbd>Ctrl</kbd> <kbd>A</kbd> → All Transforms</div><div class="why">Mirror가 제자리에 붙게 해요.</div></li>
+<li><h3>Mirror, Subdivision, On Cage<em>모디파이어</em></h3><div class="how">Mirror 모디파이어 추가 → <kbd>Ctrl</kbd> <kbd>1</kbd> → On Cage 버튼(세모) 켜기</div><div class="why">반대쪽을 만들고, 둥글게 하고, 둥근 모양 위에서 편집해요.</div></li>
+<li><h3>끝 뾰족하게<em>메시 편집</em></h3><div class="how"><kbd>Ctrl</kbd> <kbd>R</kbd> → 끝 쪽에 루프 1개 더</div><div class="why">끝 가까이에 줄이 있으면 끝이 더 뾰족해져요.</div></li>
+<li><h3>옆에서 휘게 하기<em>이동·변형</em></h3><div class="how"><kbd>`</kbd> → Right → 점을 Y 방향으로 옮겨 휘게 해요</div><div class="why">옆에서 봐도 곡선이어야 자연스러워요.</div></li>
+<li><h3>위쪽 좁혀 가리기<em>이동·변형</em></h3><div class="how">위쪽 빈 부분을 위로 올리고 좁혀요</div><div class="why">뿌리가 다른 머리에 가려지게 해요.</div></li>
+<li><h3>볼륨 주고 안으로 넣기<em>이동·변형</em></h3><div class="how">점 선택 → <kbd>Alt</kbd> <kbd>S</kbd> → 뒷머리를 뚫고 나오지 않게 안으로 넣어요</div><div class="why">통통하게 하되 다른 머리를 뚫으면 안 돼요.</div></li>
+<li><h3>Auto Smooth 80도<em>음영·노멀</em></h3><div class="how"><span class="mouse">우클릭</span> → Shade Auto Smooth → 80</div><div class="why">표면을 매끈하게 보여 줘요.</div></li>
+<li><h3>Edge Crease와 뒷면 채움<em>메시 편집</em></h3><div class="how">가장자리 엣지 선택 → <kbd>Shift</kbd> <kbd>E</kbd> → 1 → 뒷면을 채워요</div><div class="why">윤곽을 살리고 입체로 닫아요.</div><div class="nt">보이지 않는 뿌리 끝은 마감하지 않아도 돼요.</div></li>
+</ol>
+<div class="box"><b>강사의 팁</b><ul><li>이 빠진 것처럼, 깨진 도자기처럼 틈이 보이면 안 돼요.</li><li>버추얼 캐릭터를 아래에서 올려다볼 일은 거의 없어요. 겉에서 보이는 면 위주로 신경 쓰세요.</li></ul></div>
+</section>
+<section id="s9"><div class="sec-head"><h2>가느다란 옆 가닥</h2><a class="t" href="https://www.youtube.com/watch?v=oYI_m44hLb8&t=2290s">38:10~43:00</a></div>
+<p class="lead">가는 옆 가닥이 머리에 붙어 있어요.</p>
+<ol class="steps">
+<li><h3>Plane 놓기<em>메시 편집</em></h3><div class="how">Plane 추가 → 위치에 놓아요</div><div class="why">같은 방식으로 시작해요.</div></li>
+<li><h3>기본 세팅 하기<em>모디파이어</em></h3><div class="how"><kbd>Ctrl</kbd> <kbd>A</kbd> → All Transforms → Mirror → Subdivision → <span class="mouse">우클릭</span> → Shade Auto Smooth → On Cage 켜기</div><div class="why">머리카락 조각마다 하는 기본 준비예요.</div></li>
+<li><h3>가운데 루프 컷<em>메시 편집</em></h3><div class="how"><kbd>Ctrl</kbd> <kbd>R</kbd> → 가운데</div><div class="why">부풀릴 가운데 줄을 만들어요.</div><div class="nt">가느다란 머리카락일수록 오히려 버텍스를 더 많이 나눠야 표현돼요. 아끼지 마세요.</div></li>
+<li><h3>한쪽 뽑아 파고들게<em>메시 편집</em></h3><div class="how">한쪽 엣지 선택 → <kbd>E</kbd> → 안으로 살짝 넣어요</div><div class="why">가닥이 머리 안으로 살짝 파고드는 느낌을 줘요.</div></li>
+<li><h3>볼륨 살짝 주기<em>이동·변형</em></h3><div class="how">점 선택 → <kbd>Alt</kbd> <kbd>S</kbd></div><div class="why">가는 가닥이라 조금만 부풀려요.</div></li>
+<li><h3>붕 뜬 곳 붙이기<em>이동·변형</em></h3><div class="how">붕 뜬 점을 머리에 맞춰 옮겨요</div><div class="why">머리에서 떠 보이면 어색해요.</div><div class="nt">머리를 뚫고 들어가지 않게 하세요.</div></li>
+<li><h3>Edge Crease와 메꾸기<em>메시 편집</em></h3><div class="how">가장자리 엣지 선택 → <kbd>Shift</kbd> <kbd>E</kbd> → 1 → 뒷면을 메꿔요</div><div class="why">윤곽을 살리고 입체로 닫아요.</div></li>
+<li><h3>겹치면 벌리기<em>메시 편집</em></h3><div class="how"><kbd>Ctrl</kbd> <kbd>R</kbd> 로 루프 컷 → <kbd>Alt</kbd> <kbd>S</kbd></div><div class="why">뒷면끼리 겹치면 줄을 넣고 부풀려 벌려요.</div></li>
+</ol>
+</section>
+<section id="s10"><div class="sec-head"><h2>바보털(안테나), 커브 방식 1</h2><a class="t" href="https://www.youtube.com/watch?v=oYI_m44hLb8&t=2580s">43:00~49:35</a></div>
+<p class="lead">머리 위에 납작하게 휜 바보털이 메시로 만들어져 있어요.</p>
+<ol class="steps">
+<li><h3>Path 추가<em>커브</em></h3><div class="how"><kbd>Shift</kbd> <kbd>A</kbd> → Curve → Path</div><div class="why">커브는 점 몇 개로 부드러운 선을 만드는 오브젝트예요. 긴 가닥을 만들기 쉬워요.</div></li>
+<li><h3>Extrude로 납작하게<em>커브</em></h3><div class="how">Object Data 탭 → Geometry → Extrude 값을 올려요</div><div class="why">Extrude를 올리면 선이 칼국수처럼 납작한 리본이 돼요. Depth는 둥근 튜브 두께인데 여기서는 안 써요.</div><div class="nt">강의 자막에 수치가 없어요. 화면을 보고 맞추세요. 여기서는 Extrude만 써요.</div></li>
+<li><h3>세워서 놓기<em>이동·변형</em></h3><div class="how"><kbd>R</kbd> 90 → 머리 위에 놓아요</div><div class="why">누워 있는 커브를 세워요.</div></li>
+<li><h3>남는 점 지우기<em>커브</em></h3><div class="how">Edit Mode → 남는 점 선택 → 삭제</div><div class="why">바보털은 짧아서 점이 많이 필요 없어요.</div></li>
+<li><h3>대각선으로 휘게<em>커브</em></h3><div class="how"><kbd>`</kbd> → Right → 점을 옮겨 대각선으로 휘게 해요</div><div class="why">옆에서 봤을 때 휘어야 살아 있는 느낌이 나요.</div></li>
+<li><h3>굵기 조절하기<em>커브</em></h3><div class="how">점 선택 → <kbd>Alt</kbd> <kbd>S</kbd> (끝과 뿌리는 가늘게, 가운데는 굵게)</div><div class="why">커브에서 Alt+S는 그 점의 Radius(굵기)를 바꿔요. 값은 N 패널에서 볼 수 있어요.</div></li>
+<li><h3>점 추가하기<em>커브</em></h3><div class="how">두 점 선택 → <span class="mouse">우클릭</span> → Subdivide</div><div class="why">두 점 사이에 새 점이 생겨서 더 세밀하게 휠 수 있어요.</div></li>
+<li><h3>비틀기<em>커브</em></h3><div class="how">가운데 점과 뿌리 쪽 점을 함께 선택 → <kbd>Ctrl</kbd> <kbd>T</kbd>. 미세 조절은 <kbd>N</kbd> 패널 → Tilt 값</div><div class="why">Tilt는 리본을 꽈배기처럼 비트는 기능이에요.</div><div class="nt">가운데 점만 돌리면 나중에 수습이 안 돼요. 뿌리 쪽 점을 꼭 함께 선택하세요.</div></li>
+<li><h3>Resolution 낮추기<em>커브</em></h3><div class="how">Object Data 탭 → Resolution U → 12 에서 2 로</div><div class="why">메시로 바꿀 때 생기는 점 수를 줄여요. 점이 적어야 편집하기 쉬워요.</div><div class="nt">2~3을 권장해요.</div></li>
+<li><h3>메시로 변환<em>커브</em></h3><div class="how">Convert to Mesh</div><div class="why">커브를 점과 면으로 된 메시로 바꿔요. 이 뒤부터는 메시로 편집해요.</div></li>
+<li><h3>기본 세팅 하기<em>모디파이어</em></h3><div class="how"><kbd>Ctrl</kbd> <kbd>1</kbd> → On Cage 켜기 → <span class="mouse">우클릭</span> → Shade Auto Smooth → 80</div><div class="why">다른 머리카락과 같은 설정으로 맞춰요.</div></li>
+<li><h3>루프 컷과 볼륨<em>이동·변형</em></h3><div class="how"><kbd>Ctrl</kbd> <kbd>R</kbd> → 선택 → <kbd>Alt</kbd> <kbd>S</kbd> (뿌리 쪽을 더 두껍게)</div><div class="why">납작한 리본에 두께를 줘요.</div></li>
+<li><h3>노멀 뒤집기<em>음영·노멀</em></h3><div class="how">전체 선택 → Flip</div><div class="why">노멀은 면의 앞뒤 방향이에요. 전부 빨갛게 보이면 면이 뒤집힌 거라 다시 뒤집어 줘요.</div><div class="nt">전부 빨갛게 보일 때만 해요.</div></li>
+<li><h3>Edge Crease와 뒷면 채움<em>메시 편집</em></h3><div class="how">가장자리 엣지 선택 → <kbd>Shift</kbd> <kbd>E</kbd> → 1 → <kbd>F</kbd> 로 뒷면 채우기</div><div class="why">윤곽을 살리고 입체로 닫아요.</div></li>
+<li><h3>네모진 곳 조정<em>메시 편집</em></h3><div class="how">엣지 선택 → <kbd>G</kbd> <kbd>G</kbd></div><div class="why">Edge Slide로 선을 면 위에서 밀어 네모져 보이는 곳을 고쳐요.</div></li>
+</ol>
+</section>
+<section id="s11"><div class="sec-head"><h2>뒷머리, UV Sphere 조각</h2><a class="t" href="https://www.youtube.com/watch?v=oYI_m44hLb8&t=2975s">49:35~60:20</a></div>
+<p class="lead">구에서 떼어 낸 뒷머리 3조각이 볼륨 있는 가닥으로 다듬어져 있어요.</p>
+<ol class="steps">
+<li><h3>UV Sphere 추가<em>메시 편집</em></h3><div class="how"><kbd>Shift</kbd> <kbd>A</kbd> → UV Sphere → Segments 12, Rings 6</div><div class="why">머리 뒤통수가 둥글어서 구에서 조각을 떼어 쓰면 편해요.</div><div class="nt">링은 세그먼트의 절반이 좋아요.</div></li>
+<li><h3>머리 크기에 맞추기<em>이동·변형</em></h3><div class="how"><kbd>S</kbd> 로 크기 조절 → 머리에 맞게 놓아요</div><div class="why">구가 머리를 감싸는 크기가 되어야 해요.</div><div class="nt">Subdivision을 걸어 보면 크기 맞추기가 쉬워요.</div></li>
+<li><h3>가닥 영역 3곳 분리<em>메시 편집</em></h3><div class="how">뒷머리 가닥이 될 영역 선택 → <kbd>Shift</kbd> <kbd>D</kbd> → <kbd>P</kbd> (3곳 각각)</div><div class="why">구에서 가닥 모양 조각을 복사해 떼어 내요.</div></li>
+<li><h3>원래 구 삭제<em>메시 편집</em></h3><div class="how">원래 UV Sphere 선택 → 삭제</div><div class="why">조각을 뗐으니 구는 필요 없어요.</div></li>
+<li><h3>조각 합치기<em>메시 편집</em></h3><div class="how">분리한 조각들 선택 → <kbd>Ctrl</kbd> <kbd>J</kbd></div><div class="why">세 조각을 한 오브젝트로 관리해요.</div></li>
+<li><h3>Mirror 추가하고 맨 위로<em>모디파이어</em></h3><div class="how"><kbd>Q</kbd> → Mirror → Mirror를 모디파이어 스택 맨 위로 옮겨요 → On Cage 켜기</div><div class="why">모디파이어는 위에서부터 차례로 적용돼요. Mirror가 Subdivision보다 먼저여야 가운데가 매끈하게 이어져요.</div></li>
+<li><h3>가닥 볼륨 주기<em>이동·변형</em></h3><div class="how">각 가닥에 <kbd>Ctrl</kbd> <kbd>R</kbd> 로 루프 컷 → <kbd>Alt</kbd> <kbd>S</kbd> 로 가운데 부풀리기 → 끝은 오므려요</div><div class="why">가닥마다 가운데가 볼록하고 끝이 모여야 머리카락처럼 보여요.</div></li>
+<li><h3>방해되는 조각 숨기기<em>화면</em></h3><div class="how">조각 선택 → <kbd>H</kbd>. 다시 보이기는 <kbd>Alt</kbd> <kbd>H</kbd></div><div class="why">다른 조각이 가려서 작업이 어려울 때 잠깐 숨겨요.</div></li>
+<li><h3>정수리 꼭지 정리<em>메시 편집</em></h3><div class="how">정수리 엣지 선택 → Subdivide → 생긴 점들을 서로 연결해요</div><div class="why">정수리로 갈수록 선이 빽빽해야 볼륨이 정리돼요.</div><div class="nt">뿌리는 같은 색으로 칠해져 티가 안 나요. 적당히 하면 돼요.</div></li>
+<li><h3>뒷모습에 맞추기<em>이동·변형</em></h3><div class="how">뒷모습 참조 이미지에 맞춰 길이와 끝 모양을 조정해요</div><div class="why">뒤에서 봤을 때 그림과 비슷해야 해요.</div><div class="nt">Mirror Clipping은 켜지 않고 중앙을 붙여요.</div></li>
+<li><h3>가닥마다 Edge Crease<em>메시 편집</em></h3><div class="how">각 가닥 가장자리 엣지 선택 → <kbd>Shift</kbd> <kbd>E</kbd> → 1 → 뾰족해진 곳을 다듬어요</div><div class="why">가닥 윤곽을 날카롭게 남겨요.</div></li>
+<li><h3>뒷면 채우기<em>메시 편집</em></h3><div class="how">피벗 Active Element → 가장자리를 <kbd>S</kbd> 로 모아 붙여요 → <kbd>F</kbd></div><div class="why">뒷면을 막아 입체로 닫아요.</div></li>
+<li><h3>겹치는 곳 벌리기<em>메시 편집</em></h3><div class="how"><kbd>Ctrl</kbd> <kbd>R</kbd> 로 루프 컷 → <kbd>Alt</kbd> <kbd>S</kbd></div><div class="why">겹친 면을 벌려요.</div></li>
+<li><h3>안 풀리면 엣지 나누기<em>메시 편집</em></h3><div class="how">엣지를 나눠요 → 생긴 오각형은 엣지를 이어 정리해요</div><div class="why">루프 컷으로 해결이 안 될 때 쓰는 방법이에요.</div></li>
+</ol>
+<div class="box"><b>강사의 팁</b><ul><li>구조: 뒷머리는 갈래로 나뉜 큰 조각들에, 그 위에 덧댄 가닥 1~2개로 이루어져요.</li><li>특별한 디자인이 없다면 뒷머리는 동그라미를 잘라 수박 줄 긋듯이 만들어도 문제없다는 게 강사의 결론이에요.</li></ul></div>
+</section>
+<section id="s12"><div class="sec-head"><h2>뒷머리 덧댄 삐친 가닥</h2><a class="t" href="https://www.youtube.com/watch?v=oYI_m44hLb8&t=3620s">60:20~67:15</a></div>
+<p class="lead">뒷머리 조각 사이 경계를 가리는 삐친 가닥 2개가 있어요.</p>
+<ol class="steps">
+<li><h3>가닥 하나 복제해 떼기<em>메시 편집</em></h3><div class="how">기존 뒷머리 가닥 하나 선택 → <kbd>Shift</kbd> <kbd>D</kbd> → <kbd>P</kbd></div><div class="why">뒷머리 조각 사이 경계선이 너무 뚜렷해서 가닥을 덧대 가려요.</div></li>
+<li><h3>줄이고 돌려 놓기<em>이동·변형</em></h3><div class="how"><kbd>S</kbd> 로 줄이기 → <kbd>R</kbd> 로 돌려 경계 위에 놓아요</div><div class="why">경계선을 덮는 자리에 놓아요.</div></li>
+<li><h3>삐친 모양으로 바꾸기<em>이동·변형</em></h3><div class="how">Proportional Editing 켜기 → 점을 옮겨 곡선으로 삐치게 해요 → <kbd>Ctrl</kbd> <kbd>R</kbd> 로 루프 추가</div><div class="why">똑같은 머리가 하나 더 있는 느낌이 나지 않게 모양을 바꿔요.</div></li>
+<li><h3>두 번째 가닥 Mirror 제거<em>모디파이어</em></h3><div class="how">두 번째 가닥 → Mirror 모디파이어 제거 → 한쪽에만 놓아요 → 뒤에서 볼 때 휘게 해요</div><div class="why">이 가닥은 좌우 대칭이 아니라서 한쪽에만 있어야 해요.</div></li>
+<li><h3>뜬 곳과 묻힌 곳 고치기<em>이동·변형</em></h3><div class="how"><kbd>`</kbd> → Right → 붕 뜬 부분은 안으로 모으고, 파묻힌 부분은 꺼내요</div><div class="why">옆에서 봤을 때 머리에 자연스럽게 얹혀 있어야 해요.</div><div class="nt">뿌리는 신경 쓰지 않아도 돼요.</div></li>
+</ol>
+</section>
+<section id="s13"><div class="sec-head"><h2>트윈테일, 커브 방식 2</h2><a class="t" href="https://www.youtube.com/watch?v=oYI_m44hLb8&t=4035s">67:15~71:15</a></div>
+<p class="lead">양쪽으로 늘어진 통통한 트윈테일 본체가 있어요.</p>
+<ol class="steps">
+<li><h3>Path 추가<em>커브</em></h3><div class="how"><kbd>Shift</kbd> <kbd>A</kbd> → Curve → Path</div><div class="why">긴 트윈테일은 커브로 시작하면 휘는 모양을 잡기 쉬워요.</div></li>
+<li><h3>Depth로 튜브 만들기<em>커브</em></h3><div class="how">Object Data 탭 → Geometry → Depth 값을 올려요 → Resolution → 2</div><div class="why">Depth는 선에 둥근 두께를 줘서 튜브로 만들어요. Resolution을 낮춰 점 수를 줄여요.</div><div class="nt">강의 자막에 Depth 수치가 없어요. 화면을 보고 맞추세요.</div></li>
+<li><h3>늘어지게 점 놓기<em>커브</em></h3><div class="how">크기를 줄여요 → 묶음 위치에서 아래로 늘어지게 점을 놓아요</div><div class="why">트윈테일이 묶인 곳에서 아래로 떨어지는 모양을 잡아요.</div></li>
+<li><h3>굵기 조절하기<em>커브</em></h3><div class="how">점 선택 → <kbd>Alt</kbd> <kbd>S</kbd> (끝으로 갈수록 가늘게, 묶인 뿌리 쪽도 가늘게)</div><div class="why">점마다 Radius(굵기)를 바꿔요.</div><div class="nt">점이 심하게 꺾이면 단면이 찌그러져요. 그럴 땐 Radius를 1로 두고 배치만 하세요. 굵기는 메시로 바꾼 뒤에 해도 돼요.</div></li>
+<li><h3>점 추가하기<em>커브</em></h3><div class="how">두 점 선택 → <span class="mouse">우클릭</span> → Subdivide</div><div class="why">점이 모자라면 사이에 하나 더 넣어요.</div><div class="nt">필요할 때만 해요.</div></li>
+<li><h3>옆에서도 휘게 하기<em>커브</em></h3><div class="how"><kbd>`</kbd> → Right → 점을 옮겨 휘게 해요</div><div class="why">머리카락을 일자로 만들면 모델이 정적으로 보여요.</div></li>
+<li><h3>메시로 변환<em>커브</em></h3><div class="how">Convert to Mesh</div><div class="why">커브를 메시로 바꿔 세밀하게 편집해요.</div></li>
+<li><h3>Mirror와 기본 세팅<em>모디파이어</em></h3><div class="how">Mirror 모디파이어 추가 → <kbd>Ctrl</kbd> <kbd>A</kbd> → <kbd>Ctrl</kbd> <kbd>1</kbd> → On Cage 켜기 → <span class="mouse">우클릭</span> → Shade Auto Smooth → 80</div><div class="why">반대쪽 트윈테일을 만들고 다른 머리카락과 같은 설정으로 맞춰요.</div></li>
+<li><h3>빵빵하게 부풀리기<em>이동·변형</em></h3><div class="how">루프 선택 → <kbd>Alt</kbd> <kbd>S</kbd>, Proportional Editing 도 함께 써요</div><div class="why">트윈테일을 통통하게 만들어요.</div></li>
+<li><h3>Subdivision 적용<em>모디파이어</em></h3><div class="how">Subdivision 모디파이어 → Apply</div><div class="why">나뉜 면을 진짜 점으로 굳혀서 더 부드러운 바탕을 만들어요.</div></li>
+<li><h3>반대쪽 지우고 다시 세팅<em>모디파이어</em></h3><div class="how">미러된 반대쪽 절반 삭제 → Mirror 모디파이어 추가 → <kbd>Ctrl</kbd> <kbd>1</kbd></div><div class="why">한쪽만 남기고 Mirror와 Subdivision을 다시 걸어 더 매끈하게 해요.</div></li>
+<li><h3>끝 마감하기<em>메시 편집</em></h3><div class="how">끝 루프 선택 → 뽑아요(강의 자막은 Alt E) → <kbd>M</kbd> → At Center</div><div class="why">뚫려 있는 끝을 한 점으로 모아 막아요.</div><div class="nt">뽑는 단축키는 자막 표기 그대로라 정확하지 않을 수 있어요. 화면을 보고 맞추세요. 꼭 한 점으로 막지 않고 모아 두기만 해도 멀리서는 티가 안 나요.</div></li>
+</ol>
+</section>
+<section id="s14"><div class="sec-head"><h2>트윈테일 삐친 가닥</h2><a class="t" href="https://www.youtube.com/watch?v=oYI_m44hLb8&t=4275s">71:15~80:30</a></div>
+<p class="lead">트윈테일에 바깥으로 삐친 가닥 3개가 붙어 있어요.</p>
+<ol class="steps">
+<li><h3>면 복제해 떼기<em>메시 편집</em></h3><div class="how">트윈테일 메시에서 세로 3줄 정도의 면 선택 → <kbd>Shift</kbd> <kbd>D</kbd> → <kbd>P</kbd></div><div class="why">본체에서 떼어 낸 조각이라 모양이 본체와 잘 어울려요.</div></li>
+<li><h3>바깥으로 삐치게<em>이동·변형</em></h3><div class="how">Proportional Editing 켜기 → 점을 옮겨 바깥으로 삐친 모양을 만들어요</div><div class="why">삐친 가닥이 있어야 머리가 풍성해 보여요.</div></li>
+<li><h3>본체보다 도드라지게<em>이동·변형</em></h3><div class="how">점 선택 → <kbd>Alt</kbd> <kbd>S</kbd> (뿌리 쪽은 더 빵실하게, 끝은 작게)</div><div class="why">본체에 묻히지 않고 눈에 띄게 해요.</div><div class="nt">형태를 잡기 전에 볼륨부터 주세요.</div></li>
+<li><h3>Edge Crease 주기<em>메시 편집</em></h3><div class="how">가장자리 엣지 선택 → <kbd>Shift</kbd> <kbd>E</kbd> → 1</div><div class="why">가닥 윤곽을 날카롭게 남겨요.</div></li>
+<li><h3>루프 컷과 볼륨<em>메시 편집</em></h3><div class="how"><kbd>Ctrl</kbd> <kbd>R</kbd> → 볼륨이 필요한 쪽에만 → <kbd>Alt</kbd> <kbd>S</kbd></div><div class="why">부풀릴 줄을 넣고 볼륨을 줘요.</div><div class="nt">반대쪽에 생긴 필요 없는 루프는 지워요.</div></li>
+<li><h3>뒷면 메꾸기<em>메시 편집</em></h3><div class="how">가장자리를 모아 붙여요 → <kbd>F</kbd></div><div class="why">입체로 닫아야 아웃라인이 생겨요.</div><div class="nt">뿌리 쪽이 본체에 파고드는 것은 무시해도 돼요. 흔들릴 일이 없는 부분이에요.</div></li>
+<li><h3>두 번째, 세 번째 가닥<em>메시 편집</em></h3><div class="how">같은 방법으로 두 번 더 만들어요. 방향과 모양만 다르게 하고, 필요 없는 부분은 삭제해요</div><div class="why">가닥이 여러 개여야 자연스러워요. 참조에 없어도 예뻐 보이게 볼륨을 더 줘요.</div></li>
+</ol>
+<div class="box"><b>강사의 팁</b><ul><li>손이 많이 가는 머리일수록 더 예쁘게 나와요.</li></ul></div>
+</section>
+<div class="pn"><a href="ep05.html">← Ep.5 바디를 움직이자! 몸 리깅하고 색칠하기</a><a href="ep07.html">Ep.7 트윈테일 컬러링 &amp; 찰랑 리깅 →</a></div>
+<footer>강의 자막을 정리한 노트에서 뽑은 내용이에요. 자막에 없는 수치는 강의 화면을 보고 맞추세요. 단축키는 Blender 기본 키맵 기준이에요.
+강의: <a href="https://www.youtube.com/playlist?list=PLAR5yRjFCe9sOjK9pbKqRPGTGlaXgfUIA">[SD 버츄얼 캐릭터 만들기] DyeoV</a></footer>
+</div></body></html>
