@@ -49,7 +49,7 @@ footer a{color:var(--accent)}
 <div class="wrap">
 <header><h1>Blender 기초 노트</h1><p>SD 캐릭터 강의(DyeoV)를 따라가기 전에 알아 둘 조작과 개념을 주제별로 모았어요. 구역마다 직접 해 볼 연습이 하나씩 있어요.</p>
 <div class="legend"><span><kbd>G</kbd> 키보드 키</span><span><span class="mouse">클릭</span> 마우스 조작</span><span>키는 Blender 기본 키맵 기준</span></div></header>
-<nav><a href="#view">화면 움직이기</a><a href="#object">오브젝트 다루기</a><a href="#edit">편집 모드</a><a href="#core">강의가 계속 쓰는 세 가지</a><a href="#concept">알아 둘 개념</a><a href="#helper">자주 쓰는 보조 기능</a><a href="#trap">초보가 자주 걸리는 함정</a><a href="#uv">UV</a><a href="#texture">텍스처</a><a href="#rig">리깅</a></nav>
+<nav><a href="#view">화면 움직이기</a><a href="#object">오브젝트 다루기</a><a href="#edit">편집 모드</a><a href="#core">강의가 계속 쓰는 세 가지</a><a href="#modifier">Mirror와 Subdivision</a><a href="#concept">알아 둘 개념</a><a href="#helper">자주 쓰는 보조 기능</a><a href="#trap">초보가 자주 걸리는 함정</a><a href="#uv">UV</a><a href="#texture">텍스처</a><a href="#rig">리깅</a></nav>
 <section id="view"><div class="sec-head"><h2>화면 움직이기</h2><span>VIEW NAVIGATION</span></div><p class="lead">마우스를 3D 화면 위에 올려 둔 상태에서 해요.</p><div class="grid">
 <div class="card"><h3>화면 돌리기</h3><div class="how"><span class="mouse">휠 버튼 누른 채 드래그</span></div></div>
 <div class="card"><h3>화면 옮기기</h3><div class="how"><kbd>Shift</kbd> + <span class="mouse">휠 버튼 드래그</span></div></div>
@@ -91,7 +91,20 @@ footer a{color:var(--accent)}
 <div class="card"><h3>루프컷 <kbd>Ctrl</kbd> <kbd>R</kbd></h3><div class="how">선 위에 마우스 → <span class="mouse">클릭</span> 두 번</div><div class="why">한 바퀴 도는 선을 추가해요. 휠을 굴리면 줄 수가 늘어요</div></div>
 </div>
 <div class="box"><b>연습</b>큐브 윗면을 선택하고 <kbd>I</kbd>로 안쪽에 작은 면을 만든 뒤, 그 면을 <kbd>E</kbd>로 위로 뽑아 보세요. 그다음 <kbd>Ctrl</kbd> <kbd>R</kbd>로 옆면에 가로 줄을 하나 넣어 보세요.</div>
-<p class="note">여기까지 익히면 강의 Ep.2를 시작할 수 있어요. 비례 편집, Mirror, Subdivision은 Ep.2에서 강사가 켜는 방법부터 보여 줘요.</p>
+<p class="note">다음 장의 Mirror와 Subdivision까지 익히면 강의 Ep.2를 시작할 수 있어요.</p>
+</section>
+<section id="modifier"><div class="sec-head"><h2>Mirror와 Subdivision</h2><span>MIRROR · SUBDIVISION</span></div><p class="lead">강의가 머리·몸·머리카락 어디서나 거는 두 가지예요. 걸어 둔 것은 오른쪽 속성 창의 스패너 아이콘 탭에서 보여요.</p><div class="grid">
+<div class="card"><h3>Subdivision 걸기</h3><div class="how">오브젝트 선택 후 <kbd>Ctrl</kbd> <kbd>1</kbd> &nbsp; 2단계는 <kbd>Ctrl</kbd> <kbd>2</kbd></div></div>
+<div class="card"><h3>강의에서 쓰는 단계</h3><div class="how">거의 전부 <b>1</b>. 귀와 리본만 2. 3은 안 써요</div></div>
+<div class="card"><h3>Mirror 걸기</h3><div class="how">편집 모드에서 왼쪽 절반 삭제 → 스패너 탭 → Add Modifier → Generate → Mirror → <b>Clipping</b> 체크</div></div>
+<div class="card"><h3>편집 중에도 결과 보기</h3><div class="how">모디파이어 줄의 삼각형 아이콘(On Cage) 켜기</div></div>
+<div class="card"><h3>모디파이어 적용</h3><div class="how">모디파이어 위에 마우스를 두고 <kbd>Ctrl</kbd> <kbd>A</kbd> &nbsp; 또는 옆의 화살표 → Apply</div></div>
+<div class="card"><h3>부드럽게 보이기</h3><div class="how"><span class="mouse">우클릭</span> → Shade Auto Smooth → 각도 80°</div></div>
+<div class="card"><h3>비례 편집</h3><div class="how"><kbd>O</kbd> (알파벳 오)로 켜고 끔. <kbd>G</kbd>로 움직이는 도중에 <span class="mouse">휠</span>로 범위 조절</div></div>
+<div class="card"><h3>Round Cube 꺼내기</h3><div class="how"><kbd>Shift</kbd> <kbd>A</kbd> → Mesh → Round Cube → 왼쪽 아래 패널에서 Arc 6 (머리) / 2 (몸)</div></div>
+</div>
+<div class="box"><b>알아 둘 것</b>Subdivision은 점이 늘어난 것처럼 <b>보여 주기만</b> 해요. 편집 모드에서는 원래 점만 잡히고, 그 점을 움직이면 부드러운 겉모양이 따라 변해요. 적용(Apply)하면 그때 실제 점이 되고 되돌릴 수 없어요. 강의의 '한 번 적용하고 다시 Mirror + Subdivision'은 눈구멍을 뚫을 만큼 실제 점을 늘리는 단계예요.</div>
+<p class="note">Round Cube는 Extra Mesh Objects 애드온이 있어야 메뉴에 나와요. Blender 버전에 따라 Shade Auto Smooth가 Shade Smooth by Angle로 표시될 수 있어요.</p>
 </section>
 <section id="concept"><div class="sec-head"><h2>알아 둘 개념</h2><span>CONCEPTS</span></div><p class="lead">조작법이 아니라 '왜 그렇게 되는지'에 해당하는 내용이에요.</p><div class="grid">
 <div class="card"><h3>점 · 선 · 면</h3><div class="how">모든 형태는 점을 선으로 잇고 그 사이를 면으로 채운 거예요. 면은 사각형으로 유지하는 게 기본이에요</div><div class="where">전체</div></div>
@@ -101,7 +114,7 @@ footer a{color:var(--accent)}
 <div class="card"><h3>모디파이어</h3><div class="how">원본을 건드리지 않고 효과를 얹는 기능이에요. 끄거나 지우면 원래대로 돌아와요</div><div class="where">Mirror, Subdivision</div></div>
 <div class="card"><h3>Mirror</h3><div class="how">반쪽만 만들면 반대쪽이 자동으로 생겨요. 그래서 왼쪽 절반을 지우고 시작해요</div><div class="where">Ep.2부터 계속</div></div>
 <div class="card"><h3>Subdivision</h3><div class="how">각진 메시를 부드럽게 보여 줘요. 실제 점 개수는 그대로예요</div><div class="where">Ep.2부터 계속</div></div>
-<div class="card"><h3>비례 편집 <kbd>O</kbd></h3><div class="how">점 하나를 움직이면 주변 점이 같이 딸려 와요. 휠로 범위를 조절해요</div><div class="where">Ep.2 얼굴 형태</div></div>
+<div class="card"><h3>비례 편집 <kbd>O</kbd> (알파벳 오)</h3><div class="how">점 하나를 움직이면 주변 점이 같이 딸려 와요. 휠로 범위를 조절해요</div><div class="where">Ep.2 얼굴 형태</div></div>
 </div>
 <p class="note">오른쪽 칸은 DyeoV 강의에서 그 개념이 처음 쓰이는 곳이에요.</p>
 </section>
@@ -118,7 +131,9 @@ footer a{color:var(--accent)}
 <div class="box"><b>습관</b>단계가 끝날 때마다 다른 이름으로 저장해 두세요(face_01, face_02 …). 그리고 한 방향에서만 보지 말고 계속 돌려 보세요. 정면에서 괜찮아도 옆에서 보면 틀어진 경우가 많아요.</div>
 </section>
 <section id="trap"><div class="sec-head"><h2>초보가 자주 걸리는 함정</h2><span>COMMON TRAPS</span></div><p class="lead">뭔가 이상하면 여기부터 확인하세요.</p><div class="grid">
+<div class="card"><h3>글자 키 단축키가 전부 안 먹힌다</h3><div class="how">키보드가 한글 입력 상태예요. <b>한/영 키</b>를 눌러 영문으로 바꾸세요. 숫자 키만 되고 <kbd>G</kbd> <kbd>A</kbd> 같은 글자 키가 안 되면 이거예요</div></div>
 <div class="card"><h3>키가 안 먹힌다</h3><div class="how">마우스가 3D 화면 위에 없어서예요. 단축키는 마우스가 올라가 있는 창에 적용돼요</div></div>
+<div class="card"><h3><kbd>Ctrl</kbd> <kbd>A</kbd>로 모디파이어가 적용 안 된다</h3><div class="how">마우스가 오른쪽 속성 창의 그 모디파이어 칸 위에 있어야 해요. 3D 화면 위에서 누르면 다른 메뉴가 떠요. 편집 모드에서는 적용이 안 되니 오브젝트 모드에서 하세요</div></div>
 <div class="card"><h3>엉뚱한 게 움직인다</h3><div class="how">모드가 달라서예요. 화면 왼쪽 위에 Object Mode인지 Edit Mode인지 표시돼요</div></div>
 <div class="card"><h3>뒤쪽 점이 선택 안 된다</h3><div class="how">X-Ray가 꺼져 있어서예요. <kbd>Alt</kbd> <kbd>Z</kbd>로 켜요. 반쪽을 지울 때 꼭 필요해요</div></div>
 <div class="card"><h3><kbd>E</kbd> 누르고 취소했더니 이상하다</h3><div class="how">오른쪽 클릭으로 취소해도 겹친 점이 남아요. <kbd>Ctrl</kbd> <kbd>Z</kbd>로 되돌려야 깨끗해요</div></div>
