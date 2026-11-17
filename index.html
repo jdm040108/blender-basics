@@ -49,7 +49,7 @@ footer a{color:var(--accent)}
 <div class="wrap">
 <header><h1>Blender 기초 노트</h1><p>SD 캐릭터 강의(DyeoV)를 따라가기 전에 알아 둘 조작과 개념을 주제별로 모았어요. 구역마다 직접 해 볼 연습이 하나씩 있어요.</p>
 <div class="legend"><span><kbd>G</kbd> 키보드 키</span><span><span class="mouse">클릭</span> 마우스 조작</span><span>키는 Blender 기본 키맵 기준</span></div></header>
-<nav><a href="#view">화면 움직이기</a><a href="#object">오브젝트 다루기</a><a href="#edit">편집 모드</a><a href="#core">강의가 계속 쓰는 세 가지</a><a href="#modifier">Mirror와 Subdivision</a><a href="#concept">알아 둘 개념</a><a href="#helper">자주 쓰는 보조 기능</a><a href="#trap">초보가 자주 걸리는 함정</a><a href="#uv">UV</a><a href="#texture">텍스처</a><a href="#rig">리깅</a></nav>
+<nav><a href="#view">화면 움직이기</a><a href="#object">오브젝트 다루기</a><a href="#edit">편집 모드</a><a href="#core">강의가 계속 쓰는 세 가지</a><a href="#modifier">Mirror와 Subdivision</a><a href="#mirror">Mirror 따라 하기</a><a href="#delete">지우기</a><a href="#concept">알아 둘 개념</a><a href="#helper">자주 쓰는 보조 기능</a><a href="#trap">초보가 자주 걸리는 함정</a><a href="#uv">UV</a><a href="#texture">텍스처</a><a href="#rig">리깅</a></nav>
 <section id="view"><div class="sec-head"><h2>화면 움직이기</h2><span>VIEW NAVIGATION</span></div><p class="lead">마우스를 3D 화면 위에 올려 둔 상태에서 해요.</p><div class="grid">
 <div class="card"><h3>화면 돌리기</h3><div class="how"><span class="mouse">휠 버튼 누른 채 드래그</span></div></div>
 <div class="card"><h3>화면 옮기기</h3><div class="how"><kbd>Shift</kbd> + <span class="mouse">휠 버튼 드래그</span></div></div>
@@ -105,6 +105,29 @@ footer a{color:var(--accent)}
 </div>
 <div class="box"><b>알아 둘 것</b>Subdivision은 점이 늘어난 것처럼 <b>보여 주기만</b> 해요. 편집 모드에서는 원래 점만 잡히고, 그 점을 움직이면 부드러운 겉모양이 따라 변해요. 적용(Apply)하면 그때 실제 점이 되고 되돌릴 수 없어요. 강의의 '한 번 적용하고 다시 Mirror + Subdivision'은 눈구멍을 뚫을 만큼 실제 점을 늘리는 단계예요.</div>
 <p class="note">Round Cube는 Extra Mesh Objects 애드온이 있어야 메뉴에 나와요. Blender 버전에 따라 Shade Auto Smooth가 Shade Smooth by Angle로 표시될 수 있어요.</p>
+</section>
+<section id="mirror"><div class="sec-head"><h2>Mirror 따라 하기</h2><span>MIRROR STEP BY STEP</span></div><p class="lead">거울이에요. 오른쪽 절반만 남겨 두면 왼쪽 절반을 자동으로 만들어 주고, 오른쪽을 움직이면 왼쪽도 똑같이 따라 움직여요.</p><div class="grid">
+<div class="card"><h3>1. 정면으로 보기</h3><div class="how"><kbd>`</kbd> → Front</div></div>
+<div class="card"><h3>2. 편집 모드 + X-Ray</h3><div class="how"><kbd>Tab</kbd> 그다음 <kbd>Alt</kbd> <kbd>Z</kbd>. X-Ray를 켜야 뒤쪽 점까지 같이 선택돼요</div></div>
+<div class="card"><h3>3. 왼쪽 절반 선택</h3><div class="how">가운데 줄보다 왼쪽에 있는 점들을 <span class="mouse">드래그</span>해서 네모로 잡아요. 가운데 줄의 점은 잡지 않아요</div></div>
+<div class="card"><h3>4. 삭제</h3><div class="how"><kbd>X</kbd> → Vertices. 오른쪽 절반만 남아요</div></div>
+<div class="card"><h3>5. Mirror 추가</h3><div class="how"><kbd>Tab</kbd>으로 나온 뒤, 속성 창 왼쪽 세로 아이콘 줄의 <b>파란 스패너</b> → Add Modifier → Generate → Mirror</div></div>
+<div class="card"><h3>6. Clipping 체크</h3><div class="how">방금 생긴 Mirror 칸 안의 <b>Clipping</b>에 체크</div></div>
+<div class="card"><h3>7. 확인</h3><div class="how">편집 모드에서 오른쪽 점 하나를 <kbd>G</kbd>로 움직여 보세요. 왼쪽도 같이 움직이면 된 거예요</div></div>
+</div>
+<div class="box"><b>왜 쓰나</b>얼굴과 몸은 좌우가 같아요. 한쪽만 만들면 작업량이 절반이고 좌우가 어긋날 일이 없어요. Clipping은 가운데 줄의 점이 거울 선을 넘지 못하게 붙잡아 줘요. 꺼져 있으면 가운데가 벌어져 틈이 생기거나 서로 파고들어 겹쳐요.</div>
+<p class="note">기본 큐브에는 가운데 줄이 없어요. 큐브로 연습하려면 먼저 <kbd>Ctrl</kbd> <kbd>R</kbd>로 세로 루프컷을 하나 넣어 가운데 줄을 만드세요. 강의의 Round Cube는 처음부터 가운데 줄이 있어요. 속성 창은 화면 오른쪽 아래 창이고, 왼쪽 가장자리에 탭 아이콘이 세로로 늘어서 있어요.</p>
+</section>
+<section id="delete"><div class="sec-head"><h2>지우기</h2><span>DELETE · DISSOLVE</span></div><p class="lead">오브젝트를 지우는 것과 점·선·면을 지우는 것은 모드가 달라요. 같은 <kbd>X</kbd>를 눌러도 뜨는 메뉴가 달라요.</p><div class="grid">
+<div class="card"><h3>오브젝트 통째로</h3><div class="how">오브젝트 모드에서 선택 → <kbd>X</kbd> → Delete</div></div>
+<div class="card"><h3>점 지우기</h3><div class="how">편집 모드에서 점 선택 → <kbd>X</kbd> → Vertices. 그 점에 붙은 선과 면도 같이 사라져요</div></div>
+<div class="card"><h3>면만 지워 구멍 내기</h3><div class="how">면 선택 → <kbd>X</kbd> → Faces. 강의에서 눈구멍·입구멍을 뚫을 때 써요</div></div>
+<div class="card"><h3>테두리는 남기고 면만</h3><div class="how">면 선택 → <kbd>X</kbd> → Only Faces</div></div>
+<div class="card"><h3>구멍 없이 선만 없애기</h3><div class="how">선 선택 → <kbd>Ctrl</kbd> <kbd>X</kbd> (Dissolve). 강의에서 관절 안쪽 선을 정리할 때 써요</div></div>
+<div class="card"><h3>모디파이어 지우기</h3><div class="how">스패너 탭에서 그 모디파이어 칸 오른쪽 끝의 X 버튼</div></div>
+<div class="card"><h3>되돌리기 / 다시 실행</h3><div class="how"><kbd>Ctrl</kbd> <kbd>Z</kbd> / <kbd>Ctrl</kbd> <kbd>Shift</kbd> <kbd>Z</kbd></div></div>
+</div>
+<div class="box"><b>Delete와 Dissolve</b>Delete는 지운 자리에 구멍이 나요. Dissolve는 선이나 점만 없애고 주변 면을 이어 붙여서 구멍이 나지 않아요. 구멍을 뚫으려면 Delete, 줄 수를 줄이려면 Dissolve예요.</div>
 </section>
 <section id="concept"><div class="sec-head"><h2>알아 둘 개념</h2><span>CONCEPTS</span></div><p class="lead">조작법이 아니라 '왜 그렇게 되는지'에 해당하는 내용이에요.</p><div class="grid">
 <div class="card"><h3>점 · 선 · 면</h3><div class="how">모든 형태는 점을 선으로 잇고 그 사이를 면으로 채운 거예요. 면은 사각형으로 유지하는 게 기본이에요</div><div class="where">전체</div></div>
