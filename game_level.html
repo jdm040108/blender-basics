@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>게임 맵 만들기</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap">
+<link rel="stylesheet" href="style.css"></head><body><div class="wrap">
+<div class="top"><a href="index.html">기초</a><a href="ep01.html">Ep.1</a><a href="ep02.html">Ep.2</a><a href="ep03.html">Ep.3</a><a href="ep04.html">Ep.4</a><a href="ep05.html">Ep.5</a><a href="ep06.html">Ep.6</a><a href="ep07.html">Ep.7</a><a href="ep08.html">Ep.8</a><a href="ep09.html">Ep.9</a><a href="ep10.html">Ep.10</a><a href="ep11.html">Ep.11</a><a href="ep12.html">Ep.12</a><a href="ep13.html">Ep.13</a><a href="lookup.html">찾아보기</a><a href="game_level.html" class="on">게임 맵</a></div>
+<header><div class="ep">EXTRA</div><h1>게임 맵 만들기 (쿼터뷰 던전)</h1><p>지하 연구소 던전을 Unity에 넣을 수 있게 만든 방법이에요. 2m 칸에 맞춘 조각(모듈 키트)을 만들고, 텍스처 하나를 같이 쓰고, 같은 조각은 복사가 아니라 연결해서 놓아요. 조명은 Blender에서는 확인용으로만 달고 실제 조명은 Unity에서 해요.</p>
+<div class="legend"><span><kbd>G</kbd> 키보드 키</span><span><span class="mouse">클릭</span> 마우스 조작</span><span>넘패드 없는 키보드 기준</span></div></header>
+<nav class="toc"><a href="#s1">1. 순서: 그레이박스부터</a><a href="#s2">2. 크기와 방향 규칙</a><a href="#s3">3. 모듈 키트 (2m 칸)</a><a href="#s4">4. 폴리곤 줄이기</a><a href="#s5">5. 텍스처 하나로 (아틀라스)</a><a href="#s6">6. 같은 조각은 연결 복제</a><a href="#s7">7. 방 단위로 조립</a><a href="#s8">8. 쿼터뷰 카메라와 확인용 조명</a><a href="#s9">9. Unity로 FBX 내보내기</a><a href="#s10">10. 숫자로 본 결과</a></nav>
+
+<section id="s1"><div class="sec-head"><h2>1. 순서: 그레이박스부터</h2><span>WORKFLOW</span></div>
+<p class="lead">처음부터 예쁘게 만들지 않아요. 상자로 방 배치를 먼저 잡고, 플레이해 보고, 그다음에 조각을 다듬어요.</p>
+<ol class="steps">
+<li><h3>상자로 방과 통로 배치<em>그레이박스</em></h3><div class="how">바닥판과 벽 높이(2.6m 정도)만 있는 상자로 방, 통로, 문 위치를 잡아요</div><div class="why">맵이 재미있는지는 동선과 크기가 정해요. 디테일을 넣은 뒤에 방 크기를 바꾸면 다시 만들어야 해요.</div></li>
+<li><h3>쿼터뷰로 보면서 크기 확인<em>확인</em></h3><div class="how">게임 카메라 각도(8장)로 렌더해서 캐릭터 크기 상자(높이 1.0~1.7m)와 같이 봐요</div><div class="why">위에서 내려다보면 방이 실제보다 좁아 보이거나 지붕이 시야를 가리는 문제를 일찍 찾을 수 있어요.</div></li>
+<li><h3>조각(키트)으로 바꾸기<em>모듈 키트</em></h3><div class="how">벽, 문틀, 기둥, 콘솔 같은 조각을 만들고 상자 자리에 바꿔 끼워요</div><div class="why">조각만 고치면 맵 전체가 같이 바뀌어서, 분위기를 통째로 바꾸는 것도 쉬워요. 이번에도 일반 연구소 톤을 SF 관제실 톤으로 조각만 바꿔서 전환했어요.</div></li>
+<li><h3>Unity에서 조명, 충돌, 문 작업<em>엔진</em></h3><div class="how">FBX로 내보내 Unity에서 조명, 콜라이더, 문 열림, 벽 가림 처리를 해요</div><div class="why">게임에서 보이는 빛과 충돌은 엔진이 계산해요. Blender 조명은 Unity로 넘어가지 않아요.</div></li>
+</ol>
+</section>
+
+<section id="s2"><div class="sec-head"><h2>2. 크기와 방향 규칙</h2><span>UNITS · AXES</span></div>
+<p class="lead">모든 조각이 같은 규칙을 지켜야 Unity에서 회전 0, 크기 1로 그대로 놓여요.</p>
+<ol class="steps">
+<li><h3>1 Blender 단위 = 1m = Unity 1칸<em>단위</em></h3><div class="how">Scene 탭 → Units → Unit System Metric, Unit Scale 1.0 그대로</div><div class="why">문 높이 2.0m, 사람 1.75m 같은 실제 크기로 만들면 Unity에서도 같은 크기예요.</div></li>
+<li><h3>정면은 -Y 쪽<em>방향</em></h3><div class="how">벽 장식, 콘솔 화면, 문 손잡이 같은 앞면이 -Y를 보게 만들어요. 앞에서 보는 화면은 <kbd>`</kbd> (숫자 1 왼쪽 키) → Front</div><div class="why">Blender의 -Y 정면은 Unity의 +Z(앞)로 넘어가요. 모든 조각의 정면이 같으면 Unity에서 90도 단위로만 돌려 놓으면 돼요.</div><div class="nt">넘패드가 없으면 <kbd>`</kbd> 키 원형 메뉴로 Front, Top 등을 골라요.</div></li>
+<li><h3>원점은 바닥 가운데<em>원점</em></h3><div class="how"><kbd>Shift</kbd> <kbd>S</kbd> → Cursor to World Origin → 조각을 원점 위에 바닥이 Z=0이 되게 놓기 → Object → Set Origin → Origin to 3D Cursor</div><div class="why">원점이 바닥 가운데에 있으면 Unity에서 바닥 높이에 그냥 놓아도 뜨거나 묻히지 않고, 2m 칸에 딱 맞게 붙어요.</div></li>
+<li><h3>크기와 회전은 적용해 두기<em>이동·변형</em></h3><div class="how">조각 선택 → <kbd>Ctrl</kbd> <kbd>A</kbd> → All Transforms (조각 원본에만. 맵에 놓은 복제본은 그대로)</div><div class="why">원본 조각의 Scale이 1이 아니면 Unity에서 크기가 이상하게 들어와요.</div></li>
+<li><h3>이름은 SM_로 시작<em>정리</em></h3><div class="how">예: SM_SF_Wall_2m_Panel, SM_SF_Doorway_Heavy_2m, SM_SF_Pillar</div><div class="why">SM은 Static Mesh(움직이지 않는 메시)라는 뜻이에요. 이름에 크기와 종류를 넣으면 Unity 프로젝트 창에서 바로 찾을 수 있어요.</div></li>
+</ol>
+</section>
+
+<section id="s3"><div class="sec-head"><h2>3. 모듈 키트 (2m 칸)</h2><span>MODULAR KIT</span></div>
+<p class="lead">벽 하나 = 가로 2m. 모든 방 크기를 2m의 배수로 정하면 조각을 이어 붙이기만 하면 돼요.</p>
+<ol class="steps">
+<li><h3>2m 칸에 붙게 스냅 켜기<em>스냅</em></h3><div class="how">화면 위 자석 아이콘 옆 메뉴 → Increment, Absolute Grid Snap 체크 → <kbd>Shift</kbd> <kbd>Tab</kbd>으로 스냅 켜고 끄기 → <kbd>G</kbd> 로 옮기면 칸에 붙어요</div><div class="why">조각 사이에 틈이 생기면 빛이 새고, 겹치면 깜빡여요(Z-fighting).</div><div class="nt">Overlays 메뉴의 Grid Scale을 2로 하면 바닥 격자가 2m 칸으로 보여요.</div></li>
+<li><h3>벽은 종류를 몇 개 섞기<em>다양성</em></h3><div class="how">기본 벽, 패널 벽, 환풍구 벽처럼 같은 크기에 모양만 다른 벽을 2~3개 만들어 섞어요 (이번에는 패널 약 22%, 환풍구 약 14%)</div><div class="why">같은 벽만 이어지면 복사 붙여넣기 티가 나요. 크기가 같으니 아무 자리에나 바꿔 끼울 수 있어요.</div></li>
+<li><h3>문틀, 유리벽도 2m<em>모듈 키트</em></h3><div class="how">일반 문틀, 위험 문틀(붉은 등 + 경고 줄무늬), 유리벽을 벽과 같은 2m 폭으로</div><div class="why">벽 한 칸을 빼고 문틀을 끼우면 바로 출입구가 돼요.</div></li>
+<li><h3>모서리는 기둥으로 가리기<em>모듈 키트</em></h3><div class="how">벽이 꺾이는 모서리마다 팔각 기둥을 놓아요</div><div class="why">벽 두 개가 만나는 모서리는 틈이나 겹침이 생기기 쉬워요. 기둥이 그걸 덮어 주고 장식도 돼요.</div></li>
+<li><h3>조각 보관 컬렉션<em>정리</em></h3><div class="how"><kbd>M</kbd> → New Collection → Kit_SciFi 같은 컬렉션에 원본 조각만 모아서 맵 밖에 한 줄로 늘어놓기</div><div class="why">원본을 고치면 맵에 놓인 연결 복제본(6장)이 전부 같이 바뀌어요. 내보낼 때도 이 컬렉션만 내보내요.</div></li>
+</ol>
+</section>
+
+<section id="s4"><div class="sec-head"><h2>4. 폴리곤 줄이기</h2><span>TOPOLOGY · BUDGET</span></div>
+<p class="lead">쿼터뷰에서는 멀리서 내려다보니까 작은 디테일은 거의 안 보여요. 안 보이는 면부터 지워요.</p>
+<ol class="steps">
+<li><h3>삼각형 수 보기<em>확인</em></h3><div class="how">화면 오른쪽 위 Overlays 메뉴 → Statistics 체크</div><div class="why">게임 엔진은 모든 면을 삼각형으로 바꿔 그려요. Triangles 숫자가 실제 부담이에요.</div></li>
+<li><h3>원통은 각을 적게<em>폴리곤</em></h3><div class="how"><kbd>Shift</kbd> <kbd>A</kbd> → Cylinder 추가 직후 왼쪽 아래 패널에서 Vertices 를 8~12로</div><div class="why">기본 32각은 쿼터뷰에서 8각과 거의 구분이 안 돼요. 드럼통 8각, 기둥 8각, 큰 장치 12각으로 했어요.</div></li>
+<li><h3>안 보이는 면 지우기<em>메시 편집</em></h3><div class="how"><kbd>Tab</kbd> (Edit Mode) → <kbd>3</kbd> (면 선택) → 벽에 붙어 안 보이는 면, 바닥에 닿는 밑면 선택 → <kbd>X</kbd> → Faces</div><div class="why">벽에 붙인 장식판의 뒷면, 바닥에 놓인 상자의 밑면은 절대 안 보여요. 이번 SF 키트는 이것만으로 약 237k → 205k 삼각형으로 줄었어요.</div></li>
+<li><h3>반복 장식은 개수 줄이기<em>폴리곤</em></h3><div class="how">환풍구 살, 컨테이너 골 같은 반복을 꼭 필요한 만큼만</div><div class="why">환풍구 살 하나도 상자 하나라 12삼각형이에요. 벽마다 들어가면 맵 전체에서 수천 개가 돼요.</div></li>
+<li><h3>좋은 토폴로지란<em>개념</em></h3><div class="how">게임 배경 조각은 면이 평평하고 각진 상자 조합이면 충분해요. 캐릭터처럼 사각형 흐름(엣지 루프)을 맞출 필요는 없어요</div><div class="why">구부러지거나 애니메이션되는 메시만 면 흐름이 중요해요. 배경은 삼각형 수, 틈 없는 연결, 뒤집힌 면이 없는지가 중요해요.</div><div class="nt">뒤집힌 면 확인: Overlays → Face Orientation. 파란색이 앞면, 빨간색이 뒷면이에요. 밖에서 빨갛게 보이면 Edit Mode에서 <kbd>Shift</kbd> <kbd>N</kbd>.</div></li>
+</ol>
+</section>
+
+<section id="s5"><div class="sec-head"><h2>5. 텍스처 하나로 (아틀라스)</h2><span>ATLAS · MATERIAL SLOTS</span></div>
+<p class="lead">색 칸이 여러 개 있는 작은 텍스처 한 장을 모든 조각이 같이 써요. 매테리얼이 적을수록 게임이 덜 무거워요.</p>
+<ol class="steps">
+<li><h3>색 칸 텍스처(팔레트) 한 장<em>텍스처</em></h3><div class="how">벽, 어두운 벽, 금속, 테두리, 노랑, 빨강 발광 같은 색을 칸으로 나눈 이미지 한 장 → 매테리얼 M_FacilityKit 하나에 연결</div><div class="why">조각마다 매테리얼이 다르면 Unity가 그릴 때마다 매테리얼을 바꿔야 해요(드로우콜 증가). 한 장이면 묶어서 그릴 수 있어요.</div></li>
+<li><h3>면의 UV를 색 칸 안에 넣기<em>UV</em></h3><div class="how">Edit Mode에서 같은 색을 칠할 면 선택 → UV Editing 탭 → UV 창에서 <kbd>A</kbd> → <kbd>S</kbd> <kbd>0</kbd> (한 점으로 모으기) → <kbd>G</kbd> 로 원하는 색 칸 위로 옮기기</div><div class="why">색만 쓰는 조각은 UV를 펼칠 필요 없이 색 칸 안 아무 곳에 모아 두면 돼요.</div><div class="nt">발광 빨강 칸에 실수로 넣으면 바닥 케이블이 레이저처럼 빛나요. 이번에도 케이블 UV를 테두리 색 칸으로 옮겨서 고쳤어요.</div></li>
+<li><h3>바꿀 색은 슬롯을 따로<em>매테리얼</em></h3><div class="how">기둥 표시등, 콘솔 버튼등처럼 구역마다 색이 달라야 하는 면은 Material 탭 → <kbd>+</kbd> 로 두 번째 슬롯(M_DeptLight) 추가 → 면 선택 → Assign</div><div class="why">Unity에서 이 슬롯만 다른 색 매테리얼로 바꾸면 조각 하나로 동쪽은 노랑, 서쪽은 파랑 구역을 만들 수 있어요.</div></li>
+<li><h3>유리는 세 번째 슬롯<em>매테리얼</em></h3><div class="how">유리벽, 냉동 캡슐 덮개는 M_Glass 슬롯 따로</div><div class="why">투명은 그리는 방식이 달라서 매테리얼을 나눠야 해요.</div></li>
+</ol>
+</section>
+
+<section id="s6"><div class="sec-head"><h2>6. 같은 조각은 연결 복제</h2><span>INSTANCING</span></div>
+<p class="lead">맵에 벽이 수백 개 있어도 메시 데이터는 벽 종류 수만큼만 있게 해요.</p>
+<ol class="steps">
+<li><h3>Shift+D 말고 Alt+D<em>복제</em></h3><div class="how">원본 조각 선택 → <kbd>Alt</kbd> <kbd>D</kbd> → 옮겨 놓기</div><div class="why"><kbd>Shift</kbd> <kbd>D</kbd> 는 메시를 통째로 복사해서 파일이 커지고, 고칠 때 하나씩 고쳐야 해요. <kbd>Alt</kbd> <kbd>D</kbd> 는 같은 메시를 가리키는 오브젝트만 늘려요.</div></li>
+<li><h3>연결됐는지 확인<em>확인</em></h3><div class="how">Object Data 탭(초록 삼각형) 위 메시 이름 옆 숫자 확인</div><div class="why">숫자가 이 메시를 같이 쓰는 오브젝트 수예요. 이번 맵은 오브젝트 1604개에 메시는 111개였어요.</div></li>
+<li><h3>하나만 따로 고치고 싶을 때<em>복제</em></h3><div class="how">그 숫자 버튼 클릭 → 연결이 끊긴 단독 메시가 돼요</div><div class="why">한 곳만 부서진 벽처럼 바꾸고 싶을 때 써요. 대신 그 벽은 메시가 하나 더 늘어요.</div></li>
+<li><h3>Unity에서는 프리팹으로<em>엔진</em></h3><div class="how">조각 FBX를 프리팹으로 만들고 맵에서는 프리팹을 놓아요</div><div class="why">Unity도 같은 메시를 묶어 그리는(GPU 인스턴싱, SRP Batcher) 기능이 있어서 같은 효과를 얻어요.</div></li>
+</ol>
+</section>
+
+<section id="s7"><div class="sec-head"><h2>7. 방 단위로 조립</h2><span>ROOMS · CULLING</span></div>
+<p class="lead">방 하나 = 컬렉션 하나. 바닥은 방마다 한 장으로 만들어요.</p>
+<ol class="steps">
+<li><h3>방마다 컬렉션<em>정리</em></h3><div class="how">B1_MainLab, B1_Corridor_A 처럼 층_방이름으로 컬렉션 만들고, 그 방의 벽·바닥·소품을 넣기</div><div class="why">방 단위로 숨기고 보이며 작업할 수 있고, Unity에서도 방 단위로 켜고 끄기(가려진 방 안 그리기) 쉬워요.</div></li>
+<li><h3>바닥은 방마다 한 장<em>폴리곤</em></h3><div class="how">2m 바닥 타일을 수십 장 깔지 않고 방 모양대로 바닥판 하나를 만들어요. 계단이나 구멍 자리는 면을 지워 비우기</div><div class="why">바닥 타일 100장은 오브젝트 100개지만, 판 하나는 1개예요. 바닥 무늬는 텍스처로 충분해요.</div></li>
+<li><h3>방과 방 사이 연결 종류<em>배치</em></h3><div class="how">뚫린 통로 / 문틀 / 위험 문틀 / 유리벽 / 철창 / 엘리베이터 중 하나로 정하고 그 칸만 벽 대신 끼우기</div><div class="why">연결 종류만 바꿔도 같은 배치가 전혀 다른 동선이 돼요(유리벽은 보이지만 못 지나감, 철창은 총은 통과).</div></li>
+<li><h3>층은 높이로 나누기<em>배치</em></h3><div class="how">B1은 Z=0, B2는 Z=-8 처럼 층마다 높이를 띄우고 계단 조각으로 잇기</div><div class="why">층을 같은 파일에 두면 계단 위치가 맞는지 바로 확인할 수 있어요.</div></li>
+</ol>
+</section>
+
+<section id="s8"><div class="sec-head"><h2>8. 쿼터뷰 카메라와 확인용 조명</h2><span>CAMERA · PREVIEW LIGHTS</span></div>
+<p class="lead">Blender 조명은 분위기 확인용이에요. 게임 화면은 Unity 조명으로 다시 만들어요.</p>
+<ol class="steps">
+<li><h3>쿼터뷰 카메라<em>카메라</em></h3><div class="how"><kbd>Shift</kbd> <kbd>A</kbd> → Camera → <kbd>N</kbd> 패널에서 Rotation X 35°, Y 0°, Z 45° (바닥에서 55° 내려다보기) → <kbd>`</kbd> → View Camera 로 카메라 시점</div><div class="why">게임 카메라와 같은 각도로 봐야 벽이 캐릭터를 가리는지, 방이 좁아 보이는지 알 수 있어요.</div><div class="nt">현재 화면 그대로 카메라를 맞추려면 <kbd>Ctrl</kbd> <kbd>Alt</kbd> <kbd>0</kbd> 대신 View 메뉴 → Align View → Align Active Camera to View 를 써요(넘패드 없음).</div></li>
+<li><h3>지붕은 만들지 않거나 숨기기<em>배치</em></h3><div class="how">천장은 빼고, 큰 장치 위 판도 가로대만 남기기</div><div class="why">위에서 내려다보는 게임이라 지붕이 있으면 안이 안 보여요. 이번 중앙 장치도 윗판을 가로대로 바꿔서 안이 보이게 했어요.</div></li>
+<li><h3>붉은 비상등 분위기<em>조명</em></h3><div class="how">World 색을 거의 검정(어두운 빨강)으로 → 방마다 붉은 Point Light 1~2개, 구역색 포인트 조명 1개 → 조명은 JLab_PreviewLights 같은 컬렉션에 따로</div><div class="why">조명을 한 컬렉션에 모아 두면 내보낼 때 빼기 쉬워요.</div><div class="nt">조명을 소품 안에 놓으면 빛이 안 나와요. 방에 조명이 하나뿐이면 가운데 장치를 피해 살짝 옆으로 옮겨요.</div></li>
+<li><h3>EEVEE 렌더가 지글지글할 때<em>렌더</em></h3><div class="how">Render 탭 → Raytracing 체크 끄기 (또는 Samples 늘리기)</div><div class="why">어두운 장면에서 레이트레이싱 반사가 노이즈(자글자글한 점)를 만들어요. 확인용 렌더면 꺼도 충분해요.</div></li>
+</ol>
+</section>
+
+<section id="s9"><div class="sec-head"><h2>9. Unity로 FBX 내보내기</h2><span>FBX EXPORT</span></div>
+<p class="lead">원본 조각(키트 컬렉션)만 내보내고, Unity에서 프리팹으로 맵을 다시 조립해요.</p>
+<ol class="steps">
+<li><h3>내보낼 조각 선택<em>선택</em></h3><div class="how">아웃라이너에서 Kit 컬렉션 우클릭 → Select Objects</div><div class="why">조명, 카메라, 맵에 놓인 복제본은 빼요. 조각 하나 = FBX 하나로 내보내면 Unity에서 관리하기 좋아요.</div></li>
+<li><h3>FBX 설정<em>내보내기</em></h3><div class="how">File → Export → FBX → Limit to: Selected Objects / Object Types: Mesh / Transform: Apply Scalings FBX All, Forward -Z Forward, Up Y Up, Apply Transform 체크 / Geometry: Apply Modifiers 체크</div><div class="why">이렇게 하면 Unity에서 회전 0, 크기 1로 들어오고, -Y 정면이 Unity 앞(+Z)을 봐요.</div><div class="nt">Apply Transform은 움직이는 뼈가 없는 배경 조각에만 써요. 캐릭터처럼 리깅된 모델은 끄고 Unity 쪽 Bake Axis Conversion을 켜요.</div></li>
+<li><h3>매테리얼은 Unity에서 다시 연결<em>엔진</em></h3><div class="how">FBX 옆에 .fbm 폴더가 생기면 지워도 돼요 → Unity에서 아틀라스 텍스처로 매테리얼을 하나 만들어 모든 조각에 연결</div><div class="why">FBX 안의 매테리얼은 Blender 셰이더라 Unity URP에서 그대로 쓰기 어려워요. 슬롯 이름만 맞으면 한 번에 바꿀 수 있어요.</div></li>
+<li><h3>Unity에서 할 일<em>엔진</em></h3><div class="how">조명(붉은 비상등), 콜라이더, 문 열림, 캐릭터를 가리는 벽 반투명 처리, 내비메시</div><div class="why">이건 게임 동작이라 Blender 파일에는 들어가지 않아요.</div></li>
+</ol>
+</section>
+
+<section id="s10"><div class="sec-head"><h2>10. 숫자로 본 결과</h2><span>NUMBERS</span></div>
+<p class="lead">이번 지하 연구소(B1, B2 두 층) 그레이박스 기준이에요.</p>
+<div class="tw"><table>
+<tr><th>항목</th><th>값</th><th>메모</th></tr>
+<tr><td>칸 크기</td><td>2m</td><td>벽 높이 약 2.6m</td></tr>
+<tr><td>오브젝트 수</td><td>1604개</td><td>대부분 연결 복제</td></tr>
+<tr><td>메시 종류</td><td>111개</td><td>Unity 프리팹 수와 비슷</td></tr>
+<tr><td>전체 삼각형</td><td>약 205k</td><td>안 보이는 면 지우기 전 약 237k</td></tr>
+<tr><td>매테리얼</td><td>3개</td><td>아틀라스 / 바꿀 발광색 / 유리</td></tr>
+</table></div>
+<div class="box"><b>기억할 것</b><ul><li>모든 조각: 미터 단위, 정면 -Y, 원점 바닥 가운데, Scale 1</li><li>같은 조각은 <kbd>Alt</kbd> <kbd>D</kbd></li><li>안 보이는 면은 지우기</li><li>조명은 확인용, 진짜 조명은 Unity</li></ul></div>
+</section>
+
+<div class="pn"><a href="lookup.html">← 찾아보기</a><a href="index.html">기초 →</a></div>
+<footer>이번 지하 연구소 맵 작업에서 쓴 방법을 정리했어요. 실제 작업은 Python 스크립트로 했고, 여기에는 같은 일을 손으로 할 때의 메뉴와 단축키를 적었어요. 단축키는 Blender 기본 키맵 기준이에요.</footer>
+</div></body></html>
